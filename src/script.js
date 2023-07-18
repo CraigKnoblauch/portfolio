@@ -24,21 +24,17 @@ scene.background = SEPIA
 // const dracoLoader = new DRACOLoader()
 // dracoLoader.setDecoderPath('draco/')
 
-// const gltfLoader = new GLTFLoader()
+const gltfLoader = new GLTFLoader()
 // gltfLoader.setDRACOLoader(dracoLoader)
 
 // let mixer = null
-// gltfLoader.load('models/Fox/glTF/Fox.gltf',
-// (gltf) => {
-//     mixer = new THREE.AnimationMixer(gltf.scene)
-//     const action = mixer.clipAction(gltf.animations[2])
-
-//     action.play()
-
-//     gltf.scene.scale.set(0.025, 0.025, 0.025)
-//     scene.add(gltf.scene)
-// }
-// )
+gltfLoader.load('models/platform-non-compressed.glb',
+    (gltf) => {
+        gltf.scene.scale.set(0.025, 0.025, 0.025)
+        gltf.scene.rotateY(45)
+        scene.add(gltf.scene)
+    }
+)
 
 /**
  * Floor
