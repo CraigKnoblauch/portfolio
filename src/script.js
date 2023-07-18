@@ -18,6 +18,15 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 scene.background = SEPIA
 
+// Texture loader
+const textureLoader = new THREE.TextureLoader()
+const fuselageTexture = textureLoader.load('textures/rocket-uv.jpg')
+
+/**
+ * Materials
+ */
+const fuselageMaterial = new THREE.MeshBasicMaterial({ map: fuselageTexture })
+
 /**
  * Models
  */
@@ -38,13 +47,24 @@ gltfLoader.load('models/platform-non-compressed.glb',
 )
 
 // Load rocket
+const rocket = {}
 gltfLoader.load('models/rocket-non-compressed.glb',
     (gltf) => {
         gltf.scene.scale.set(0.025, 0.025, 0.025)
         gltf.scene.rotateY(45)
+
+        rocket.nozzle1 = gltf.scene.children.find((child) => child.name == 'nozzle1')
+        rocket.nozzle2 = gltf.scene.children.find((child) => child.name == 'nozzle2')
+        rocket.payload_ferring = gltf.scene.children.find((child) => child.name == 'payload_ferring')
+        rocket.fuselage = gltf.scene.children.find((child) => child.name == 'fuselage')
+
+        rocket.fuselage.material = fuselageMaterial
+
         scene.add(gltf.scene)
     }
 )
+
+console.log(scene)
 
 /**
  * Floor
