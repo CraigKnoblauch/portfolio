@@ -28,7 +28,17 @@ const gltfLoader = new GLTFLoader()
 // gltfLoader.setDRACOLoader(dracoLoader)
 
 // let mixer = null
+// Load platform
 gltfLoader.load('models/platform-non-compressed.glb',
+    (gltf) => {
+        gltf.scene.scale.set(0.025, 0.025, 0.025)
+        gltf.scene.rotateY(45)
+        scene.add(gltf.scene)
+    }
+)
+
+// Load rocket
+gltfLoader.load('models/rocket-non-compressed.glb',
     (gltf) => {
         gltf.scene.scale.set(0.025, 0.025, 0.025)
         gltf.scene.rotateY(45)
