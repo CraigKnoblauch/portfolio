@@ -6,9 +6,9 @@ Command: npx gltfjsx@6.2.16 rabbit.glb
 import React, { useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 
-export function Model(props) {
+const Rabbit = (props) => {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/rabbit.glb')
+  const { nodes, materials, animations } = useGLTF('./model/rabbit.glb')
   const { actions } = useAnimations(animations, group)
   return (
     <group ref={group} {...props} dispose={null}>
@@ -23,10 +23,17 @@ export function Model(props) {
           <primitive object={nodes.pole_backl} />
           <primitive object={nodes.control_backr} />
           <primitive object={nodes.pole_backr} />
+          <group name="rabbit">
+            <skinnedMesh name="Plane" geometry={nodes.Plane.geometry} material={materials.brown} skeleton={nodes.Plane.skeleton} />
+            <skinnedMesh name="Plane_1" geometry={nodes.Plane_1.geometry} material={materials.white} skeleton={nodes.Plane_1.skeleton} />
+            <skinnedMesh name="Plane_2" geometry={nodes.Plane_2.geometry} material={materials.black} skeleton={nodes.Plane_2.skeleton} />
+          </group>
         </group>
       </group>
     </group>
   )
 }
 
-useGLTF.preload('/rabbit.glb')
+export default Rabbit
+
+useGLTF.preload('./model/rabbit.glb')

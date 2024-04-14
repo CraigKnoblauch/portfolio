@@ -1,9 +1,13 @@
+import { OrbitControls } from "@react-three/drei"
+import Rabbit from "./Rabbit.jsx"
+
 const Experience = () => {
     return (
-        <mesh>
-            <boxGeometry />
-            <meshNormalMaterial />
-        </mesh>
+        <>
+            <ambientLight />
+            <OrbitControls />
+            <Rabbit />
+        </>
     )
 }
 
