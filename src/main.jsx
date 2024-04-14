@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './style.css'
+// import './style.css'
 import { createTheme, MantineProvider } from '@mantine/core'
 import Rabbit from './components/Rabbit.jsx'
 import { RabbitAnimationsProvider } from './contexts/RabbitAnimationsContext.jsx'

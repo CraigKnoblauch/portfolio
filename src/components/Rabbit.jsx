@@ -10,7 +10,7 @@ import { useRabbitAnimations } from '../contexts/RabbitAnimationsContext.jsx'
 const Rabbit = (props) => {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF('./model/rabbit.glb')
-  const { setAnimationNames } = useRabbitAnimations()
+  const { setAnimationNames, animationIndex } = useRabbitAnimations()
   const { actions, names } = useAnimations(animations, group)
 
   useEffect(() => {
@@ -18,8 +18,11 @@ const Rabbit = (props) => {
   }, [names]);
 
   useEffect(() => {
-    actions[names[0]].reset().fadeIn(0.5).play()
-  }, []);
+    actions[names[animationIndex]].reset().fadeIn(0.5).play()
+    return () => {
+      actions[names[animationIndex]].fadeOut(0.5)
+    }
+  }, [animationIndex, actions, names]);
 
   return (
     <group ref={group} {...props} dispose={null}>
