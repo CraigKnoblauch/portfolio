@@ -6,7 +6,9 @@ const Experience = () => {
         <>
             <ambientLight />
             <OrbitControls />
-            <Rabbit />
+            <group position={[0, -0.4, 0]} >
+                <Rabbit />
+            </group>
         </>
     )
 }

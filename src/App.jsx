@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <Canvas>
+      <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
         <Experience />
       </Canvas>
     </>
