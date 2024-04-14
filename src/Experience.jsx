@@ -7,25 +7,12 @@ import portalFragmentShader from './shaders/portal/fragment.glsl'
 import { timerDelta } from 'three/examples/jsm/nodes/Nodes.js'
 import Rabbit from './Rabbit'
 
-const PortalMaterial = shaderMaterial(
-    {
-        uTime: 0,
-        uColorStart: new Three.Color('#ffffff'),
-        uColorEnd: new Three.Color('#000000')
-    },
-    portalVertexShader,
-    portalFragmentShader
-)
-
-
-extend({ PortalMaterial })
-
 export default function Experience()
 {
-    const { nodes } = useGLTF('./model/portal.glb')
-    console.log(nodes)
-    const bakedTexture = useTexture('./model/baked.jpg')
-    bakedTexture.flipY = false
+    // const { nodes } = useGLTF('./model/portal.glb')
+    // console.log(nodes)
+    // const bakedTexture = useTexture('./model/baked.jpg')
+    // bakedTexture.flipY = false
 
     // const portalMaterialRef = useRef()
 
@@ -37,15 +24,15 @@ export default function Experience()
 
     return <>
 
-        <color args={['#FFDEA8']} attach="background" />
+        {/* <color args={['#FFDEA8']} attach="background" /> */}
 
         <OrbitControls makeDefault />
 
         <ambientLight />
 
-        <Center>
+        <group position={[0, -1, 0]}>
             <Rabbit />
-        </Center>
+        </group>
 
     </>
 }
