@@ -1,4 +1,3 @@
-import { Affix, Button } from "@mantine/core"
 import { exp } from "three/examples/jsm/nodes/Nodes.js"
 import { useRabbitAnimations } from "../contexts/RabbitAnimationsContext"
 
@@ -6,15 +5,15 @@ export const RabbitControlInterface = () => {
 
     const { animationNames, animationIndex, setAnimationIndex } = useRabbitAnimations()
 
-    return (
-        <Affix position={{ bottom: 50, right: 20 }}>
+    return <div className="rabbit-control-interface">
+        <ul>
             {animationNames.map((animation, index) => (
-                <Button key={animation} onClick={() => setAnimationIndex(index)}>
+                <button key={animation} onClick={() => setAnimationIndex(index)}>
                     {animation}
-                </Button>
+                </button>
             ))}
-        </Affix>
-    )
+        </ul>
+    </div>
 }
 
 export default RabbitControlInterface
