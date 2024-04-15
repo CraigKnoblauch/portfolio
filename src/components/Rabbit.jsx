@@ -9,7 +9,7 @@ import { useRabbitAnimations } from '../contexts/RabbitAnimationsContext.jsx'
 
 const Rabbit = (props) => {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF('./model/rabbit.glb')
+  const { nodes, materials, animations } = useGLTF('./models/rabbit.glb')
   const { setAnimationNames, animationIndex } = useRabbitAnimations()
   const { actions, names } = useAnimations(animations, group)
 
@@ -50,4 +50,4 @@ const Rabbit = (props) => {
 
 export default Rabbit
 
-useGLTF.preload('./model/rabbit.glb')
+useGLTF.preload('./models/rabbit.glb')
