@@ -1,7 +1,9 @@
 import * as Three from 'three'
-import { shaderMaterial } from "@react-three/drei"
+import { PivotControls, shaderMaterial } from "@react-three/drei"
 import floorFragmentShader from '../shaders/floor/fragment.glsl'
 import floorVertexShader from '../shaders/floor/vertex.glsl'
+import { extend } from '@react-three/fiber'
+import { useRef, useMemo } from 'react'
 
 const topLeft = new Three.Color("#FFDEA8")
 const topRight = new Three.Color("#CCC19D")
@@ -19,20 +21,26 @@ const BackgroundTexture = new Three.DataTexture(FloorTextureData, 2, 2, Three.RG
 BackgroundTexture.magFilter = Three.LinearFilter
 BackgroundTexture.needsUpdate = true
 
-const FloorMaterial = shaderMaterial(
-    {
-        tBackground: {value: BackgroundTexture}
-    },
-    floorVertexShader,
-    floorFragmentShader
-)
-
-
 export default function Floor() {
+
+    const floorMeshRef = useRef()
+    const floorUniforms = useMemo(() => (
+        {
+            tBackground: {
+                value: BackgroundTexture
+            }
+        }
+    ), [])
+
     return <>
-        <mesh position-y={ - 1 } rotation-x={ - Math.PI * 0.5 } scale={ 10 } frustumCulled={ false } matrixAutoUpdate={ true }>
-            <planeGeometry />
-            <FloorMaterial />
-        </mesh>
+        <PivotControls>
+            <mesh ref={floorMeshRef} geometry={ new Three.PlaneGeometry(1, 1, 100, 100)} rotation-x={ - Math.PI * 0.5 } frustumCulled={ false } matrixAutoUpdate={ true }>
+                <shaderMaterial 
+                    uniforms={floorUniforms}
+                    fragmentShader={floorFragmentShader}
+                    vertexShader={floorVertexShader}
+                />
+            </mesh>
+        </PivotControls>
     </>
 }

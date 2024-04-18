@@ -9,8 +9,8 @@ const Experience = () => {
             <OrbitControls />
             <group position={[0, -0.4, 0]} scale={0.5} >
                 <Rabbit />
+                <Floor />
             </group>
-            <Floor />
         </>
     )
 }
