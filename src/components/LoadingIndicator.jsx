@@ -2,7 +2,7 @@ import * as Three from 'three'
 import { shaderMaterial } from "@react-three/drei"
 import loadingIndicatorFragmentShader from '../shaders/loading-indicator/fragment.glsl'
 import loadingIndicatorVertexShader from '../shaders/loading-indicator/vertex.glsl'
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { useFrame, extend } from '@react-three/fiber'
 
 const LoadingIndicatorMaterial = shaderMaterial(
@@ -31,7 +31,7 @@ export default function LoadingIndicator() {
     })
     
     return <>
-        <mesh ref={meshRef} rotation={[-89.5, 0, 0]}>
+        <mesh ref={meshRef} rotation={[-89.5, 0, 90]}>
             <planeGeometry args={[6, 6, 10, 10]} />
             <loadingIndicatorMaterial ref={loadingIndicatorMaterialRef} />
         </mesh>
