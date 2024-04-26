@@ -4,7 +4,8 @@ Command: npx gltfjsx@6.2.16 rabbit.glb
 */
 
 import React, { useEffect, useRef } from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import { useGLTF, useAnimations, useKeyboardControls } from '@react-three/drei'
 import { useRabbitAnimations } from '../contexts/RabbitAnimationsContext.jsx'
 
 const Rabbit = (props) => {
@@ -12,6 +13,7 @@ const Rabbit = (props) => {
   const { nodes, materials, animations } = useGLTF('./models/rabbit.glb')
   const { setAnimationNames, animationIndex } = useRabbitAnimations()
   const { actions, names } = useAnimations(animations, group)
+  const [subscribeKeys, getKeys] = useKeyboardControls()
 
   useEffect(() => {
     setAnimationNames(names)
@@ -23,6 +25,14 @@ const Rabbit = (props) => {
       actions[names[animationIndex]].fadeOut(0.5)
     }
   }, [animationIndex, actions, names]);
+
+  useFrame((state, delta) => {
+    const keys = getKeys()
+    if (keys.forward) group.current.position.z += 0.1
+    if (keys.backward) group.current.position.z -= 0.1
+    if (keys.left) group.current.position.x -= 0.1
+    if (keys.right) group.current.position.x += 0.1
+  })
 
   return (
     <group ref={group} {...props} dispose={null}>
