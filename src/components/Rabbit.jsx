@@ -27,10 +27,48 @@ const Rabbit = (props) => {
   //   }
   // }, [animationIndex, actions, names]);
 
+  let forwardRotation = null
+  let targetBackwardRotation = null
   useFrame((state, delta) => {
+    // Init forward rotation and target backward rotation
+    if (forwardRotation === null) forwardRotation = group.current.rotation.y
+    if (targetBackwardRotation === null) targetBackwardRotation = forwardRotation - Math.PI
+
     const keys = getKeys()
-    if (keys.forward) group.current.position.z += 0.1
-    if (keys.backward) group.current.position.z -= 0.1
+
+    // Reset currentRotation to an equivalent that is between -2*PI and 2*PI
+    if (group.current.rotation.y > 2*Math.PI) group.current.rotation.y -= 2*Math.PI
+    if (group.current.rotation.y < -2*Math.PI) group.current.rotation.y += 2*Math.PI
+
+    const currentRotation = group.current.rotation.y
+
+    function forward() {
+      group.current.position.z += Math.cos(currentRotation)*0.1
+      group.current.position.x += Math.sin(currentRotation)*0.1
+    }
+
+    if (keys.forward) {
+      // Move the rabbit forward relative to its current rotation
+      forward()
+      forwardRotation = currentRotation
+      
+      // Set and normalize the target backward rotation
+      targetBackwardRotation = forwardRotation - Math.PI
+      if (targetBackwardRotation > 2*Math.PI) targetBackwardRotation -= 2*Math.PI
+      if (targetBackwardRotation < -2*Math.PI) targetBackwardRotation += 2*Math.PI
+    }
+
+    if (keys.backward) {
+      // Rotate until the rotation is 180 degrees from the forward rotation
+      if (currentRotation >= targetBackwardRotation) {
+        group.current.rotation.y -= (0.01*Math.PI*2)
+      }
+      
+      // TODO Repeat the backwards movement after the backwards key has been released
+
+      forward()
+    }
+
     if (keys.left) group.current.rotation.y += (0.005*Math.PI*2)
     if (keys.right) group.current.rotation.y -= (0.005*Math.PI*2)
 
