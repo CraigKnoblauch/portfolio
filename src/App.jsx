@@ -18,7 +18,7 @@ function App() {
         <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
           <Experience />
         </Canvas>
-        <RabbitControlInterface />
+        {/* <RabbitControlInterface /> */}
       </KeyboardControls>
     </>
   )

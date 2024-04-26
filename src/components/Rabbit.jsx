@@ -15,16 +15,17 @@ const Rabbit = (props) => {
   const { actions, names } = useAnimations(animations, group)
   const [subscribeKeys, getKeys] = useKeyboardControls()
 
-  useEffect(() => {
-    setAnimationNames(names)
-  }, [names]);
+  // These were for the RabbitControlInterface. Commenting them out for now.
+  // useEffect(() => {
+  //   setAnimationNames(names)
+  // }, [names]);
 
-  useEffect(() => {
-    actions[names[animationIndex]].reset().fadeIn(0.5).play()
-    return () => {
-      actions[names[animationIndex]].fadeOut(0.5)
-    }
-  }, [animationIndex, actions, names]);
+  // useEffect(() => {
+  //   actions[names[animationIndex]].reset().fadeIn(0.5).play()
+  //   return () => {
+  //     actions[names[animationIndex]].fadeOut(0.5)
+  //   }
+  // }, [animationIndex, actions, names]);
 
   useFrame((state, delta) => {
     const keys = getKeys()
@@ -32,6 +33,12 @@ const Rabbit = (props) => {
     if (keys.backward) group.current.position.z -= 0.1
     if (keys.left) group.current.position.x -= 0.1
     if (keys.right) group.current.position.x += 0.1
+
+    if(keys.forward || keys.backward || keys.left || keys.right) {
+      actions["walk/jump"].fadeOut(1)
+    } else {
+      actions["walk/jump"].reset().fadeIn(0.5).play()
+    }
   })
 
   return (
