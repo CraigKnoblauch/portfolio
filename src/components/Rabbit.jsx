@@ -31,8 +31,8 @@ const Rabbit = (props) => {
     const keys = getKeys()
     if (keys.forward) group.current.position.z += 0.1
     if (keys.backward) group.current.position.z -= 0.1
-    if (keys.left) group.current.position.x -= 0.1
-    if (keys.right) group.current.position.x += 0.1
+    if (keys.left) group.current.rotation.y += (0.005*Math.PI*2)
+    if (keys.right) group.current.rotation.y -= (0.005*Math.PI*2)
 
     if(keys.forward || keys.backward || keys.left || keys.right) {
       actions["walk/jump"].fadeOut(1)
