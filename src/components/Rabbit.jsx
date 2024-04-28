@@ -4,6 +4,7 @@ Command: npx gltfjsx@6.2.16 rabbit.glb
 */
 
 import React, { useEffect, useRef } from 'react'
+import * as Three from 'three'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF, useAnimations, useKeyboardControls } from '@react-three/drei'
 import { useRabbitAnimations } from '../contexts/RabbitAnimationsContext.jsx'
@@ -77,6 +78,26 @@ const Rabbit = (props) => {
     } else {
       actions["walk/jump"].reset().fadeIn(0.5).play()
     }
+
+    /**
+     * Camera
+     * NOTE This really shouldn't be here. TODO Refactor to a separate component.
+     */
+    const cameraPosition = new Three.Vector3()
+    cameraPosition.x = group.current.position.x// + Math.sin(currentRotation)*0.1
+    cameraPosition.z = group.current.position.z// + Math.cos(currentRotation)*0.1
+    cameraPosition.y = group.current.position.y// + 1
+
+    const cameraTarget = new Three.Vector3(0, 0, 0)
+    cameraTarget.copy(group.current.position.clone())
+
+    state.camera.position.copy(cameraPosition)
+    // state.camera.lookAt(cameraTarget)
+
+    console.log("cameraPosition", cameraPosition)
+    console.log("group.current.position", group.current.position)
+    console.log("cameraTarget", cameraTarget)
+
   })
 
   return (
