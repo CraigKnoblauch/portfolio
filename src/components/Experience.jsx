@@ -6,7 +6,7 @@ import { Physics } from "@react-three/rapier"
 const Experience = () => {
     return (
         <>
-            <Physics>
+            <Physics debug={true}>
                 <ambientLight />
                 <OrbitControls />
                 <group position={[0, -0.4, 0]} scale={0.5} >
