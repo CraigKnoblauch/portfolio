@@ -11,6 +11,7 @@ import { useRabbitAnimations } from '../contexts/RabbitAnimationsContext.jsx'
 
 const Rabbit = (props) => {
   const group = useRef()
+  const rabbit = useRef()
   const { nodes, materials, animations } = useGLTF('./models/rabbit.glb')
   const { setAnimationNames, animationIndex } = useRabbitAnimations()
   const { actions, names } = useAnimations(animations, group)
@@ -44,8 +45,8 @@ const Rabbit = (props) => {
     const currentRotation = group.current.rotation.y
 
     function forward() {
-      group.current.position.z += Math.cos(currentRotation)*0.1
-      group.current.position.x += Math.sin(currentRotation)*0.1
+      rabbit.current.position.z += Math.cos(currentRotation)*0.1
+      rabbit.current.position.x += Math.sin(currentRotation)*0.1
     }
 
     if (keys.forward) {
@@ -84,9 +85,9 @@ const Rabbit = (props) => {
      * NOTE This really shouldn't be here. TODO Refactor to a separate component.
      */
     const cameraPosition = new Three.Vector3()
-    cameraPosition.x = group.current.position.x// + Math.sin(currentRotation)*0.1
-    cameraPosition.z = group.current.position.z// + Math.cos(currentRotation)*0.1
-    cameraPosition.y = group.current.position.y// + 1
+    cameraPosition.x = rabbit.current.position.x + 3// + Math.sin(currentRotation)*0.1
+    cameraPosition.z = rabbit.current.position.z// + Math.cos(currentRotation)*0.1
+    cameraPosition.y = rabbit.current.position.y// + 1
 
     const cameraTarget = new Three.Vector3(0, 0, 0)
     cameraTarget.copy(group.current.position.clone())
@@ -113,7 +114,7 @@ const Rabbit = (props) => {
           <primitive object={nodes.pole_backl} />
           <primitive object={nodes.control_backr} />
           <primitive object={nodes.pole_backr} />
-          <group name="rabbit">
+          <group name="rabbit" ref={rabbit}>
             <skinnedMesh name="Plane" geometry={nodes.Plane.geometry} material={materials.brown} skeleton={nodes.Plane.skeleton} />
             <skinnedMesh name="Plane_1" geometry={nodes.Plane_1.geometry} material={materials.white} skeleton={nodes.Plane_1.skeleton} />
             <skinnedMesh name="Plane_2" geometry={nodes.Plane_2.geometry} material={materials.black} skeleton={nodes.Plane_2.skeleton} />
