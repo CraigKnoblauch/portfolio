@@ -10,7 +10,6 @@ export default function Rabbit(props) {
     const body = useRef()
     const model = useGLTF('./models/rabbit.glb')
     const { actions, names } = useAnimations(model.animations, group)
-    console.log("Actions: ", actions)
 
     // Keyboard controls
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
@@ -47,8 +46,6 @@ export default function Rabbit(props) {
         body.current.setTranslation(position)
         body.current.setRotation(rotation)
     })
-
-    console.log(model)
 
     return <>
         <group ref={group} {...props} dispose={null}>
