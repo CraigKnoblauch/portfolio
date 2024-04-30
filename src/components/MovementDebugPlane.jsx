@@ -3,7 +3,7 @@ import { RigidBody } from "@react-three/rapier"
 export default function MovementDebugPlane() {
     return <>
         <RigidBody type="fixed"
-                   friction={0.7}
+                   friction={0.5}
                    colliders="cuboid"
         >
             <mesh position={[0, -0.5, 0]}>

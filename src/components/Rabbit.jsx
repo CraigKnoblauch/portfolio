@@ -16,14 +16,13 @@ export default function Rabbit(props) {
     useFrame((state, delta) => {
         const keys = getKeys()
 
-        actions["walk/jump"].play()
+        // actions["walk/jump"].play()
 
-        // Get current position and rotation
-        // TODO I shouldn't set the translation and rotation directly
-        // The rapier docs say that's akin to teleporting the body and will cauase bugs
+        // Get current rotation
         const rotation = body.current.rotation()
 
         const impulse = {x: 0, y: 0, z: 0}
+        const torque = {x: 0, y: 0, z: 0}
 
         function forward() {
             impulse.z += Math.cos(rotation.y) * delta * 8000
@@ -37,17 +36,17 @@ export default function Rabbit(props) {
             
         }
         if (keys.left) {
-            rotation.y += (0.005*Math.PI*2)
-            forward()
+            torque.y += 1 * delta * 50000
+            // forward()
         }
         if (keys.right) {
-            rotation.y -= (0.005*Math.PI*2)
-            forward()
+            torque.y -= 1 * delta * 50000
+            // forward()
         }
 
         // Update the body position and rotation
         body.current.applyImpulse(impulse)
-        body.current.setRotation(rotation)
+        body.current.applyTorqueImpulse(torque)
     })
 
     return <>
