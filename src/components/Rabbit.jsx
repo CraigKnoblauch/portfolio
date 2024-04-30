@@ -1,4 +1,4 @@
-import { RigidBody } from "@react-three/rapier"
+import { RigidBody } from "@react-three/rapier" // NOTE Rapier RigidBody docs: https://rapier.rs/docs/api/javascript/JavaScript3D
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
 import { useRef, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"
@@ -16,9 +16,11 @@ export default function Rabbit(props) {
     useFrame((state, delta) => {
         const keys = getKeys()
 
-        actions["walk/jump"].play()
+        // actions["walk/jump"].play()
 
         // Get current position and rotation
+        // TODO I shouldn't set the translation and rotation directly
+        // The rapier docs say that's akin to teleporting the body and will cauase bugs
         const position = body.current.translation()
         const rotation = body.current.rotation()
 
@@ -53,7 +55,7 @@ export default function Rabbit(props) {
                     canSleep={false} 
                     restitution={0.2} 
                     friction={1} 
-                    linearDamping={0.5} // The damping allows the ball to come to a stop
+                    linearDamping={0.5}
                     angularDamping={0.5}
                     gravityScale={0}
                     position={[0, 0, 0]}
