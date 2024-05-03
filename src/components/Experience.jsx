@@ -3,6 +3,7 @@ import Rabbit from "./Rabbit.jsx"
 import LoadingIndicator from "./LoadingIndicator.jsx"
 import { Physics } from "@react-three/rapier"
 import MovementDebugPlane from "./MovementDebugPlane.jsx"
+import Ground from "./Ground.jsx"
 
 const Experience = () => {
     return (
@@ -11,6 +12,7 @@ const Experience = () => {
                 <ambientLight />
                 <OrbitControls />
                 <group position={[0, -0.4, 0]}>
+                    <Ground />
                     <MovementDebugPlane />
                     <Rabbit />
                 </group>
