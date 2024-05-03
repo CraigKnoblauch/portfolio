@@ -4,6 +4,7 @@ import LoadingIndicator from "./LoadingIndicator.jsx"
 import { Physics } from "@react-three/rapier"
 import MovementDebugPlane from "./MovementDebugPlane.jsx"
 import Ground from "./Ground.jsx"
+import AsuCaption from "./captions/AsuCaption.jsx"
 
 const Experience = () => {
     return (
@@ -11,7 +12,7 @@ const Experience = () => {
             <Physics debug={true}>
                 <ambientLight />
                 <OrbitControls />
-                <group position={[0, -0.4, 0]}>
+                <group>
                     <Ground />
                     <MovementDebugPlane />
                     <Rabbit />
