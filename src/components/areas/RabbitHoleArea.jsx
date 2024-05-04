@@ -4,12 +4,17 @@ Command: npx gltfjsx@6.2.16 rabbit-hole-area.glb
 */
 
 import React, { useRef } from 'react'
-import { useGLTF, useTexture } from '@react-three/drei'
+import { useGLTF, useMatcapTexture, useTexture } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
+import { MeshMatcapMaterial } from 'three'
 
 export default function RabbitHoleArea(props) {
+
     const ground_texture = useTexture('./models/rabbit-hole-ground-baked.jpg')
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
+
+    const leaf_green_matcap = useTexture('./models/leaf-green.jpg')
+
     return <>
         <group {...props} dispose={null}>
             <RigidBody type="fixed" friction={0.5}>
@@ -19,7 +24,9 @@ export default function RabbitHoleArea(props) {
                 <mesh geometry={nodes.rabbit_hole_portal.geometry} material={nodes.rabbit_hole_portal.material} position={[-12.79, -0.17, -0.852]} rotation={[0, 0, 0.489]} scale={[40.77, 53.239, 53.239]} />
                 <mesh geometry={nodes.canopy.geometry} material={nodes.canopy.material} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802} />
                 <mesh geometry={nodes.tree.geometry} material={nodes.tree.material} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802} />
-                <mesh geometry={nodes.hedge008.geometry} material={nodes.hedge008.material} position={[-12.557, 1.064, 5.317]} rotation={[-Math.PI, 0.885, -Math.PI]} />
+                <mesh geometry={nodes.hedge008.geometry} material={new MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-12.557, 1.064, 5.317]} rotation={[-Math.PI, 0.885, -Math.PI]}>
+                    {/* <meshMatcapMaterial matcap={leaf_green_matcap} /> */}
+                </mesh>
                 <mesh geometry={nodes.stem1004.geometry} material={nodes.stem1004.material} position={[-8.834, 0.157, -4.848]} rotation={[0, 0.93, 0]} scale={[0.033, 0.152, 0.033]} />
                 <mesh geometry={nodes['tall-bush1'].geometry} material={nodes['tall-bush1'].material} position={[-12.502, 1.51, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={0.171} />
                 <mesh geometry={nodes['tall-stem1'].geometry} material={nodes['tall-stem1'].material} position={[-12.502, 0.382, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={[0.04, 0.176, 0.04]} />
