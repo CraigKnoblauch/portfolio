@@ -13,139 +13,465 @@ export default function CareerArea(props) {
   const { nodes, materials } = useGLTF('./models/career-area.glb')
 
   {/**
-    Phoenix matcaps
+    TODO Refactor matcap management into it's own class. This is a mess.
   */}
-  const [under_wing_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-under-wing-orange.png'])
+
+  {/**
+     Reused generic matcaps
+  */}
+  const [black_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/black.png'])
+  const [wood_brown_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/wood-brown.png'])
+  const [gold_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/gold.png'])
+  const [bright_white_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/bright-white.png'])
+  const [platform_gray_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/platform-gray.png'])
+  const [leaf_green_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/leaf-green.png'])
+  const [rock_gray_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/rock-gray.png'])
+  const [silver_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/silver.png'])
+  const [ground_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/ground.png'])
+  const [fence_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/fence.png'])
+
+  {/**
+    In each of the following sections, matcaps that are specific to each section are defined. Matcaps may be reused across sections
+    in the actual application of materials. Just to say that if a matcap isn't defined in the sections below, that doesnt inform you
+    what matcaps are used in the final scene.
+  */}
+
+
+  {/**
+    ASU matcaps
+  */}
+  const [cactus_flower_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/cactus-pink.png'])
+  const [asu_logo_body_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/asu-red.png'])
+  const [asu_dark_rock_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/asu-dark-rock-brown.png'])
+  const [asu_lite_rock_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/asu-lite-rock-brown.png'])
+  const [asu_soil_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/asu-soil-brown.png'])
+  const [grad_cap_maroon_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/grad-cap-maroon.png'])
+
+  {/**
+    Phoenix logo matcaps
+  */}
+  const [phx_blue_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-blue.png'])
+  const [phx_gray_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-gray.png'])
+  const [phx_lite_gray_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-lite-gray.png'])
+  const [phx_green_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-green.png'])
+  const [phx_orange_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-orange.png'])
+  const [phx_under_wing_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-under-wing-orange.png'])
+
+  {/**
+    Phoenix cubesat matcaps
+  */}
+  const [cubesat_antenna_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/antenna.png'])
+  {/**
+    Good example of what I was talking about above. There are more matcaps used in the final scene than are defined here.
+    These include phx-gray.png, wood-brown.png, etc. Notice that phx-gray.png appears to be "specific" to the Phoenix logo,
+    but it isn't "restricted" to the phoenix logo.
+  */}
+
+  {/**
+    NG-12 matcaps
+
+    NG-12 does not have any matcaps that are specific to it
+  */}
+
+  {/**
+    Vanguard matcaps
+  */}
+  const [aws_green_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/aws-green.png'])
+  const [aws_orange_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/aws-orange.png'])
+  const [aws_purple_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/aws-purple.png'])
+  const [aws_red_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/aws-red.png'])
+  const [python_blue_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/python-blue.png'])
+  const [vanguard_red_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/vanguard-red.png'])
+
+  {/**
+    NRL matcaps
+  */}
+  const [nrl_accent_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/nrl-accent.png'])
+  const [nrl_dish_support_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/nrl-dish-support.png'])
+  const [concrete_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/concrete.png'])
+
 
   return <>
     <group {...props} dispose={null}>
       <RigidBody type="fixed" friction={0.5}>
-      <mesh geometry={nodes.career_ground.geometry} material={nodes.career_ground.material} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]} />
-      <mesh geometry={nodes.palm_tree_trunk001.geometry} material={nodes.palm_tree_trunk001.material} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]} />
-      <mesh geometry={nodes.palm_tree_trunk.geometry} material={nodes.palm_tree_trunk.material} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]} />
-      <mesh geometry={nodes.palm_tree_canopy001.geometry} material={nodes.palm_tree_canopy001.material} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]} />
-      <mesh geometry={nodes.palm_tree_canopy.geometry} material={nodes.palm_tree_canopy.material} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]} />
-      <mesh geometry={nodes.aws_emr_icon.geometry} material={nodes.aws_emr_icon.material} position={[9.677, 1.998, -26.324]} rotation={[0, -0.794, 0]} scale={[0.392, 0.17, 0.392]} />
-      <mesh geometry={nodes.aws_glue_icon_funnel.geometry} material={nodes.aws_glue_icon_funnel.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
-      <mesh geometry={nodes.aws_lambda_icon.geometry} material={nodes.aws_lambda_icon.material} position={[9.286, 1.306, -25.813]} rotation={[1.296, -0.269, 0.756]} scale={0.302} />
-      <mesh geometry={nodes.vanguard_text.geometry} material={nodes.vanguard_text.material} position={[10.697, 2.7, -25.061]} rotation={[2.741, -0.736, 1.294]} scale={0.486} />
-      <mesh geometry={nodes.vanguard_platform.geometry} material={nodes.vanguard_platform.material} position={[10.483, 1.64, -25.508]} rotation={[0, -0.794, 0]} scale={[0.507, 0.962, 0.507]} />
-      <mesh geometry={nodes.python_icon_top.geometry} material={nodes.python_icon_top.material} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]} />
-      <mesh geometry={nodes.aws_glue_icon_green_objects.geometry} material={nodes.aws_glue_icon_green_objects.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
-      <mesh geometry={nodes.aws_glue_icon_red_objects.geometry} material={nodes.aws_glue_icon_red_objects.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
-      <mesh geometry={nodes.aws_glue_icon_orange_objects.geometry} material={nodes.aws_glue_icon_orange_objects.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
-      <mesh geometry={nodes.python_icon_bottom.geometry} material={nodes.python_icon_bottom.material} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]} />
-      <mesh geometry={nodes.antenna.geometry} material={nodes.antenna.material} position={[-8.503, 0.968, -25.625]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.antenna_board.geometry} material={nodes.antenna_board.material} position={[-8.503, 0.968, -25.625]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.cubesat_solar_panels.geometry} material={nodes.cubesat_solar_panels.material} position={[-7.134, 2.359, -26.927]} rotation={[-0.956, 0.056, -0.625]} scale={0.068} />
-      <mesh geometry={nodes.cubesat_lens.geometry} material={nodes.cubesat_lens.material} position={[-8.766, 1.799, -25.312]} rotation={[0.693, 0.944, -1.667]} scale={0.351} />
-      <mesh geometry={nodes.cubesat_silver_sides.geometry} material={nodes.cubesat_silver_sides.material} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.cubesat_sides.geometry} material={nodes.cubesat_sides.material} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.rocket_platform.geometry} material={nodes.rocket_platform.material} position={[0.107, 0.278, -29.722]} rotation={[-Math.PI, 0.786, -Math.PI]} scale={0.113} />
-      <mesh geometry={nodes.rocket_cradle.geometry} material={nodes.rocket_cradle.material} position={[1.735, 0.737, -28.729]} rotation={[-Math.PI, 0, -Math.PI]} scale={0.013} />
-      <mesh geometry={nodes.rocket.geometry} material={nodes.rocket.material} position={[1.359, 0.84, -28.373]} rotation={[0, -1.571, 0]} scale={0.113} />
-      <mesh geometry={nodes.rocket_nozzles.geometry} material={nodes.rocket_nozzles.material} position={[1.359, 0.84, -28.373]} rotation={[0, -1.571, 0]} scale={0.113} />
-      <mesh geometry={nodes.Rock_Moss_4_Cube023.geometry} material={nodes.Rock_Moss_4_Cube023.material} position={[6.047, 0.215, -29.156]} rotation={[Math.PI / 2, 0, 1.686]} />
-      <mesh geometry={nodes.Rock_4_Cube002.geometry} material={nodes.Rock_4_Cube002.material} position={[-12.286, 0.243, -19.29]} rotation={[Math.PI / 2, 0, -0.186]} />
-      <mesh geometry={nodes.Rock_4_Cube003.geometry} material={nodes.Rock_4_Cube003.material} position={[-6.214, 0.243, -27.5]} rotation={[Math.PI / 2, 0, -2.819]} />
-      <mesh geometry={nodes.Rock_4_Cube004.geometry} material={nodes.Rock_4_Cube004.material} position={[11.495, 0.243, -20.727]} rotation={[Math.PI / 2, 0, 2.89]} />
-      <mesh geometry={nodes.Rock_Moss_5_Cube001.geometry} material={nodes.Rock_Moss_5_Cube001.material} position={[12.461, -0.099, -20.041]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_4_Cube001.geometry} material={nodes.Rock_Moss_4_Cube001.material} position={[-4.726, 0.215, -26.352]} rotation={[Math.PI / 2, 0, 1.686]} />
-      <mesh geometry={nodes.Rock_Moss_1_Cube001.geometry} material={nodes.Rock_Moss_1_Cube001.material} position={[-3.466, 0.165, -29.787]} rotation={[Math.PI / 2, 0, 0]} scale={[2.583, 2.583, 1.626]} />
-      <mesh geometry={nodes.Rock_1_Cube003.geometry} material={nodes.Rock_1_Cube003.material} position={[13.822, -0.013, -10.093]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_1_Cube005.geometry} material={nodes.Rock_1_Cube005.material} position={[6.707, -0.013, -26.197]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_1_Cube006.geometry} material={nodes.Rock_1_Cube006.material} position={[3.462, -0.013, -29.956]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_1_Cube007.geometry} material={nodes.Rock_1_Cube007.material} position={[-8.851, -0.013, -22.322]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_1_Cube008.geometry} material={nodes.Rock_1_Cube008.material} position={[-12.412, -0.013, -21.294]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_6_Cube001.geometry} material={nodes.Rock_Moss_6_Cube001.material} position={[5.712, -0.014, -26.615]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_6_Cube002.geometry} material={nodes.Rock_Moss_6_Cube002.material} position={[-9.213, -0.014, -20.09]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_6_Cube003.geometry} material={nodes.Rock_Moss_6_Cube003.material} position={[-11.507, -0.014, -22.701]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_7_Cube001.geometry} material={nodes.Rock_7_Cube001.material} position={[15.472, 0.22, -10.134]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_2_Cube004.geometry} material={nodes.Rock_2_Cube004.material} position={[13.795, 0.032, -19.716]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_2_Cube003.geometry} material={nodes.Rock_Moss_2_Cube003.material} position={[-10.998, 0.07, -19.84]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_2_Cube004.geometry} material={nodes.Rock_Moss_2_Cube004.material} position={[-1.797, 0.07, -29.986]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_2_Cube005.geometry} material={nodes.Rock_Moss_2_Cube005.material} position={[4.422, 0.07, -28.993]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_2_Cube006.geometry} material={nodes.Rock_Moss_2_Cube006.material} position={[4.185, 0.07, -27.369]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_2_Cube007.geometry} material={nodes.Rock_Moss_2_Cube007.material} position={[11.692, 0.07, -23.587]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_2_Cube008.geometry} material={nodes.Rock_Moss_2_Cube008.material} position={[12.131, 0.07, -18.547]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_3_Cube003.geometry} material={nodes.Rock_3_Cube003.material} position={[-11.511, 0.061, -18.053]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_3_Cube004.geometry} material={nodes.Rock_3_Cube004.material} position={[-1.126, 0.061, -27.793]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_3_Cube005.geometry} material={nodes.Rock_3_Cube005.material} position={[-2.691, 0.061, -28.201]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_3_Cube006.geometry} material={nodes.Rock_3_Cube006.material} position={[4.654, 0.061, -30.656]} rotation={[Math.PI / 2, 0, 0]} />
-      <mesh geometry={nodes.Rock_Moss_1_Cube002.geometry} material={nodes.Rock_Moss_1_Cube002.material} position={[14.729, 0.165, -11.503]} rotation={[Math.PI / 2, 0, 2.507]} scale={1.491} />
-      <mesh geometry={nodes.hedge012.geometry} material={nodes.hedge012.material} position={[6.811, 1.064, -27.727]} rotation={[0, -0.587, 0]} />
-      <mesh geometry={nodes['tall-stem2002'].geometry} material={nodes['tall-stem2002'].material} position={[-4.531, 0.358, -28.12]} rotation={[0, 0.143, 0]} scale={[0.037, 0.164, 0.037]} />
-      <mesh geometry={nodes['tall-bush2'].geometry} material={nodes['tall-bush2'].material} position={[-10.063, 1.181, -21.264]} rotation={[Math.PI, -1.145, Math.PI]} scale={0.231} />
-      <mesh geometry={nodes['tall-bush1004'].geometry} material={nodes['tall-bush1004'].material} position={[12.432, 1.91, -21.648]} rotation={[-Math.PI, 0.481, -Math.PI]} scale={0.216} />
-      <mesh geometry={nodes['wide-bush2001'].geometry} material={nodes['wide-bush2001'].material} position={[-4.493, 0.819, -27.943]} rotation={[-Math.PI, 0.638, -Math.PI]} scale={0.16} />
-      <mesh geometry={nodes['tall-stem1003'].geometry} material={nodes['tall-stem1003'].material} position={[12.587, 0.486, -21.788]} rotation={[Math.PI, -1.135, Math.PI]} scale={[0.051, 0.222, 0.051]} />
-      <mesh geometry={nodes.stem1007.geometry} material={nodes.stem1007.material} position={[16.84, 0.243, -11.07]} rotation={[Math.PI, -1.212, Math.PI]} scale={[0.033, 0.241, 0.033]} />
-      <mesh geometry={nodes['wide-bush1002'].geometry} material={nodes['wide-bush1002'].material} position={[16.806, 0.634, -10.983]} rotation={[0, 1.212, 0]} scale={[0.201, 0.319, 0.201]} />
-      <mesh geometry={nodes['tall-stem2004'].geometry} material={nodes['tall-stem2004'].material} position={[-10.294, 0.513, -21.481]} rotation={[0, -1.349, 0]} scale={[0.054, 0.236, 0.054]} />
-      <mesh geometry={nodes.stem2008.geometry} material={nodes.stem2008.material} position={[7.029, 0.356, -27.506]} rotation={[0, -0.587, 0]} />
-      <mesh geometry={nodes.fence_segment008.geometry} material={nodes.fence_segment008.material} position={[-21.855, 1.693, -14.945]} rotation={[-Math.PI / 2, 0, 1.571]} scale={[-0.185, -0.022, -1.866]} />
-      <mesh geometry={nodes.fence_segment001.geometry} material={nodes.fence_segment001.material} position={[4.575, 1.693, -36.285]} rotation={[-Math.PI / 2, 0, 0.001]} scale={[-0.185, -0.022, -1.866]} />
-      <mesh geometry={nodes.fence_segment003.geometry} material={nodes.fence_segment003.material} position={[21.125, 1.693, -14.633]} rotation={[-Math.PI / 2, 0, -1.57]} scale={[-0.185, -0.022, -1.866]} />
-      <mesh geometry={nodes.fence_segment015.geometry} material={nodes.fence_segment015.material} position={[-17.408, 1.407, -36.289]} rotation={[-Math.PI / 2, 0, 0.001]} scale={[-0.185, -0.022, -1.866]} />
-      <mesh geometry={nodes.phx_logo_claws.geometry} material={nodes.phx_logo_claws.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_beak.geometry} material={nodes.phx_logo_beak.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_under_wing.geometry} material={nodes.phx_logo_under_wing.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_body.geometry} material={nodes.phx_logo_body.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_eye.geometry} material={nodes.phx_logo_eye.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_dark_gray_edges.geometry} material={nodes.phx_logo_dark_gray_edges.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_lite_gray_panels.geometry} material={nodes.phx_logo_lite_gray_panels.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_solar_panels.geometry} material={nodes.phx_logo_solar_panels.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_gray_cam_ring.geometry} material={nodes.phx_logo_gray_cam_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_blue_cam_ring.geometry} material={nodes.phx_logo_blue_cam_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_land.geometry} material={nodes.phx_logo_land.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_water.geometry} material={nodes.phx_logo_water.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_text_blue_ring.geometry} material={nodes.phx_logo_text_blue_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_text.geometry} material={nodes.phx_logo_text.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_space.geometry} material={nodes.phx_logo_space.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.phx_logo_stars.geometry} material={nodes.phx_logo_stars.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.asu_platform.geometry} material={nodes.asu_platform.material} position={[-11.552, 0, -14.551]} rotation={[0, -0.211, 0]} />
-      <mesh geometry={nodes.asu_soil.geometry} material={nodes.asu_soil.material} position={[-11.552, 0.841, -14.551]} rotation={[0, -0.211, 0]} scale={[1.645, 1, 1.863]} />
-      <mesh geometry={nodes.asu_dark_tall_rock.geometry} material={nodes.asu_dark_tall_rock.material} position={[-12.971, 1.257, -13.598]} rotation={[0, -0.365, 0]} scale={0.412} />
-      <mesh geometry={nodes.asu_lite_tall_rock.geometry} material={nodes.asu_lite_tall_rock.material} position={[-12.418, 1.323, -15.703]} rotation={[0, 1.324, 0]} scale={0.52} />
-      <mesh geometry={nodes.asu_dark_rock001.geometry} material={nodes.asu_dark_rock001.material} position={[-10.639, 0.991, -12.738]} rotation={[0, 0.675, 0]} scale={0.15} />
-      <mesh geometry={nodes.asu_dark_rock002.geometry} material={nodes.asu_dark_rock002.material} position={[-11.396, 0.969, -13.404]} rotation={[0, -0.211, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_lite_rock001.geometry} material={nodes.asu_lite_rock001.material} position={[-11.011, 0.969, -14.036]} rotation={[0, 0.797, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_lite_rock002.geometry} material={nodes.asu_lite_rock002.material} position={[-11.312, 0.969, -14.7]} rotation={[0, -0.211, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_lite_rock003.geometry} material={nodes.asu_lite_rock003.material} position={[-10.342, 0.969, -14.334]} rotation={[0, -1.336, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_lite_rock004.geometry} material={nodes.asu_lite_rock004.material} position={[-10.769, 0.969, -14.971]} rotation={[0, 1.014, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_dark_rock003.geometry} material={nodes.asu_dark_rock003.material} position={[-10.558, 0.991, -13.324]} rotation={[0, -0.573, 0]} scale={0.15} />
-      <mesh geometry={nodes.asu_dark_rock004.geometry} material={nodes.asu_dark_rock004.material} position={[-11.525, 0.991, -14.006]} rotation={[0, -0.211, 0]} scale={0.15} />
-      <mesh geometry={nodes.asu_dark_rock005.geometry} material={nodes.asu_dark_rock005.material} position={[-11.257, 0.991, -15.137]} rotation={[0, 0.491, 0]} scale={0.15} />
-      <mesh geometry={nodes.asu_dark_rock006.geometry} material={nodes.asu_dark_rock006.material} position={[-10.854, 0.992, -14.538]} rotation={[-Math.PI, 0.334, -Math.PI]} scale={0.15} />
-      <mesh geometry={nodes.asu_dark_rock007.geometry} material={nodes.asu_dark_rock007.material} position={[-10.19, 0.991, -15.039]} rotation={[-Math.PI, 1.074, -Math.PI]} scale={0.15} />
-      <mesh geometry={nodes.asu_dark_rock008.geometry} material={nodes.asu_dark_rock008.material} position={[-10.545, 0.991, -13.871]} rotation={[0, 1.434, 0]} scale={0.15} />
-      <mesh geometry={nodes.asu_lite_rock005.geometry} material={nodes.asu_lite_rock005.material} position={[-10.983, 0.969, -12.938]} rotation={[0, -0.211, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_dark_rock009.geometry} material={nodes.asu_dark_rock009.material} position={[-11.375, 0.969, -12.862]} rotation={[0, -1.188, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_dark_rock.geometry} material={nodes.asu_dark_rock.material} position={[-10.759, 0.991, -15.488]} rotation={[Math.PI, -0.241, Math.PI]} scale={0.15} />
-      <mesh geometry={nodes.asu_lite_rock.geometry} material={nodes.asu_lite_rock.material} position={[-11.84, 0.969, -13.496]} rotation={[0, 0.35, 0]} scale={0.127} />
-      <mesh geometry={nodes.asu_cactus002.geometry} material={nodes.asu_cactus002.material} position={[-11.253, 0.856, -16.012]} rotation={[Math.PI / 2, 0, -0.636]} scale={0.741} />
-      <mesh geometry={nodes.asu_cactus001.geometry} material={nodes.asu_cactus001.material} position={[-10.989, 0.874, -15.703]} rotation={[Math.PI / 2, 0, -2.501]} scale={0.828} />
-      <mesh geometry={nodes.asu_cactus.geometry} material={nodes.asu_cactus.material} position={[-11.879, 0.851, -12.931]} rotation={[Math.PI / 2, 0, -0.246]} />
-      <mesh geometry={nodes.asu_ground_cactus.geometry} material={nodes.asu_ground_cactus.material} position={[-10.873, 0.922, -13.523]} rotation={[Math.PI / 2, 0, 0.211]} scale={0.507} />
-      <mesh geometry={nodes.asu_ground_cactus001.geometry} material={nodes.asu_ground_cactus001.material} position={[-11.204, 0.897, -14.304]} rotation={[Math.PI / 2, 0, 0.211]} scale={0.354} />
-      <mesh geometry={nodes.asu_ground_cactus002.geometry} material={nodes.asu_ground_cactus002.material} position={[-10.411, 0.902, -14.693]} rotation={[Math.PI / 2, 0, -0.463]} scale={0.386} />
-      <mesh geometry={nodes.asu_logo_body.geometry} material={nodes.asu_logo_body.material} position={[-12.097, 1.435, -14.671]} rotation={[1.48, 0.306, -1.278]} scale={0.772} />
-      <mesh geometry={nodes.asu_logo_sun.geometry} material={nodes.asu_logo_sun.material} position={[-12.121, 1.471, -14.631]} rotation={[1.48, 0.306, -1.278]} scale={0.772} />
-      <mesh geometry={nodes.grad_cap_base.geometry} material={nodes.grad_cap_base.material} position={[-9.996, 1.056, -15.772]} rotation={[0, -0.149, 0]} scale={2.779} />
-      <mesh geometry={nodes.grad_cap_top.geometry} material={nodes.grad_cap_top.material} position={[-10.001, 1.186, -15.764]} rotation={[0.079, -0.072, 0.189]} scale={0.485} />
-      <mesh geometry={nodes.grad_cap_button.geometry} material={nodes.grad_cap_button.material} position={[-10.001, 1.186, -15.764]} rotation={[0.061, 0.021, 0.188]} scale={2.779} />
-      <mesh geometry={nodes.grad_cap_cord.geometry} material={nodes.grad_cap_cord.material} position={[-9.539, 1.245, -15.451]} rotation={[-0.436, 0.055, 1.443]} scale={2.779} />
-      <mesh geometry={nodes.grad_cap_tassel.geometry} material={nodes.grad_cap_tassel.material} position={[-9.539, 0.936, -15.451]} rotation={[0, -0.149, 0]} scale={-0.019} />
-      <mesh geometry={nodes.asu_cactus_flower001.geometry} material={nodes.asu_cactus_flower001.material} position={[-11.879, 0.851, -12.931]} rotation={[Math.PI / 2, 0, -0.246]} />
-      <mesh geometry={nodes.asu_cactus_flower.geometry} material={nodes.asu_cactus_flower.material} position={[-11.253, 0.856, -16.012]} rotation={[Math.PI / 2, 0, -0.636]} scale={0.741} />
-      <mesh geometry={nodes.nrl_windows.geometry} material={nodes.nrl_windows.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_stairs.geometry} material={nodes.nrl_stairs.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_walls.geometry} material={nodes.nrl_walls.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_accent.geometry} material={nodes.nrl_accent.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_dish_support.geometry} material={nodes.nrl_dish_support.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_under_dish_support.geometry} material={nodes.nrl_under_dish_support.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_collector.geometry} material={nodes.nrl_collector.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.nrl_dish.geometry} material={nodes.nrl_dish.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+        <mesh geometry={nodes.career_ground.geometry} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]}>
+          <meshMatcapMaterial matcap={ground_matcap} />
+        </mesh>
+        <mesh geometry={nodes.palm_tree_trunk001.geometry} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes.palm_tree_trunk.geometry} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes.palm_tree_canopy001.geometry} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.palm_tree_canopy.geometry} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.aws_emr_icon.geometry} position={[9.677, 1.998, -26.324]} rotation={[0, -0.794, 0]} scale={[0.392, 0.17, 0.392]}>
+          <meshMatcapMaterial matcap={aws_orange_matcap} />
+        </mesh>
+        <mesh geometry={nodes.aws_glue_icon_funnel.geometry} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437}>
+          <meshMatcapMaterial matcap={aws_purple_matcap} />
+        </mesh>
+        <mesh geometry={nodes.aws_lambda_icon.geometry} position={[9.286, 1.306, -25.813]} rotation={[1.296, -0.269, 0.756]} scale={0.302}>
+          <meshMatcapMaterial matcap={aws_orange_matcap} />
+        </mesh>
+        <mesh geometry={nodes.vanguard_text.geometry} position={[10.697, 2.7, -25.061]} rotation={[2.741, -0.736, 1.294]} scale={0.486}>
+          <meshMatcapMaterial matcap={vanguard_red_matcap} />
+        </mesh>
+        <mesh geometry={nodes.vanguard_platform.geometry} position={[10.483, 1.64, -25.508]} rotation={[0, -0.794, 0]} scale={[0.507, 0.962, 0.507]}>
+          <meshMatcapMaterial matcap={platform_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.python_icon_top.geometry} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]}>
+          <meshMatcapMaterial matcap={python_blue_matcap} />
+        </mesh>
+        <mesh geometry={nodes.aws_glue_icon_green_objects.geometry} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437}>
+          <meshMatcapMaterial matcap={aws_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.aws_glue_icon_red_objects.geometry} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437}>
+          <meshMatcapMaterial matcap={aws_red_matcap} />
+        </mesh>
+        <mesh geometry={nodes.aws_glue_icon_orange_objects.geometry} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437}>
+          <meshMatcapMaterial matcap={aws_orange_matcap} />
+        </mesh>
+        <mesh geometry={nodes.python_icon_bottom.geometry} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.antenna.geometry} position={[-8.503, 0.968, -25.625]} rotation={[0.693, 0.944, -1.667]} scale={0.077}>
+          <meshMatcapMaterial matcap={cubesat_antenna_matcap} />
+        </mesh>
+        <mesh geometry={nodes.antenna_board.geometry} position={[-8.503, 0.968, -25.625]} rotation={[0.693, 0.944, -1.667]} scale={0.077}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes.cubesat_solar_panels.geometry} position={[-7.134, 2.359, -26.927]} rotation={[-0.956, 0.056, -0.625]} scale={0.068}>
+          <meshMatcapMaterial matcap={black_matcap} />
+        </mesh>
+        <mesh geometry={nodes.cubesat_lens.geometry} position={[-8.766, 1.799, -25.312]} rotation={[0.693, 0.944, -1.667]} scale={0.351}>
+          <meshMatcapMaterial matcap={black_matcap} />
+        </mesh>
+        <mesh geometry={nodes.cubesat_silver_sides.geometry} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077}>
+          <meshMatcapMaterial matcap={silver_matcap} />
+        </mesh>
+        <mesh geometry={nodes.cubesat_sides.geometry} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077}>
+          <meshMatcapMaterial matcap={phx_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.rocket_platform.geometry} position={[0.107, 0.278, -29.722]} rotation={[-Math.PI, 0.786, -Math.PI]} scale={0.113}>
+          <meshMatcapMaterial matcap={platform_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.rocket_cradle.geometry} position={[1.735, 0.737, -28.729]} rotation={[-Math.PI, 0, -Math.PI]} scale={0.013}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.rocket.geometry} position={[1.359, 0.84, -28.373]} rotation={[0, -1.571, 0]} scale={0.113}>
+          <meshMatcapMaterial matcap={bright_white_matcap} />
+        </mesh>
+        <mesh geometry={nodes.rocket_nozzles.geometry} position={[1.359, 0.84, -28.373]} rotation={[0, -1.571, 0]} scale={0.113}>
+          <meshMatcapMaterial matcap={silver_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_4_Cube023.geometry} position={[6.047, 0.215, -29.156]} rotation={[Math.PI / 2, 0, 1.686]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_4_Cube002.geometry} position={[-12.286, 0.243, -19.29]} rotation={[Math.PI / 2, 0, -0.186]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_4_Cube003.geometry} position={[-6.214, 0.243, -27.5]} rotation={[Math.PI / 2, 0, -2.819]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_4_Cube004.geometry} position={[11.495, 0.243, -20.727]} rotation={[Math.PI / 2, 0, 2.89]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_5_Cube001.geometry} position={[12.461, -0.099, -20.041]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_4_Cube001.geometry} position={[-4.726, 0.215, -26.352]} rotation={[Math.PI / 2, 0, 1.686]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_1_Cube001.geometry} position={[-3.466, 0.165, -29.787]} rotation={[Math.PI / 2, 0, 0]} scale={[2.583, 2.583, 1.626]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_1_Cube003.geometry} position={[13.822, -0.013, -10.093]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_1_Cube005.geometry} position={[6.707, -0.013, -26.197]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_1_Cube006.geometry} position={[3.462, -0.013, -29.956]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_1_Cube007.geometry} position={[-8.851, -0.013, -22.322]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_1_Cube008.geometry} position={[-12.412, -0.013, -21.294]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_6_Cube001.geometry} position={[5.712, -0.014, -26.615]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_6_Cube002.geometry} position={[-9.213, -0.014, -20.09]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_6_Cube003.geometry} position={[-11.507, -0.014, -22.701]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_7_Cube001.geometry} position={[15.472, 0.22, -10.134]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_2_Cube004.geometry} position={[13.795, 0.032, -19.716]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_2_Cube003.geometry} position={[-10.998, 0.07, -19.84]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_2_Cube004.geometry} position={[-1.797, 0.07, -29.986]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_2_Cube005.geometry} position={[4.422, 0.07, -28.993]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_2_Cube006.geometry} position={[4.185, 0.07, -27.369]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_2_Cube007.geometry} position={[11.692, 0.07, -23.587]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_2_Cube008.geometry} position={[12.131, 0.07, -18.547]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_3_Cube003.geometry} position={[-11.511, 0.061, -18.053]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_3_Cube004.geometry} position={[-1.126, 0.061, -27.793]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_3_Cube005.geometry} position={[-2.691, 0.061, -28.201]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_3_Cube006.geometry} position={[4.654, 0.061, -30.656]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.Rock_Moss_1_Cube002.geometry} position={[14.729, 0.165, -11.503]} rotation={[Math.PI / 2, 0, 2.507]} scale={1.491}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.hedge012.geometry} position={[6.811, 1.064, -27.727]} rotation={[0, -0.587, 0]}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes['tall-stem2002'].geometry} position={[-4.531, 0.358, -28.12]} rotation={[0, 0.143, 0]} scale={[0.037, 0.164, 0.037]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes['tall-bush2'].geometry} position={[-10.063, 1.181, -21.264]} rotation={[Math.PI, -1.145, Math.PI]} scale={0.231}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes['tall-bush1004'].geometry} position={[12.432, 1.91, -21.648]} rotation={[-Math.PI, 0.481, -Math.PI]} scale={0.216}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes['wide-bush2001'].geometry} position={[-4.493, 0.819, -27.943]} rotation={[-Math.PI, 0.638, -Math.PI]} scale={0.16}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes['tall-stem1003'].geometry} position={[12.587, 0.486, -21.788]} rotation={[Math.PI, -1.135, Math.PI]} scale={[0.051, 0.222, 0.051]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes.stem1007.geometry} position={[16.84, 0.243, -11.07]} rotation={[Math.PI, -1.212, Math.PI]} scale={[0.033, 0.241, 0.033]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes['wide-bush1002'].geometry} position={[16.806, 0.634, -10.983]} rotation={[0, 1.212, 0]} scale={[0.201, 0.319, 0.201]}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes['tall-stem2004'].geometry} position={[-10.294, 0.513, -21.481]} rotation={[0, -1.349, 0]} scale={[0.054, 0.236, 0.054]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes.stem2008.geometry} position={[7.029, 0.356, -27.506]} rotation={[0, -0.587, 0]}>
+          <meshMatcapMaterial matcap={wood_brown_matcap} />
+        </mesh>
+        <mesh geometry={nodes.fence_segment001.geometry} position={[4.575, 1.693, -36.285]} rotation={[-Math.PI / 2, 0, 0.001]} scale={[-0.185, -0.022, -1.866]}>
+          <meshMatcapMaterial matcap={fence_matcap} />
+        </mesh>
+        <mesh geometry={nodes.fence_segment008.geometry} position={[-21.855, 1.693, -14.945]} rotation={[-Math.PI / 2, 0, 1.571]} scale={[-0.185, -0.022, -1.866]}>
+          <meshMatcapMaterial matcap={fence_matcap} />
+        </mesh>
+        <mesh geometry={nodes.fence_segment003.geometry} position={[21.125, 1.693, -14.633]} rotation={[-Math.PI / 2, 0, -1.57]} scale={[-0.185, -0.022, -1.866]}>
+          <meshMatcapMaterial matcap={fence_matcap} />
+        </mesh>
+        <mesh geometry={nodes.fence_segment015.geometry} position={[-17.408, 1.407, -36.289]} rotation={[-Math.PI / 2, 0, 0.001]} scale={[-0.185, -0.022, -1.866]}>
+          <meshMatcapMaterial matcap={fence_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_claws.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_beak.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_under_wing.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_under_wing_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_body.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_orange_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_eye.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_under_wing_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_dark_gray_edges.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_lite_gray_panels.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_lite_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_solar_panels.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_gray_cam_ring.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_blue_cam_ring.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_blue_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_land.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_water.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_blue_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_text_blue_ring.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={phx_blue_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_text.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_space.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={black_matcap} />
+        </mesh>
+        <mesh geometry={nodes.phx_logo_stars.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
+          <meshMatcapMaterial matcap={bright_white_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_platform.geometry} position={[-11.552, 0, -14.551]} rotation={[0, -0.211, 0]}>
+          <meshMatcapMaterial matcap={platform_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_soil.geometry} position={[-11.552, 0.841, -14.551]} rotation={[0, -0.211, 0]} scale={[1.645, 1, 1.863]}>
+          <meshMatcapMaterial matcap={asu_soil_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_tall_rock.geometry} position={[-12.971, 1.257, -13.598]} rotation={[0, -0.365, 0]} scale={0.412}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_tall_rock.geometry} position={[-12.418, 1.323, -15.703]} rotation={[0, 1.324, 0]} scale={0.52}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock001.geometry} position={[-10.639, 0.991, -12.738]} rotation={[0, 0.675, 0]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock002.geometry} position={[-11.396, 0.969, -13.404]} rotation={[0, -0.211, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_rock001.geometry} position={[-11.011, 0.969, -14.036]} rotation={[0, 0.797, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_rock002.geometry} position={[-11.312, 0.969, -14.7]} rotation={[0, -0.211, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_rock003.geometry} position={[-10.342, 0.969, -14.334]} rotation={[0, -1.336, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_rock004.geometry} position={[-10.769, 0.969, -14.971]} rotation={[0, 1.014, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock003.geometry} position={[-10.558, 0.991, -13.324]} rotation={[0, -0.573, 0]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock004.geometry} position={[-11.525, 0.991, -14.006]} rotation={[0, -0.211, 0]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock005.geometry} position={[-11.257, 0.991, -15.137]} rotation={[0, 0.491, 0]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock006.geometry} position={[-10.854, 0.992, -14.538]} rotation={[-Math.PI, 0.334, -Math.PI]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock007.geometry} position={[-10.19, 0.991, -15.039]} rotation={[-Math.PI, 1.074, -Math.PI]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock008.geometry} position={[-10.545, 0.991, -13.871]} rotation={[0, 1.434, 0]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_rock005.geometry} position={[-10.983, 0.969, -12.938]} rotation={[0, -0.211, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock009.geometry} position={[-11.375, 0.969, -12.862]} rotation={[0, -1.188, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_dark_rock.geometry} position={[-10.759, 0.991, -15.488]} rotation={[Math.PI, -0.241, Math.PI]} scale={0.15}>
+          <meshMatcapMaterial matcap={asu_dark_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_lite_rock.geometry} position={[-11.84, 0.969, -13.496]} rotation={[0, 0.35, 0]} scale={0.127}>
+          <meshMatcapMaterial matcap={asu_lite_rock_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_cactus002.geometry} position={[-11.253, 0.856, -16.012]} rotation={[Math.PI / 2, 0, -0.636]} scale={0.741}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_cactus001.geometry} position={[-10.989, 0.874, -15.703]} rotation={[Math.PI / 2, 0, -2.501]} scale={0.828}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_cactus.geometry} position={[-11.879, 0.851, -12.931]} rotation={[Math.PI / 2, 0, -0.246]}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_ground_cactus.geometry} position={[-10.873, 0.922, -13.523]} rotation={[Math.PI / 2, 0, 0.211]} scale={0.507}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_ground_cactus001.geometry} position={[-11.204, 0.897, -14.304]} rotation={[Math.PI / 2, 0, 0.211]} scale={0.354}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_ground_cactus002.geometry} position={[-10.411, 0.902, -14.693]} rotation={[Math.PI / 2, 0, -0.463]} scale={0.386}>
+          <meshMatcapMaterial matcap={leaf_green_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_logo_body.geometry} position={[-12.097, 1.435, -14.671]} rotation={[1.48, 0.306, -1.278]} scale={0.772}>
+          <meshMatcapMaterial matcap={asu_logo_body_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_logo_sun.geometry} position={[-12.121, 1.471, -14.631]} rotation={[1.48, 0.306, -1.278]} scale={0.772}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.grad_cap_base.geometry} position={[-9.996, 1.056, -15.772]} rotation={[0, -0.149, 0]} scale={2.779}>
+          <meshMatcapMaterial matcap={grad_cap_maroon_matcap} />
+        </mesh>
+        <mesh geometry={nodes.grad_cap_top.geometry} position={[-10.001, 1.186, -15.764]} rotation={[0.079, -0.072, 0.189]} scale={0.485}>
+          <meshMatcapMaterial matcap={grad_cap_maroon_matcap} />
+        </mesh>
+        <mesh geometry={nodes.grad_cap_button.geometry} position={[-10.001, 1.186, -15.764]} rotation={[0.061, 0.021, 0.188]} scale={2.779}>
+          <meshMatcapMaterial matcap={grad_cap_maroon_matcap} />
+        </mesh>
+        <mesh geometry={nodes.grad_cap_cord.geometry} position={[-9.539, 1.245, -15.451]} rotation={[-0.436, 0.055, 1.443]} scale={2.779}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.grad_cap_tassel.geometry} position={[-9.539, 0.936, -15.451]} rotation={[0, -0.149, 0]} scale={-0.019}>
+          <meshMatcapMaterial matcap={gold_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_cactus_flower001.geometry} position={[-11.879, 0.851, -12.931]} rotation={[Math.PI / 2, 0, -0.246]}>
+          <meshMatcapMaterial matcap={cactus_flower_matcap} />
+        </mesh>
+        <mesh geometry={nodes.asu_cactus_flower.geometry} position={[-11.253, 0.856, -16.012]} rotation={[Math.PI / 2, 0, -0.636]} scale={0.741}>
+          <meshMatcapMaterial matcap={cactus_flower_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_windows.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={black_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_stairs.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={concrete_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_walls.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={bright_white_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_accent.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={nrl_accent_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_dish_support.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={nrl_dish_support_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_under_dish_support.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={rock_gray_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_collector.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={nrl_dish_support_matcap} />
+        </mesh>
+        <mesh geometry={nodes.nrl_dish.geometry} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]}>
+          <meshMatcapMaterial matcap={platform_gray_matcap} />
+        </mesh>
       </RigidBody>
     </group>
   </>

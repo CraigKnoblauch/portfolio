@@ -11,7 +11,7 @@ import CareerArea from "./areas/CareerArea.jsx"
 const Experience = () => {
     return (
         <>
-            <Physics debug={true}>
+            <Physics debug={false}>
                 <ambientLight />
                 <OrbitControls />
                 <group>
