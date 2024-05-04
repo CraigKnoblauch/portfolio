@@ -14,36 +14,49 @@ export default function RabbitHoleArea(props) {
     const ground_texture = useTexture('./models/rabbit-hole-ground-baked.jpg')
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
 
-    const [leaf_green_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/leaf-green.jpg'])
+    const [leaf_green_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/leaf-green.png'])
     const [rock_gray_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/rock-gray.png'])
+    const [wood_brown_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/wood-brown.png'])
+    const [white_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/white.png'])
+    const [ground_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/ground.png'])
 
     return <>
         <group {...props} dispose={null}>
             <RigidBody type="fixed" friction={0.5}>
-                <mesh geometry={nodes.rabbit_hole_ground.geometry} map={ground_texture} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]}>
-                    <meshBasicMaterial map={ground_texture} />
+                <mesh geometry={nodes.rabbit_hole_ground.geometry} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]}>
+                    <meshMatcapMaterial matcap={ground_matcap} />
                 </mesh>
                 <mesh geometry={nodes.rabbit_hole_portal.geometry} material={nodes.rabbit_hole_portal.material} position={[-12.79, -0.17, -0.852]} rotation={[0, 0, 0.489]} scale={[40.77, 53.239, 53.239]} />
                 <mesh geometry={nodes.canopy.geometry} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
-                <mesh geometry={nodes.tree.geometry} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802} />
+                <mesh geometry={nodes.tree.geometry} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
                 <mesh geometry={nodes.hedge008.geometry} position={[-12.557, 1.064, 5.317]} rotation={[-Math.PI, 0.885, -Math.PI]}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
-                <mesh geometry={nodes.stem1004.geometry} material={nodes.stem1004.material} position={[-8.834, 0.157, -4.848]} rotation={[0, 0.93, 0]} scale={[0.033, 0.152, 0.033]} />
+                <mesh geometry={nodes.stem1004.geometry} position={[-8.834, 0.157, -4.848]} rotation={[0, 0.93, 0]} scale={[0.033, 0.152, 0.033]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
                 <mesh geometry={nodes['tall-bush1'].geometry} position={[-12.502, 1.51, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={0.171}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
-                <mesh geometry={nodes['tall-stem1'].geometry} material={nodes['tall-stem1'].material} position={[-12.502, 0.382, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={[0.04, 0.176, 0.04]} />
-                <mesh geometry={nodes['tall-stem2'].geometry} material={nodes['tall-stem2'].material} position={[-6.943, 0.452, -5.793]} rotation={[Math.PI, -0.289, Math.PI]} scale={[0.048, 0.208, 0.048]} />
+                <mesh geometry={nodes['tall-stem1'].geometry} position={[-12.502, 0.382, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={[0.04, 0.176, 0.04]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes['tall-stem2'].geometry} position={[-6.943, 0.452, -5.793]} rotation={[Math.PI, -0.289, Math.PI]} scale={[0.048, 0.208, 0.048]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
                 <mesh geometry={nodes['wide-bush1'].geometry} position={[-8.778, 0.403, -4.923]} rotation={[Math.PI, -0.93, Math.PI]} scale={0.201}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
                 <mesh geometry={nodes['wide-bush2'].geometry} position={[-7.112, 1.038, -5.91]} rotation={[-Math.PI, 1.282, -Math.PI]} scale={0.203}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
-                <mesh geometry={nodes.stem2005.geometry} material={nodes.stem2005.material} position={[-12.7, 0.356, 5.041]} rotation={[-Math.PI, 0.885, -Math.PI]} />
+                <mesh geometry={nodes.stem2005.geometry} position={[-12.7, 0.356, 5.041]} rotation={[-Math.PI, 0.885, -Math.PI]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
                 <mesh geometry={nodes.hedge004.geometry} position={[-10.761, 1.064, -8.617]}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
@@ -68,34 +81,90 @@ export default function RabbitHoleArea(props) {
                 <mesh geometry={nodes.hedge016.geometry} position={[-17.921, 1.064, -8.606]}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
-                <mesh geometry={nodes.stem1002.geometry} material={nodes.stem1002.material} position={[-10.468, 0.217, -8.432]} />
-                <mesh geometry={nodes.stem1003.geometry} material={nodes.stem1003.material} position={[-5.827, 0.217, -8.616]} />
-                <mesh geometry={nodes.stem1008.geometry} material={nodes.stem1008.material} position={[-15.248, 0.217, -8.432]} />
-                <mesh geometry={nodes.stem2002.geometry} material={nodes.stem2002.material} position={[-8.198, 0.356, -8.495]} />
-                <mesh geometry={nodes.stem2003.geometry} material={nodes.stem2003.material} position={[-3.288, 0.356, -8.541]} />
-                <mesh geometry={nodes.stem2009.geometry} material={nodes.stem2009.material} position={[-12.979, 0.356, -8.496]} />
-                <mesh geometry={nodes.stem2010.geometry} material={nodes.stem2010.material} position={[-17.617, 0.356, -8.542]} />
-                <mesh geometry={nodes.stem2017.geometry} material={nodes.stem2017.material} position={[-20.046, 0.356, -8.543]} />
-                <mesh geometry={nodes.Plane001.geometry} material={nodes.Plane001.material} position={[-9.111, 0.027, -0.804]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane003.geometry} material={nodes.Plane003.material} position={[-8.528, 0.027, -0.025]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane004.geometry} material={nodes.Plane004.material} position={[-9.848, 0.027, -0.231]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane005.geometry} material={nodes.Plane005.material} position={[-7.684, 0.027, -0.621]} rotation={[0, -0.181, 0]} scale={[0.228, 0.829, 0.228]} />
-                <mesh geometry={nodes.Plane006.geometry} material={nodes.Plane006.material} position={[-6.656, 0.027, -0.122]} rotation={[0, 0.776, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane007.geometry} material={nodes.Plane007.material} position={[-6.226, 0.027, -0.757]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane008.geometry} material={nodes.Plane008.material} position={[-5.309, 0.027, -0.204]} rotation={[0, 0.531, 0]} scale={[0.211, 0.766, 0.211]} />
-                <mesh geometry={nodes.Plane009.geometry} material={nodes.Plane009.material} position={[-4.396, 0.027, -0.58]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane010.geometry} material={nodes.Plane010.material} position={[-3.738, 0.027, -0.081]} rotation={[Math.PI, -1.359, Math.PI]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane011.geometry} material={nodes.Plane011.material} position={[-2.827, 0.027, -0.352]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane012.geometry} material={nodes.Plane012.material} position={[-1.912, 0.027, -0.088]} rotation={[0, 0.531, 0]} scale={[0.244, 0.888, 0.244]} />
-                <mesh geometry={nodes.Plane013.geometry} material={nodes.Plane013.material} position={[-1.194, 0.027, -0.604]} rotation={[0, 0.925, 0]} scale={[0.191, 0.695, 0.191]} />
-                <mesh geometry={nodes.Plane042.geometry} material={nodes.Plane042.material} position={[-0.417, 0.027, 0.781]} rotation={[0, 0.531, 0]} scale={[0.217, 0.79, 0.217]} />
-                <mesh geometry={nodes.Plane043.geometry} material={nodes.Plane043.material} position={[-0.854, 0.027, 1.453]} rotation={[0, 0.209, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane044.geometry} material={nodes.Plane044.material} position={[-1.09, 0.027, 2.463]} rotation={[0, 0.85, 0]} scale={[0.224, 0.813, 0.224]} />
-                <mesh geometry={nodes.Plane045.geometry} material={nodes.Plane045.material} position={[-1.662, 0.027, 3.049]} rotation={[0, 0.531, 0]} scale={[0.155, 0.564, 0.155]} />
-                <mesh geometry={nodes.Plane046.geometry} material={nodes.Plane046.material} position={[-2.159, 0.027, 4.432]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane047.geometry} material={nodes.Plane047.material} position={[-2.791, 0.027, 5.094]} rotation={[0, 0.328, 0]} scale={[0.184, 0.67, 0.184]} />
-                <mesh geometry={nodes.Plane048.geometry} material={nodes.Plane048.material} position={[-3.136, 0.027, 6.062]} rotation={[0, 0.606, 0]} scale={[0.217, 0.788, 0.217]} />
-                <mesh geometry={nodes.Plane014.geometry} material={nodes.Plane014.material} position={[-1.461, 0.027, 3.751]} rotation={[0, 1.279, 0]} scale={[0.181, 0.656, 0.181]} />
+                <mesh geometry={nodes.stem1002.geometry} position={[-10.468, 0.217, -8.432]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem1003.geometry} position={[-5.827, 0.217, -8.616]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem1008.geometry} position={[-15.248, 0.217, -8.432]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem2002.geometry} position={[-8.198, 0.356, -8.495]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem2003.geometry} position={[-3.288, 0.356, -8.541]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem2009.geometry} position={[-12.979, 0.356, -8.496]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem2010.geometry} position={[-17.617, 0.356, -8.542]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.stem2017.geometry} position={[-20.046, 0.356, -8.543]}>
+                    <meshMatcapMaterial matcap={wood_brown_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane001.geometry} position={[-9.111, 0.027, -0.804]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane003.geometry} position={[-8.528, 0.027, -0.025]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane004.geometry} position={[-9.848, 0.027, -0.231]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane005.geometry} position={[-7.684, 0.027, -0.621]} rotation={[0, -0.181, 0]} scale={[0.228, 0.829, 0.228]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane006.geometry} position={[-6.656, 0.027, -0.122]} rotation={[0, 0.776, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane007.geometry} position={[-6.226, 0.027, -0.757]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane008.geometry} position={[-5.309, 0.027, -0.204]} rotation={[0, 0.531, 0]} scale={[0.211, 0.766, 0.211]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane009.geometry} position={[-4.396, 0.027, -0.58]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane010.geometry} position={[-3.738, 0.027, -0.081]} rotation={[Math.PI, -1.359, Math.PI]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane011.geometry} position={[-2.827, 0.027, -0.352]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane012.geometry} position={[-1.912, 0.027, -0.088]} rotation={[0, 0.531, 0]} scale={[0.244, 0.888, 0.244]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane013.geometry} position={[-1.194, 0.027, -0.604]} rotation={[0, 0.925, 0]} scale={[0.191, 0.695, 0.191]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane042.geometry} position={[-0.417, 0.027, 0.781]} rotation={[0, 0.531, 0]} scale={[0.217, 0.79, 0.217]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane043.geometry} position={[-0.854, 0.027, 1.453]} rotation={[0, 0.209, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane044.geometry} position={[-1.09, 0.027, 2.463]} rotation={[0, 0.85, 0]} scale={[0.224, 0.813, 0.224]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane045.geometry} position={[-1.662, 0.027, 3.049]} rotation={[0, 0.531, 0]} scale={[0.155, 0.564, 0.155]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane046.geometry} position={[-2.159, 0.027, 4.432]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane047.geometry} position={[-2.791, 0.027, 5.094]} rotation={[0, 0.328, 0]} scale={[0.184, 0.67, 0.184]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane048.geometry} position={[-3.136, 0.027, 6.062]} rotation={[0, 0.606, 0]} scale={[0.217, 0.788, 0.217]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Plane014.geometry} position={[-1.461, 0.027, 3.751]} rotation={[0, 1.279, 0]} scale={[0.181, 0.656, 0.181]}>
+                    <meshMatcapMaterial matcap={white_matcap} />
+                </mesh>
                 <mesh geometry={nodes.Rock_Moss_2_Cube001.geometry} position={[-13.977, 0.07, 3.363]} rotation={[Math.PI / 2, 0, 0]}>
                     <meshMatcapMaterial matcap={rock_gray_matcap} />
                 </mesh>
