@@ -5,6 +5,7 @@ import { Physics } from "@react-three/rapier"
 import MovementDebugPlane from "./MovementDebugPlane.jsx"
 import Ground from "./Ground.jsx"
 import AsuCaption from "./captions/AsuCaption.jsx"
+import RabbitHoleArea from "./areas/RabbitHoleArea.jsx"
 
 const Experience = () => {
     return (
@@ -13,7 +14,7 @@ const Experience = () => {
                 <ambientLight />
                 <OrbitControls />
                 <group>
-                    <Ground />
+                    <RabbitHoleArea />
                     <MovementDebugPlane />
                     <Rabbit />
                 </group>
