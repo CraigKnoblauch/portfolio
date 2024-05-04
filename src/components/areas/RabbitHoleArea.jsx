@@ -4,10 +4,24 @@ Command: npx gltfjsx@6.2.16 rabbit-hole-area.glb
 */
 
 import React, { useRef } from 'react'
-import { useGLTF, useMatcapTexture, useTexture } from '@react-three/drei'
+import { useGLTF, useMatcapTexture, useTexture, shaderMaterial } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
-import { useLoader } from '@react-three/fiber'
+import { useLoader, extend, useFrame } from '@react-three/fiber'
+import portalVertexShader from '../../shaders/portal/vertex.glsl' // TODO not a big fan of paths like this
+import portalFragmentShader from '../../shaders/portal/fragment.glsl'
+
+const PortalMaterial = shaderMaterial(
+    {
+        uTime: 0,
+        uColorStart: new THREE.Color('#ffffff'),
+        uColorEnd: new THREE.Color('#000000')
+    },
+    portalVertexShader,
+    portalFragmentShader
+)
+
+extend({ PortalMaterial })
 
 export default function RabbitHoleArea(props) {
 
@@ -20,13 +34,21 @@ export default function RabbitHoleArea(props) {
     const [white_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/white.png'])
     const [ground_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/ground.png'])
 
+    // Animate portal
+    const portalMaterialRef = useRef()
+    useFrame((state, delta) => {
+        portalMaterialRef.current.uTime += delta
+    })
+
     return <>
         <group {...props} dispose={null}>
             <RigidBody type="fixed" friction={0.5}>
                 <mesh geometry={nodes.rabbit_hole_ground.geometry} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]}>
                     <meshMatcapMaterial matcap={ground_matcap} />
                 </mesh>
-                <mesh geometry={nodes.rabbit_hole_portal.geometry} material={nodes.rabbit_hole_portal.material} position={[-12.79, -0.17, -0.852]} rotation={[0, 0, 0.489]} scale={[40.77, 53.239, 53.239]} />
+                <mesh geometry={nodes.rabbit_hole_portal.geometry} position={[-12.79, -0.17, -0.852]} rotation={[0, 0, 0.489]} scale={[40.77, 53.239, 53.239]}>
+                    <portalMaterial ref={portalMaterialRef} />
+                </mesh>
                 <mesh geometry={nodes.canopy.geometry} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
