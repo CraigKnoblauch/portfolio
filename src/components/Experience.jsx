@@ -7,6 +7,9 @@ import Ground from "./Ground.jsx"
 import AsuCaption from "./captions/AsuCaption.jsx"
 import RabbitHoleArea from "./areas/RabbitHoleArea.jsx"
 import CareerArea from "./areas/CareerArea.jsx"
+import ProjectsArea from "./areas/ProjectsArea.jsx"
+import ContactArea from "./areas/ContactArea.jsx"
+import HobbiesArea from "./areas/HobbiesArea.jsx"
 
 const Experience = () => {
     return (
@@ -17,6 +20,9 @@ const Experience = () => {
                 <group>
                     <RabbitHoleArea />
                     <CareerArea />
+                    <HobbiesArea />
+                    <ProjectsArea />
+                    <ContactArea />
                     <MovementDebugPlane />
                     <Rabbit />
                 </group>
