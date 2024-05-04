@@ -15,7 +15,7 @@ export default function CareerArea(props) {
   {/**
     Phoenix matcaps
   */}
-  const [under_wing_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phoenix/logo/phx-under-wing-orange.png'])
+  const [under_wing_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/phx-under-wing-orange.png'])
 
   return <>
     <group {...props} dispose={null}>
