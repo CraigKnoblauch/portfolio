@@ -6,6 +6,7 @@ import MovementDebugPlane from "./MovementDebugPlane.jsx"
 import Ground from "./Ground.jsx"
 import AsuCaption from "./captions/AsuCaption.jsx"
 import RabbitHoleArea from "./areas/RabbitHoleArea.jsx"
+import CareerArea from "./areas/CareerArea.jsx"
 
 const Experience = () => {
     return (
@@ -15,6 +16,7 @@ const Experience = () => {
                 <OrbitControls />
                 <group>
                     <RabbitHoleArea />
+                    <CareerArea />
                     <MovementDebugPlane />
                     <Rabbit />
                 </group>
