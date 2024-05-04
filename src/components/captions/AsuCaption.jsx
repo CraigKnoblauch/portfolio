@@ -7,7 +7,7 @@ export default function AsuCaption({position=[0, 1, 0], rotation_on_ground=0}) {
     return <>
         <mesh position={position} rotation={[-Math.PI/2, 0, rotation_on_ground]}>
             <planeGeometry args={[1, 1]} />
-            <meshStandardMaterial map={ texture } transparent={ true } color="white" />
+            <meshStandardMaterial alphaMap={ texture } transparent={ true } color="blue"/>
         </mesh>
     </>
 }
