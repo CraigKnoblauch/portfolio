@@ -90,6 +90,7 @@ export default function CareerArea(props) {
   const [nrl_dish_support_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/nrl-dish-support.png'])
   const [concrete_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/concrete.png'])
 
+  // TODO Procedurally generate the contents below. Current approach requires manual editing of the generated code. Too much work to forget if you need to update the scene.
 
   return <>
     <group {...props} dispose={null}>
