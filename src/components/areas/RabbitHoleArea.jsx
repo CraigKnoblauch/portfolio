@@ -14,7 +14,8 @@ export default function RabbitHoleArea(props) {
     const ground_texture = useTexture('./models/rabbit-hole-ground-baked.jpg')
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
 
-    const [leaf_green_matcap] = useLoader(THREE.TextureLoader, ['./models/leaf-green.jpg'])
+    const [leaf_green_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/leaf-green.jpg'])
+    const [rock_gray_matcap] = useLoader(THREE.TextureLoader, ['./matcaps/rock-gray.png'])
 
     return <>
         <group {...props} dispose={null}>
@@ -23,23 +24,47 @@ export default function RabbitHoleArea(props) {
                     <meshBasicMaterial map={ground_texture} />
                 </mesh>
                 <mesh geometry={nodes.rabbit_hole_portal.geometry} material={nodes.rabbit_hole_portal.material} position={[-12.79, -0.17, -0.852]} rotation={[0, 0, 0.489]} scale={[40.77, 53.239, 53.239]} />
-                <mesh geometry={nodes.canopy.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802} />
+                <mesh geometry={nodes.canopy.geometry} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
                 <mesh geometry={nodes.tree.geometry} position={[-13.71, 0.421, -0.805]} rotation={[Math.PI / 2, 0, 0.151]} scale={1.802} />
-                <mesh geometry={nodes.hedge008.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-12.557, 1.064, 5.317]} rotation={[-Math.PI, 0.885, -Math.PI]} />
+                <mesh geometry={nodes.hedge008.geometry} position={[-12.557, 1.064, 5.317]} rotation={[-Math.PI, 0.885, -Math.PI]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
                 <mesh geometry={nodes.stem1004.geometry} material={nodes.stem1004.material} position={[-8.834, 0.157, -4.848]} rotation={[0, 0.93, 0]} scale={[0.033, 0.152, 0.033]} />
-                <mesh geometry={nodes['tall-bush1'].geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-12.502, 1.51, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={0.171} />
+                <mesh geometry={nodes['tall-bush1'].geometry} position={[-12.502, 1.51, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={0.171}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
                 <mesh geometry={nodes['tall-stem1'].geometry} material={nodes['tall-stem1'].material} position={[-12.502, 0.382, 3.164]} rotation={[Math.PI, -1.165, Math.PI]} scale={[0.04, 0.176, 0.04]} />
                 <mesh geometry={nodes['tall-stem2'].geometry} material={nodes['tall-stem2'].material} position={[-6.943, 0.452, -5.793]} rotation={[Math.PI, -0.289, Math.PI]} scale={[0.048, 0.208, 0.048]} />
-                <mesh geometry={nodes['wide-bush1'].geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-8.778, 0.403, -4.923]} rotation={[Math.PI, -0.93, Math.PI]} scale={0.201} />
-                <mesh geometry={nodes['wide-bush2'].geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-7.112, 1.038, -5.91]} rotation={[-Math.PI, 1.282, -Math.PI]} scale={0.203} />
+                <mesh geometry={nodes['wide-bush1'].geometry} position={[-8.778, 0.403, -4.923]} rotation={[Math.PI, -0.93, Math.PI]} scale={0.201}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes['wide-bush2'].geometry} position={[-7.112, 1.038, -5.91]} rotation={[-Math.PI, 1.282, -Math.PI]} scale={0.203}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
                 <mesh geometry={nodes.stem2005.geometry} material={nodes.stem2005.material} position={[-12.7, 0.356, 5.041]} rotation={[-Math.PI, 0.885, -Math.PI]} />
-                <mesh geometry={nodes.hedge004.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-10.761, 1.064, -8.617]} />
-                <mesh geometry={nodes.hedge005.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-5.535, 1.064, -8.431]} />
-                <mesh geometry={nodes.hedge006.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-7.894, 1.064, -8.432]} />
-                <mesh geometry={nodes.hedge007.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-3.592, 1.064, -8.604]} />
-                <mesh geometry={nodes.hedge013.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-15.541, 1.064, -8.617]} />
-                <mesh geometry={nodes.hedge014.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-12.675, 1.064, -8.432]} />
-                <mesh geometry={nodes.hedge015.geometry} material={new THREE.MeshMatcapMaterial({matcap: leaf_green_matcap})} position={[-20.35, 1.064, -8.606]} />
+                <mesh geometry={nodes.hedge004.geometry} position={[-10.761, 1.064, -8.617]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes.hedge005.geometry} position={[-5.535, 1.064, -8.431]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes.hedge006.geometry} position={[-7.894, 1.064, -8.432]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes.hedge007.geometry} position={[-3.592, 1.064, -8.604]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes.hedge013.geometry} position={[-15.541, 1.064, -8.617]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes.hedge014.geometry} position={[-12.675, 1.064, -8.432]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
+                <mesh geometry={nodes.hedge015.geometry} position={[-20.35, 1.064, -8.606]}>
+                    <meshMatcapMaterial matcap={leaf_green_matcap} />
+                </mesh>
                 <mesh geometry={nodes.hedge016.geometry} position={[-17.921, 1.064, -8.606]}>
                     <meshMatcapMaterial matcap={leaf_green_matcap} />
                 </mesh>
@@ -71,9 +96,15 @@ export default function RabbitHoleArea(props) {
                 <mesh geometry={nodes.Plane047.geometry} material={nodes.Plane047.material} position={[-2.791, 0.027, 5.094]} rotation={[0, 0.328, 0]} scale={[0.184, 0.67, 0.184]} />
                 <mesh geometry={nodes.Plane048.geometry} material={nodes.Plane048.material} position={[-3.136, 0.027, 6.062]} rotation={[0, 0.606, 0]} scale={[0.217, 0.788, 0.217]} />
                 <mesh geometry={nodes.Plane014.geometry} material={nodes.Plane014.material} position={[-1.461, 0.027, 3.751]} rotation={[0, 1.279, 0]} scale={[0.181, 0.656, 0.181]} />
-                <mesh geometry={nodes.Rock_Moss_2_Cube001.geometry} material={nodes.Rock_Moss_2_Cube001.material} position={[-13.977, 0.07, 3.363]} rotation={[Math.PI / 2, 0, 0]} />
-                <mesh geometry={nodes.Rock_Moss_2_Cube002.geometry} material={nodes.Rock_Moss_2_Cube002.material} position={[-9.954, 0.117, -3.285]} rotation={[Math.PI / 2, 0, 0.043]} scale={[1, 1, 1.78]} />
-                <mesh geometry={nodes.Rock_2_Cube005.geometry} material={nodes.Rock_2_Cube005.material} position={[-8.177, 0.032, -6.17]} rotation={[Math.PI / 2, 0, -2.94]} />
+                <mesh geometry={nodes.Rock_Moss_2_Cube001.geometry} position={[-13.977, 0.07, 3.363]} rotation={[Math.PI / 2, 0, 0]}>
+                    <meshMatcapMaterial matcap={rock_gray_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Rock_Moss_2_Cube002.geometry} position={[-9.954, 0.117, -3.285]} rotation={[Math.PI / 2, 0, 0.043]} scale={[1, 1, 1.78]}>
+                    <meshMatcapMaterial matcap={rock_gray_matcap} />
+                </mesh>
+                <mesh geometry={nodes.Rock_2_Cube005.geometry} position={[-8.177, 0.032, -6.17]} rotation={[Math.PI / 2, 0, -2.94]}>
+                    <meshMatcapMaterial matcap={rock_gray_matcap} />
+                </mesh>
             </RigidBody>
         </group>
     </>
