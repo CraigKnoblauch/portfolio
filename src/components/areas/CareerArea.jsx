@@ -21,27 +21,30 @@ export default function CareerArea(props) {
     <group {...props} dispose={null}>
       <RigidBody type="fixed" friction={0.5}>
       <mesh geometry={nodes.career_ground.geometry} material={nodes.career_ground.material} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]} />
-      <mesh geometry={nodes.nrl_building.geometry} material={nodes.nrl_building.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
-      <mesh geometry={nodes.PalmTree_1_Cylinder041.geometry} material={nodes.PalmTree_1_Cylinder041.material} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]} />
-      <mesh geometry={nodes.PalmTree_3_Cylinder037.geometry} material={nodes.PalmTree_3_Cylinder037.material} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]} />
-      <mesh geometry={nodes.asu.geometry} material={nodes.asu.material} position={[-12.089, 1.435, -14.402]} rotation={[1.475, 0.305, -1.261]} scale={0.772} />
+      <mesh geometry={nodes.palm_tree_trunk001.geometry} material={nodes.palm_tree_trunk001.material} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]} />
+      <mesh geometry={nodes.palm_tree_trunk.geometry} material={nodes.palm_tree_trunk.material} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]} />
+      <mesh geometry={nodes.palm_tree_canopy001.geometry} material={nodes.palm_tree_canopy001.material} position={[-12.228, 0.013, -11.458]} rotation={[Math.PI / 2, 0, 0]} scale={[1.452, 1.452, 0.921]} />
+      <mesh geometry={nodes.palm_tree_canopy.geometry} material={nodes.palm_tree_canopy.material} position={[-10.547, 0.052, -18.253]} rotation={[Math.PI / 2, 0, 0]} scale={[1.515, 1.515, 0.961]} />
       <mesh geometry={nodes.aws_emr_icon.geometry} material={nodes.aws_emr_icon.material} position={[9.677, 1.998, -26.324]} rotation={[0, -0.794, 0]} scale={[0.392, 0.17, 0.392]} />
-      <mesh geometry={nodes.aws_glue_icon.geometry} material={nodes.aws_glue_icon.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
+      <mesh geometry={nodes.aws_glue_icon_funnel.geometry} material={nodes.aws_glue_icon_funnel.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
       <mesh geometry={nodes.aws_lambda_icon.geometry} material={nodes.aws_lambda_icon.material} position={[9.286, 1.306, -25.813]} rotation={[1.296, -0.269, 0.756]} scale={0.302} />
       <mesh geometry={nodes.vanguard_text.geometry} material={nodes.vanguard_text.material} position={[10.697, 2.7, -25.061]} rotation={[2.741, -0.736, 1.294]} scale={0.486} />
       <mesh geometry={nodes.vanguard_platform.geometry} material={nodes.vanguard_platform.material} position={[10.483, 1.64, -25.508]} rotation={[0, -0.794, 0]} scale={[0.507, 0.962, 0.507]} />
-      <mesh geometry={nodes.python_icon.geometry} material={nodes.python_icon.material} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]} />
+      <mesh geometry={nodes.python_icon_top.geometry} material={nodes.python_icon_top.material} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]} />
+      <mesh geometry={nodes.aws_glue_icon_green_objects.geometry} material={nodes.aws_glue_icon_green_objects.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
+      <mesh geometry={nodes.aws_glue_icon_red_objects.geometry} material={nodes.aws_glue_icon_red_objects.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
+      <mesh geometry={nodes.aws_glue_icon_orange_objects.geometry} material={nodes.aws_glue_icon_orange_objects.material} position={[9.732, 1.391, -24.753]} rotation={[-Math.PI, 0.794, 0]} scale={0.437} />
+      <mesh geometry={nodes.python_icon_bottom.geometry} material={nodes.python_icon_bottom.material} position={[10.517, 2.795, -25.372]} rotation={[-Math.PI / 2, 0, -0.794]} scale={[0.036, 0.132, 0.036]} />
       <mesh geometry={nodes.antenna.geometry} material={nodes.antenna.material} position={[-8.503, 0.968, -25.625]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
       <mesh geometry={nodes.antenna_board.geometry} material={nodes.antenna_board.material} position={[-8.503, 0.968, -25.625]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.solar_panels001.geometry} material={nodes.solar_panels001.material} position={[-7.134, 2.359, -26.927]} rotation={[-0.956, 0.056, -0.625]} scale={0.068} />
-      <mesh geometry={nodes.lens.geometry} material={nodes.lens.material} position={[-8.766, 1.799, -25.312]} rotation={[0.693, 0.944, -1.667]} scale={0.351} />
-      <mesh geometry={nodes.silver_sides.geometry} material={nodes.silver_sides.material} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.black_sides.geometry} material={nodes.black_sides.material} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
-      <mesh geometry={nodes.rocket_stand_ring.geometry} material={nodes.rocket_stand_ring.material} position={[1.361, 0.823, -28.471]} scale={0.113} />
-      <mesh geometry={nodes.rocket_platform.geometry} material={nodes.rocket_platform.material} position={[1.377, 0.351, -28.453]} rotation={[0, 0.785, 0]} scale={0.113} />
-      <mesh geometry={nodes.flame_tunnel.geometry} material={nodes.flame_tunnel.material} position={[0.107, 0.278, -29.722]} rotation={[-Math.PI, 0.786, -Math.PI]} scale={0.113} />
+      <mesh geometry={nodes.cubesat_solar_panels.geometry} material={nodes.cubesat_solar_panels.material} position={[-7.134, 2.359, -26.927]} rotation={[-0.956, 0.056, -0.625]} scale={0.068} />
+      <mesh geometry={nodes.cubesat_lens.geometry} material={nodes.cubesat_lens.material} position={[-8.766, 1.799, -25.312]} rotation={[0.693, 0.944, -1.667]} scale={0.351} />
+      <mesh geometry={nodes.cubesat_silver_sides.geometry} material={nodes.cubesat_silver_sides.material} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
+      <mesh geometry={nodes.cubesat_sides.geometry} material={nodes.cubesat_sides.material} position={[-9.098, 1.631, -25.706]} rotation={[0.693, 0.944, -1.667]} scale={0.077} />
+      <mesh geometry={nodes.rocket_platform.geometry} material={nodes.rocket_platform.material} position={[0.107, 0.278, -29.722]} rotation={[-Math.PI, 0.786, -Math.PI]} scale={0.113} />
       <mesh geometry={nodes.rocket_cradle.geometry} material={nodes.rocket_cradle.material} position={[1.735, 0.737, -28.729]} rotation={[-Math.PI, 0, -Math.PI]} scale={0.013} />
       <mesh geometry={nodes.rocket.geometry} material={nodes.rocket.material} position={[1.359, 0.84, -28.373]} rotation={[0, -1.571, 0]} scale={0.113} />
+      <mesh geometry={nodes.rocket_nozzles.geometry} material={nodes.rocket_nozzles.material} position={[1.359, 0.84, -28.373]} rotation={[0, -1.571, 0]} scale={0.113} />
       <mesh geometry={nodes.Rock_Moss_4_Cube023.geometry} material={nodes.Rock_Moss_4_Cube023.material} position={[6.047, 0.215, -29.156]} rotation={[Math.PI / 2, 0, 1.686]} />
       <mesh geometry={nodes.Rock_4_Cube002.geometry} material={nodes.Rock_4_Cube002.material} position={[-12.286, 0.243, -19.29]} rotation={[Math.PI / 2, 0, -0.186]} />
       <mesh geometry={nodes.Rock_4_Cube003.geometry} material={nodes.Rock_4_Cube003.material} position={[-6.214, 0.243, -27.5]} rotation={[Math.PI / 2, 0, -2.819]} />
@@ -84,24 +87,65 @@ export default function CareerArea(props) {
       <mesh geometry={nodes.fence_segment001.geometry} material={nodes.fence_segment001.material} position={[4.575, 1.693, -36.285]} rotation={[-Math.PI / 2, 0, 0.001]} scale={[-0.185, -0.022, -1.866]} />
       <mesh geometry={nodes.fence_segment003.geometry} material={nodes.fence_segment003.material} position={[21.125, 1.693, -14.633]} rotation={[-Math.PI / 2, 0, -1.57]} scale={[-0.185, -0.022, -1.866]} />
       <mesh geometry={nodes.fence_segment015.geometry} material={nodes.fence_segment015.material} position={[-17.408, 1.407, -36.289]} rotation={[-Math.PI / 2, 0, 0.001]} scale={[-0.185, -0.022, -1.866]} />
-      <mesh geometry={nodes.claws.geometry} material={nodes.claws.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.beak.geometry} material={nodes.beak.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.under_wing.geometry} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]}>
-        <meshMatcapMaterial matcap={under_wing_matcap} />
-      </mesh>
-      <mesh geometry={nodes.body.geometry} material={nodes.body.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.eye.geometry} material={nodes.eye.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.dark_gray_edges.geometry} material={nodes.dark_gray_edges.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.lite_gray_panels.geometry} material={nodes.lite_gray_panels.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.solar_panels.geometry} material={nodes.solar_panels.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.gray_cam_ring.geometry} material={nodes.gray_cam_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.blue_cam_ring.geometry} material={nodes.blue_cam_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.land.geometry} material={nodes.land.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.water.geometry} material={nodes.water.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.text_blue_ring.geometry} material={nodes.text_blue_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.text.geometry} material={nodes.text.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.space.geometry} material={nodes.space.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
-      <mesh geometry={nodes.stars.geometry} material={nodes.stars.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_claws.geometry} material={nodes.phx_logo_claws.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_beak.geometry} material={nodes.phx_logo_beak.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_under_wing.geometry} material={nodes.phx_logo_under_wing.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_body.geometry} material={nodes.phx_logo_body.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_eye.geometry} material={nodes.phx_logo_eye.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_dark_gray_edges.geometry} material={nodes.phx_logo_dark_gray_edges.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_lite_gray_panels.geometry} material={nodes.phx_logo_lite_gray_panels.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_solar_panels.geometry} material={nodes.phx_logo_solar_panels.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_gray_cam_ring.geometry} material={nodes.phx_logo_gray_cam_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_blue_cam_ring.geometry} material={nodes.phx_logo_blue_cam_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_land.geometry} material={nodes.phx_logo_land.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_water.geometry} material={nodes.phx_logo_water.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_text_blue_ring.geometry} material={nodes.phx_logo_text_blue_ring.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_text.geometry} material={nodes.phx_logo_text.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_space.geometry} material={nodes.phx_logo_space.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.phx_logo_stars.geometry} material={nodes.phx_logo_stars.material} position={[-7.214, 1.13, -24.988]} rotation={[1.247, 0.251, -0.638]} scale={[0.538, 0.97, 0.538]} />
+      <mesh geometry={nodes.asu_platform.geometry} material={nodes.asu_platform.material} position={[-11.552, 0, -14.551]} rotation={[0, -0.211, 0]} />
+      <mesh geometry={nodes.asu_soil.geometry} material={nodes.asu_soil.material} position={[-11.552, 0.841, -14.551]} rotation={[0, -0.211, 0]} scale={[1.645, 1, 1.863]} />
+      <mesh geometry={nodes.asu_dark_tall_rock.geometry} material={nodes.asu_dark_tall_rock.material} position={[-12.971, 1.257, -13.598]} rotation={[0, -0.365, 0]} scale={0.412} />
+      <mesh geometry={nodes.asu_lite_tall_rock.geometry} material={nodes.asu_lite_tall_rock.material} position={[-12.418, 1.323, -15.703]} rotation={[0, 1.324, 0]} scale={0.52} />
+      <mesh geometry={nodes.asu_dark_rock001.geometry} material={nodes.asu_dark_rock001.material} position={[-10.639, 0.991, -12.738]} rotation={[0, 0.675, 0]} scale={0.15} />
+      <mesh geometry={nodes.asu_dark_rock002.geometry} material={nodes.asu_dark_rock002.material} position={[-11.396, 0.969, -13.404]} rotation={[0, -0.211, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_lite_rock001.geometry} material={nodes.asu_lite_rock001.material} position={[-11.011, 0.969, -14.036]} rotation={[0, 0.797, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_lite_rock002.geometry} material={nodes.asu_lite_rock002.material} position={[-11.312, 0.969, -14.7]} rotation={[0, -0.211, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_lite_rock003.geometry} material={nodes.asu_lite_rock003.material} position={[-10.342, 0.969, -14.334]} rotation={[0, -1.336, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_lite_rock004.geometry} material={nodes.asu_lite_rock004.material} position={[-10.769, 0.969, -14.971]} rotation={[0, 1.014, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_dark_rock003.geometry} material={nodes.asu_dark_rock003.material} position={[-10.558, 0.991, -13.324]} rotation={[0, -0.573, 0]} scale={0.15} />
+      <mesh geometry={nodes.asu_dark_rock004.geometry} material={nodes.asu_dark_rock004.material} position={[-11.525, 0.991, -14.006]} rotation={[0, -0.211, 0]} scale={0.15} />
+      <mesh geometry={nodes.asu_dark_rock005.geometry} material={nodes.asu_dark_rock005.material} position={[-11.257, 0.991, -15.137]} rotation={[0, 0.491, 0]} scale={0.15} />
+      <mesh geometry={nodes.asu_dark_rock006.geometry} material={nodes.asu_dark_rock006.material} position={[-10.854, 0.992, -14.538]} rotation={[-Math.PI, 0.334, -Math.PI]} scale={0.15} />
+      <mesh geometry={nodes.asu_dark_rock007.geometry} material={nodes.asu_dark_rock007.material} position={[-10.19, 0.991, -15.039]} rotation={[-Math.PI, 1.074, -Math.PI]} scale={0.15} />
+      <mesh geometry={nodes.asu_dark_rock008.geometry} material={nodes.asu_dark_rock008.material} position={[-10.545, 0.991, -13.871]} rotation={[0, 1.434, 0]} scale={0.15} />
+      <mesh geometry={nodes.asu_lite_rock005.geometry} material={nodes.asu_lite_rock005.material} position={[-10.983, 0.969, -12.938]} rotation={[0, -0.211, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_dark_rock009.geometry} material={nodes.asu_dark_rock009.material} position={[-11.375, 0.969, -12.862]} rotation={[0, -1.188, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_dark_rock.geometry} material={nodes.asu_dark_rock.material} position={[-10.759, 0.991, -15.488]} rotation={[Math.PI, -0.241, Math.PI]} scale={0.15} />
+      <mesh geometry={nodes.asu_lite_rock.geometry} material={nodes.asu_lite_rock.material} position={[-11.84, 0.969, -13.496]} rotation={[0, 0.35, 0]} scale={0.127} />
+      <mesh geometry={nodes.asu_cactus002.geometry} material={nodes.asu_cactus002.material} position={[-11.253, 0.856, -16.012]} rotation={[Math.PI / 2, 0, -0.636]} scale={0.741} />
+      <mesh geometry={nodes.asu_cactus001.geometry} material={nodes.asu_cactus001.material} position={[-10.989, 0.874, -15.703]} rotation={[Math.PI / 2, 0, -2.501]} scale={0.828} />
+      <mesh geometry={nodes.asu_cactus.geometry} material={nodes.asu_cactus.material} position={[-11.879, 0.851, -12.931]} rotation={[Math.PI / 2, 0, -0.246]} />
+      <mesh geometry={nodes.asu_ground_cactus.geometry} material={nodes.asu_ground_cactus.material} position={[-10.873, 0.922, -13.523]} rotation={[Math.PI / 2, 0, 0.211]} scale={0.507} />
+      <mesh geometry={nodes.asu_ground_cactus001.geometry} material={nodes.asu_ground_cactus001.material} position={[-11.204, 0.897, -14.304]} rotation={[Math.PI / 2, 0, 0.211]} scale={0.354} />
+      <mesh geometry={nodes.asu_ground_cactus002.geometry} material={nodes.asu_ground_cactus002.material} position={[-10.411, 0.902, -14.693]} rotation={[Math.PI / 2, 0, -0.463]} scale={0.386} />
+      <mesh geometry={nodes.asu_logo_body.geometry} material={nodes.asu_logo_body.material} position={[-12.097, 1.435, -14.671]} rotation={[1.48, 0.306, -1.278]} scale={0.772} />
+      <mesh geometry={nodes.asu_logo_sun.geometry} material={nodes.asu_logo_sun.material} position={[-12.121, 1.471, -14.631]} rotation={[1.48, 0.306, -1.278]} scale={0.772} />
+      <mesh geometry={nodes.grad_cap_base.geometry} material={nodes.grad_cap_base.material} position={[-9.996, 1.056, -15.772]} rotation={[0, -0.149, 0]} scale={2.779} />
+      <mesh geometry={nodes.grad_cap_top.geometry} material={nodes.grad_cap_top.material} position={[-10.001, 1.186, -15.764]} rotation={[0.079, -0.072, 0.189]} scale={0.485} />
+      <mesh geometry={nodes.grad_cap_button.geometry} material={nodes.grad_cap_button.material} position={[-10.001, 1.186, -15.764]} rotation={[0.061, 0.021, 0.188]} scale={2.779} />
+      <mesh geometry={nodes.grad_cap_cord.geometry} material={nodes.grad_cap_cord.material} position={[-9.539, 1.245, -15.451]} rotation={[-0.436, 0.055, 1.443]} scale={2.779} />
+      <mesh geometry={nodes.grad_cap_tassel.geometry} material={nodes.grad_cap_tassel.material} position={[-9.539, 0.936, -15.451]} rotation={[0, -0.149, 0]} scale={-0.019} />
+      <mesh geometry={nodes.asu_cactus_flower001.geometry} material={nodes.asu_cactus_flower001.material} position={[-11.879, 0.851, -12.931]} rotation={[Math.PI / 2, 0, -0.246]} />
+      <mesh geometry={nodes.asu_cactus_flower.geometry} material={nodes.asu_cactus_flower.material} position={[-11.253, 0.856, -16.012]} rotation={[Math.PI / 2, 0, -0.636]} scale={0.741} />
+      <mesh geometry={nodes.nrl_windows.geometry} material={nodes.nrl_windows.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_stairs.geometry} material={nodes.nrl_stairs.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_walls.geometry} material={nodes.nrl_walls.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_accent.geometry} material={nodes.nrl_accent.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_dish_support.geometry} material={nodes.nrl_dish_support.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_under_dish_support.geometry} material={nodes.nrl_under_dish_support.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_collector.geometry} material={nodes.nrl_collector.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
+      <mesh geometry={nodes.nrl_dish.geometry} material={nodes.nrl_dish.material} position={[14.456, 1.866, -15.214]} rotation={[0, -1.292, 0]} />
       </RigidBody>
     </group>
   </>
