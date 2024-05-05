@@ -109,4 +109,4 @@ export default function HobbiesArea(props) {
   </>
 }
 
-useGLTF.preload('/hobbies-area.glb')
+useGLTF.preload('./models/hobbies-area.glb')

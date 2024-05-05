@@ -201,4 +201,4 @@ export default function RabbitHoleArea(props) {
     </>
 }
 
-useGLTF.preload('/rabbit-hole-area.glb')
+useGLTF.preload('./models/rabbit-hole-area.glb')

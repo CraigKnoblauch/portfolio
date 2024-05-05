@@ -71,4 +71,4 @@ export default function ContactArea(props) {
   </>
 }
 
-useGLTF.preload('/contact-area.glb')
+useGLTF.preload('./models/contact-area.glb')

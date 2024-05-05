@@ -478,4 +478,4 @@ export default function CareerArea(props) {
   </>
 }
 
-useGLTF.preload('/career-area.glb')
+useGLTF.preload('./models/career-area.glb')

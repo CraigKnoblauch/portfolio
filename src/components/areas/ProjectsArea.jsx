@@ -31,4 +31,4 @@ export default function ProjectsArea(props) {
   </>
 }
 
-useGLTF.preload('/projects-area.glb')
+useGLTF.preload('./models/projects-area.glb')
