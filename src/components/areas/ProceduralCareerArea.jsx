@@ -20,7 +20,8 @@ export default function ProceduralCareerArea(props) {
                 console.log(mesh_obj),
 
                 mesh_obj.isObject3D && mesh_obj.type === "Mesh" && (
-                    <mesh geometry={mesh_obj.geometry}
+                    <mesh key={key}
+                          geometry={mesh_obj.geometry}
                           position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
                           rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
                           scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
