@@ -80,3 +80,9 @@ parse
 Heck when is parse even called, or loadMaterial for that matter? Was my glb loaded cached and that's why this didn't go off?
 
 Can I attach a debugger to this thing and step through to the load? That would be best
+
+# Alternate solutions
+1. Use a glb with materials to map the logic names of meshes onto the names of matcap files. After that generation is done use a glb without materials in the final product
+2. A glb with materials has the material name accessible in `nodes[i].material.name`. Make some logic like `nodes[i].material.name + ".png"` to determine the matcap for each mesh
+
+**I'll proceed with number 2, and make an issue on drei for the user's logical names of the material and mesh to appear in the returned gltf object"**
