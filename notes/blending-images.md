@@ -49,3 +49,5 @@ export default function ImageBlend() {
   );
 }
 ```
+# Alpha maps
+Regular image where white is measure of opaque and black is measure of transparency. Use this as an alpha map and set transparent to true. Look at `src/components/captions/AsuCaption.jsx` for an example.
