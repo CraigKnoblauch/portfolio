@@ -9,6 +9,13 @@ import { matcapImages } from 'src/matcapImages.js';
 export default class MatcapManager {
     constructor() {
         this.matcaps = {};
+
+        if (!this.instance) {
+            this.loadMatcaps();
+            this.instance = this;
+        }
+        
+        return this.instance;
     }
 
     loadMatcaps() {

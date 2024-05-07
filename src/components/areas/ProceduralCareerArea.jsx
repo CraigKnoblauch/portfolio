@@ -7,7 +7,6 @@ import MatcapManager from 'src/MatcapManager.js'
 export default function ProceduralCareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
     const matcapManager = new MatcapManager()
-    matcapManager.loadMatcaps()
     
     return <>
 
