@@ -6,27 +6,33 @@ Command: npx gltfjsx@6.2.16 projects-area.glb
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
+import MatcapManager from 'src/MatcapManager.js'
 
 export default function ProjectsArea(props) {
   const { nodes, materials } = useGLTF('./models/projects-area.glb')
+  const matcapManager = new MatcapManager()
   return <>
     <group {...props} dispose={null}>
-      <RigidBody type="fixed" friction={0.5}>
-        <mesh geometry={nodes.projects_ground.geometry} material={nodes.projects_ground.material} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]} />
-        <mesh geometry={nodes.hedge017.geometry} material={nodes.hedge017.material} position={[9.75, 1.064, 9.872]} rotation={[0, 0.469, 0]} />
-        <mesh geometry={nodes.hedge018.geometry} material={nodes.hedge018.material} position={[7.654, 1.064, 11.232]} rotation={[0, 1.101, 0]} />
-        <mesh geometry={nodes.hedge019.geometry} material={nodes.hedge019.material} position={[10.935, 1.064, 8.264]} rotation={[0, 0.824, 0]} />
-        <mesh geometry={nodes.stem1010.geometry} material={nodes.stem1010.material} position={[9.382, 0.217, 9.851]} rotation={[0, 0.469, 0]} />
-        <mesh geometry={nodes.hedge020.geometry} material={nodes.hedge020.material} position={[5.096, 1.064, 15.36]} rotation={[0, 0.141, 0]} />
-        <mesh geometry={nodes.hedge022.geometry} material={nodes.hedge022.material} position={[5.907, 1.064, 13.553]} rotation={[0, 0.488, 0]} />
-        <mesh geometry={nodes.stem1011.geometry} material={nodes.stem1011.material} position={[4.754, 0.217, 15.222]} rotation={[0, 0.141, 0]} />
-        <mesh geometry={nodes.stem2011.geometry} material={nodes.stem2011.material} position={[7.447, 0.356, 11.498]} rotation={[0, 1.101, 0]} />
-        <mesh geometry={nodes.stem2012.geometry} material={nodes.stem2012.material} position={[11.17, 0.356, 8.104]} rotation={[0, 0.824, 0]} />
-        <mesh geometry={nodes.stem2014.geometry} material={nodes.stem2014.material} position={[6.182, 0.356, 13.479]} rotation={[0, 0.488, 0]} />
-        <mesh geometry={nodes.Rock_2_Cube006.geometry} material={nodes.Rock_2_Cube006.material} position={[7.68, 0.032, 9.474]} rotation={[Math.PI / 2, 0, -1.113]} />
-        <mesh geometry={nodes.Rock_Moss_7_Cube002.geometry} material={nodes.Rock_Moss_7_Cube002.material} position={[9.459, 0.204, 8.181]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Rock_4_Cube005.geometry} material={nodes.Rock_4_Cube005.material} position={[3.843, 0.243, 13.018]} rotation={[Math.PI / 2, 0, -2.448]} />
-      </RigidBody>
+      {/**
+       * Add a mesh for each mesh in the nodes array
+       */}
+      {Object.entries(nodes).map(([key, mesh_obj]) => (
+          mesh_obj.isObject3D && mesh_obj.type === "Mesh" && (
+              <mesh key={key}
+                    geometry={mesh_obj.geometry}
+                    position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
+                    rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
+                    scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
+                  
+                  {/* 
+                      TODO Change all the logical names of the materials to their png file name counterpart
+                      TODO It would be more efficent to load all the textures at once and then assign them to the materials here.
+                  */}
+                  <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
+              
+              </mesh>
+          )
+      ))}
     </group>
   </>
 }

@@ -10,7 +10,6 @@ import CareerArea from "src/components/areas/CareerArea.jsx"
 import ProjectsArea from "src/components/areas/ProjectsArea.jsx"
 import ContactArea from "src/components/areas/ContactArea.jsx"
 import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
-import ProceduralCareerArea from "src/components/areas/ProceduralCareerArea"
 
 const Experience = () => {
     return (
@@ -20,8 +19,7 @@ const Experience = () => {
                 <OrbitControls />
                 <group>
                     <RabbitHoleArea />
-                    {/* <CareerArea /> */}
-                    <ProceduralCareerArea />
+                    <CareerArea />
                     <HobbiesArea />
                     <ProjectsArea />
                     <ContactArea />

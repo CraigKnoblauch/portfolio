@@ -6,67 +6,34 @@ Command: npx gltfjsx@6.2.16 contact-area.glb
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
+import MatcapManager from 'src/MatcapManager.js'
 
 export default function ContactArea(props) {
-  const { nodes, materials } = useGLTF('./models/contact-area.glb')
+  const { nodes } = useGLTF('./models/contact-area.glb')
+  const matcapManager = new MatcapManager()
+
   return <>
     <group {...props} dispose={null}>
-      <RigidBody type="fixed" friction={0.5}>
-        <mesh geometry={nodes.contact_ground.geometry} material={nodes.contact_ground.material} position={[-11.72, 0.032, -1.327]} scale={[24.489, 31.979, 31.979]} />
-        <mesh geometry={nodes.mailbox_platform.geometry} material={nodes.mailbox_platform.material} position={[-13.192, 0.386, 13.349]} scale={[1.226, 0.626, 1.226]} />
-        <mesh geometry={nodes.mailbox_housing.geometry} material={nodes.mailbox_housing.material} position={[-13.022, 0.351, 13.478]} rotation={[-Math.PI / 2, 0, 2.451]} scale={0.932} />
-        <mesh geometry={nodes.mailbox_flag.geometry} material={nodes.mailbox_flag.material} position={[-12.711, 1.438, 13.432]} rotation={[-Math.PI / 2, 0, 0.88]} scale={0.932} />
-        <mesh geometry={nodes.letter001.geometry} material={nodes.letter001.material} position={[-13.071, 1.306, 13.528]} rotation={[-Math.PI / 2, 0, 0.88]} scale={0.932} />
-        <mesh geometry={nodes.letter002.geometry} material={nodes.letter002.material} position={[-12.778, 1.31, 13.585]} rotation={[-1.644, 0.049, 0.636]} scale={0.932} />
-        <mesh geometry={nodes.letter.geometry} material={nodes.letter.material} position={[-12.438, 1.181, 13.99]} rotation={[-1.248, 0.371, 1.306]} scale={0.932} />
-        <mesh geometry={nodes.mailbox_post.geometry} material={nodes.mailbox_post.material} position={[-13.113, 1.001, 13.403]} rotation={[-Math.PI / 2, 0, 0.88]} scale={0.932} />
-        <mesh geometry={nodes.linkedin_platform.geometry} material={nodes.linkedin_platform.material} position={[-11.027, 0.416, 9.529]} scale={[1.249, 0.637, 1.249]} />
-        <mesh geometry={nodes.linkedin_icon.geometry} material={nodes.linkedin_icon.material} position={[-10.868, 0.427, 9.679]} rotation={[0, 0.748, 0]} scale={116.812} />
-        <mesh geometry={nodes.hedge021.geometry} material={nodes.hedge021.material} position={[3.189, 1.061, 16.858]} rotation={[0.055, 1.084, -0.06]} />
-        <mesh geometry={nodes.hedge023.geometry} material={nodes.hedge023.material} position={[-1.252, 1.064, 18.677]} rotation={[0, 1.259, 0]} />
-        <mesh geometry={nodes.hedge025.geometry} material={nodes.hedge025.material} position={[0.463, 1.064, 17.623]} rotation={[0, 0.033, 0]} />
-        <mesh geometry={nodes.stem1012.geometry} material={nodes.stem1012.material} position={[-1.526, 0.217, 18.924]} rotation={[0, 1.259, 0]} />
-        <mesh geometry={nodes['tall-bush1001'].geometry} material={nodes['tall-bush1001'].material} position={[-11.904, 1.91, 11.25]} rotation={[Math.PI, -1.165, Math.PI]} scale={0.216} />
-        <mesh geometry={nodes['tall-stem1001'].geometry} material={nodes['tall-stem1001'].material} position={[-11.904, 0.486, 11.25]} rotation={[Math.PI, -1.165, Math.PI]} scale={[0.051, 0.222, 0.051]} />
-        <mesh geometry={nodes['tall-stem2001'].geometry} material={nodes['tall-stem2001'].material} position={[-14.181, 0.474, 16.26]} rotation={[-Math.PI, 1.076, -Math.PI]} scale={[0.05, 0.22, 0.05]} />
-        <mesh geometry={nodes['tall-bush1002'].geometry} material={nodes['tall-bush1002'].material} position={[-13.994, 1.91, 15.968]} rotation={[0, -0.867, 0]} scale={0.216} />
-        <mesh geometry={nodes['tall-bush1006'].geometry} material={nodes['tall-bush1006'].material} position={[-3.848, 1.51, 11.828]} rotation={[0, 1.257, 0]} scale={0.171} />
-        <mesh geometry={nodes['tall-stem1004'].geometry} material={nodes['tall-stem1004'].material} position={[-3.848, 0.382, 11.828]} rotation={[0, 1.257, 0]} scale={[0.04, 0.176, 0.04]} />
-        <mesh geometry={nodes.stem2013.geometry} material={nodes.stem2013.material} position={[2.959, 0.359, 17.12]} rotation={[0.055, 1.084, -0.06]} />
-        <mesh geometry={nodes.stem2016.geometry} material={nodes.stem2016.material} position={[0.742, 0.356, 17.677]} rotation={[0, 0.033, 0]} />
-        <mesh geometry={nodes.Plane049.geometry} material={nodes.Plane049.material} position={[-3.983, 0.027, 7.172]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane050.geometry} material={nodes.Plane050.material} position={[-4.488, 0.027, 8.248]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane051.geometry} material={nodes.Plane051.material} position={[-5.262, 0.027, 9.156]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane052.geometry} material={nodes.Plane052.material} position={[-6.641, 0.027, 9.593]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane053.geometry} material={nodes.Plane053.material} position={[-7.28, 0.027, 10.468]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane054.geometry} material={nodes.Plane054.material} position={[-8.054, 0.027, 11.208]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane055.geometry} material={nodes.Plane055.material} position={[-8.424, 0.027, 12.183]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane056.geometry} material={nodes.Plane056.material} position={[-9.13, 0.027, 13.327]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane057.geometry} material={nodes.Plane057.material} position={[-9.433, 0.027, 14.403]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane058.geometry} material={nodes.Plane058.material} position={[-9.878, 0.027, 15.937]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Plane059.geometry} material={nodes.Plane059.material} position={[-10.039, 0.027, 17.633]} rotation={[0, 0.531, 0]} scale={[0.184, 0.67, 0.184]} />
-        <mesh geometry={nodes.Rock_Moss_6_Cube005.geometry} material={nodes.Rock_Moss_6_Cube005.material} position={[-11.044, -0.014, 8.028]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Rock_Moss_6_Cube006.geometry} material={nodes.Rock_Moss_6_Cube006.material} position={[-14.827, -0.014, 18.206]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Rock_Moss_2_Cube010.geometry} material={nodes.Rock_Moss_2_Cube010.material} position={[-13.522, 0.07, 15.157]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Rock_3_Cube001.geometry} material={nodes.Rock_3_Cube001.material} position={[-13.577, 0.061, 11.644]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Rock_1_Cube010.geometry} material={nodes.Rock_1_Cube010.material} position={[-2.706, -0.013, 18.961]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Rock_1_Cube011.geometry} material={nodes.Rock_1_Cube011.material} position={[-0.721, -0.013, 17.452]} rotation={[Math.PI / 2, 0, -2.486]} scale={1.304} />
-        <mesh geometry={nodes.Rock_1_Cube014.geometry} material={nodes.Rock_1_Cube014.material} position={[1.999, -0.013, 15.45]} rotation={[Math.PI / 2, 0, -1.512]} scale={0.704} />
-        <mesh geometry={nodes.Rock_1_Cube015.geometry} material={nodes.Rock_1_Cube015.material} position={[-4.27, -0.013, 12.469]} rotation={[Math.PI / 2, 0, 0]} />
-        <mesh geometry={nodes.Plane002.geometry} material={nodes.Plane002.material} position={[2.402, 2.039, 7.218]} rotation={[0, 0.474, 0]} scale={[1.452, 0.764, 0.764]} />
-        <mesh geometry={nodes.pole.geometry} material={nodes.pole.material} position={[1.721, 2.471, 7.567]} rotation={[0, 0.474, 0]} scale={-0.037} />
-        <mesh geometry={nodes.pole_top.geometry} material={nodes.pole_top.material} position={[1.721, 2.471, 7.567]} rotation={[0, 0.474, 0]} scale={-0.037} />
-        <mesh geometry={nodes.shadeRed001.geometry} material={nodes.shadeRed001.material} position={[1.024, 0.663, 7.549]} rotation={[-0.244, -0.158, 3.103]} scale={0.147} />
-        <mesh geometry={nodes.monument.geometry} material={nodes.monument.material} position={[1.291, -0.006, 6.896]} scale={0.033} />
-        <mesh geometry={nodes.fence_segment006.geometry} material={nodes.fence_segment006.material} position={[-16.781, 1.407, 6.736]} rotation={[-Math.PI / 2, 0, -3.141]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment009.geometry} material={nodes.fence_segment009.material} position={[-12.432, 1.407, 7.043]} rotation={[-Math.PI / 2, 0, 1.059]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment010.geometry} material={nodes.fence_segment010.material} position={[-14.774, 1.407, 11.204]} rotation={[-Math.PI / 2, 0, 1.059]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment011.geometry} material={nodes.fence_segment011.material} position={[-16.904, 1.407, 15.462]} rotation={[-Math.PI / 2, 0, 1.572]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment012.geometry} material={nodes.fence_segment012.material} position={[-16.568, 1.407, 19.938]} rotation={[-Math.PI / 2, 0, -3.141]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment013.geometry} material={nodes.fence_segment013.material} position={[-11.793, 1.407, 19.937]} rotation={[-Math.PI / 2, 0, -3.141]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment014.geometry} material={nodes.fence_segment014.material} position={[-7.008, 1.407, 19.936]} rotation={[-Math.PI / 2, 0, -3.141]} scale={[-0.185, -0.022, -1.866]} />
-        <mesh geometry={nodes.fence_segment007.geometry} material={nodes.fence_segment007.material} position={[-21.555, 1.407, 6.739]} rotation={[-Math.PI / 2, 0, -3.141]} scale={[-0.185, -0.022, -1.866]} />
-      </RigidBody>
+      {/**
+       * Add a mesh for each mesh in the nodes array
+       */}
+      {Object.entries(nodes).map(([key, mesh_obj]) => (
+          mesh_obj.isObject3D && mesh_obj.type === "Mesh" && (
+              <mesh key={key}
+                    geometry={mesh_obj.geometry}
+                    position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
+                    rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
+                    scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
+                  
+                  {/* 
+                      TODO Change all the logical names of the materials to their png file name counterpart
+                      TODO It would be more efficent to load all the textures at once and then assign them to the materials here.
+                  */}
+                  <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
+              
+              </mesh>
+          )
+      ))}
     </group>
   </>
 }
