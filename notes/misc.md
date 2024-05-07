@@ -1,0 +1,2 @@
+# Certain meshes in the wrong place
+I had an issue where certain specific meshes in my glb file were in the wrong position (fetch the career-area.glb from commit 424024a24d7 to see what I'm talking about). To fix this, I changed the names of the underlying geometry of the problem meshes and re-exported. I have no idea why that works, but hey, if it happens again.

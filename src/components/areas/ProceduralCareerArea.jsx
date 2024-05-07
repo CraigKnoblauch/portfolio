@@ -16,7 +16,7 @@ export default function ProceduralCareerArea(props) {
              * Add a mesh for each mesh in the nodes array
              */}
             {Object.entries(nodes).map(([key, mesh_obj]) => (
-
+                console.log(mesh_obj),
                 mesh_obj.isObject3D && mesh_obj.type === "Mesh" && (
                     <mesh key={key}
                           geometry={mesh_obj.geometry}
