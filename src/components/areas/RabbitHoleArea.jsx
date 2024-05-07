@@ -8,8 +8,8 @@ import { useGLTF, useMatcapTexture, useTexture, shaderMaterial } from '@react-th
 import { RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
 import { useLoader, extend, useFrame } from '@react-three/fiber'
-import portalVertexShader from '../../shaders/portal/vertex.glsl' // TODO not a big fan of paths like this
-import portalFragmentShader from '../../shaders/portal/fragment.glsl'
+import portalVertexShader from 'src/shaders/portal/vertex.glsl' // TODO not a big fan of paths like this
+import portalFragmentShader from 'src/shaders/portal/fragment.glsl'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 
@@ -30,15 +30,30 @@ export default function RabbitHoleArea(props) {
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
     const matcapManager = new MatcapManager()
 
+    const exclusions = [nodes.rabbit_hole_portal]
+
     // Animate portal
-    // const portalMaterialRef = useRef()
-    // useFrame((state, delta) => {
-    //     portalMaterialRef.current.uTime += delta
-    // })
+    const portalMaterialRef = useRef()
+    useFrame((state, delta) => {
+        portalMaterialRef.current.uTime += delta
+    })
 
     return <>
         <group {...props} dispose={null}>
-            <GenericArea nodes={nodes} />
+            <GenericArea nodes={nodes} exclusions={exclusions} />
+
+            {/* The portal is in the exclusions so it shouldn't be added by the generic area.
+                Add it here so we can contol the shader material
+            */}
+            <mesh key={nodes.rabbit_hole_portal.uuid}
+                  geometry={nodes.rabbit_hole_portal.geometry}
+                  position={[nodes.rabbit_hole_portal.position.x, nodes.rabbit_hole_portal.position.y, nodes.rabbit_hole_portal.position.z]} 
+                  rotation={[nodes.rabbit_hole_portal.rotation._x, nodes.rabbit_hole_portal.rotation._y, nodes.rabbit_hole_portal.rotation._z]} 
+                  scale={[nodes.rabbit_hole_portal.scale.x, nodes.rabbit_hole_portal.scale.y, nodes.rabbit_hole_portal.scale.z]}>
+
+                    <portalMaterial ref={portalMaterialRef} />
+
+            </mesh>                 
         </group>
     </>
 }
