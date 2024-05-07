@@ -2,11 +2,12 @@ import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
 import { useLoader } from "@react-three/fiber"
+import MatcapManager from 'src/MatcapManager.js'
 
 export default function ProceduralCareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-
-    console.log(nodes)
+    const matcapManager = new MatcapManager()
+    matcapManager.loadMatcaps()
     
     return <>
 
@@ -16,8 +17,6 @@ export default function ProceduralCareerArea(props) {
              * Add a mesh for each mesh in the nodes array
              */}
             {Object.entries(nodes).map(([key, mesh_obj]) => (
-
-                console.log(mesh_obj),
 
                 mesh_obj.isObject3D && mesh_obj.type === "Mesh" && (
                     <mesh key={key}
@@ -30,7 +29,7 @@ export default function ProceduralCareerArea(props) {
                             TODO Change all the logical names of the materials to their png file name counterpart
                             TODO It would be more efficent to load all the textures at once and then assign them to the materials here.
                         */}
-                        <meshMatcapMaterial matcap={useLoader(THREE.TextureLoader, ["./matcaps/" + mesh_obj.material.name + ".png"])} />
+                        <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
                     
                     </mesh>
                 )
