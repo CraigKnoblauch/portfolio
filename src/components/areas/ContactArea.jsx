@@ -7,6 +7,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import MatcapManager from 'src/MatcapManager.js'
+import GenericArea from 'src/components/areas/GenericArea.jsx'
 
 export default function ContactArea(props) {
   const { nodes } = useGLTF('./models/contact-area.glb')
@@ -14,26 +15,9 @@ export default function ContactArea(props) {
 
   return <>
     <group {...props} dispose={null}>
-      {/**
-       * Add a mesh for each mesh in the nodes array
-       */}
-      {Object.entries(nodes).map(([key, mesh_obj]) => (
-          mesh_obj.isObject3D && mesh_obj.type === "Mesh" && (
-              <mesh key={key}
-                    geometry={mesh_obj.geometry}
-                    position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
-                    rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
-                    scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
-                  
-                  {/* 
-                      TODO Change all the logical names of the materials to their png file name counterpart
-                      TODO It would be more efficent to load all the textures at once and then assign them to the materials here.
-                  */}
-                  <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
-              
-              </mesh>
-          )
-      ))}
+      
+      <GenericArea nodes={nodes} />
+      
     </group>
   </>
 }
