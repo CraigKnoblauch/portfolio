@@ -4,19 +4,38 @@ Command: npx gltfjsx@6.2.16 contact-area.glb
 */
 
 import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
+import { useLoader } from '@react-three/fiber'
+import { TextureLoader } from 'three'
 
 export default function ContactArea(props) {
   const { nodes } = useGLTF('./models/contact-area.glb')
   const matcapManager = new MatcapManager()
 
+  const flagTexuture = useTexture('./textures/usa-flag.png')
+  flagTexuture.flipY = false
+
+  console.log(nodes)
+
   return <>
     <group {...props} dispose={null}>
       
-      <GenericArea nodes={nodes} />
+      {/* Exclude the flag */}
+      <GenericArea nodes={nodes} exclusions={[nodes.Plane002]}/>
+
+      <mesh key={nodes.Plane002.uuid}
+            geometry={nodes.Plane002.geometry}
+            position={[nodes.Plane002.position.x, nodes.Plane002.position.y, nodes.Plane002.position.z]} 
+            rotation={[nodes.Plane002.rotation._x, nodes.Plane002.rotation._y, nodes.Plane002.rotation._z]} 
+            scale={[nodes.Plane002.scale.x, nodes.Plane002.scale.y, nodes.Plane002.scale.z]}>
+
+        <meshBasicMaterial map={flagTexuture} />
+
+      </mesh> 
+
       
     </group>
   </>
