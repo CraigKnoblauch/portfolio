@@ -1,4 +1,4 @@
-import { useGLTF } from "@react-three/drei"
+import { PivotControls, useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
 import { useLoader, useFrame } from "@react-three/fiber"
@@ -8,8 +8,8 @@ import GenericArea from "src/components/areas/GenericArea"
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-    const matcapManager = new MatcapManager()
     const groupRef = useRef()
+    const indicatorRef = useRef()
 
     const exhaustEmitter = nodes.exhaust_emitter
 
@@ -26,14 +26,25 @@ export default function CareerArea(props) {
         groupRef.current.add(element); // Add the new mesh to the scene
     };
 
-    useFrame(() => {
+    useFrame((state, delta) => {
+
         const dodecahedron = new THREE.Mesh(
             new THREE.DodecahedronGeometry(1),
             new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff })
         );
-        dodecahedron.position.set(exhaustEmitter.position.x, exhaustEmitter.position.y, exhaustEmitter.position.z);
+        dodecahedron.position.copy(exhaustEmitter.position);
         
         enqueue(dodecahedron);
+
+        exhaustQueue.current.forEach((element) => {
+
+            exhaustQueue.current.forEach((element) => {
+                element.position.x += 0.2 * Math.sin(exhaustEmitter.rotation.y + 10);
+                element.position.z -= 0.2 * Math.cos(exhaustEmitter.rotation.y + 1);
+            });
+
+        });
+
     });
     
     return <>
@@ -41,6 +52,10 @@ export default function CareerArea(props) {
         <group ref={groupRef} {...props} dispose={null}>
 
             <GenericArea nodes={nodes} exclusions={[nodes.exhaust_emitter]}/>
+
+            {/* Indicators */}
+            <mesh geometry={exhaustEmitter.geometry} material={new THREE.MeshBasicMaterial({ color: 'red' })} position={exhaustEmitter.position} rotation={exhaustEmitter.rotation} />
+            <mesh ref={indicatorRef} geometry={new THREE.BoxGeometry(0.1, 0.1, 5)} material={new THREE.MeshBasicMaterial({ color: 'red' })} position={exhaustEmitter.position} rotation={exhaustEmitter.rotation} />
 
         </group>
 
