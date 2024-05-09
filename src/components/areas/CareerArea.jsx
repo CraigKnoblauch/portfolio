@@ -9,7 +9,8 @@ import GenericArea from "src/components/areas/GenericArea"
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
     const groupRef = useRef()
-    const indicatorRef = useRef()
+    const rocketGroupRef = useRef()
+    const cradleRef = useRef(nodes.rocket_cradle)
 
     const exhaustEmitter = nodes.exhaust_emitter
     const matcapManager = new MatcapManager()
@@ -20,10 +21,19 @@ export default function CareerArea(props) {
         matcapManager.getMatcapByName('phx-gray'),
     ]
 
+    let initialRocketSpeed = 0.01;
+    const rocketAcceleration = 0.001;
+
     const maxNumExhaustMeshes = 100
     const exhaustQueue = useRef([])
 
+    // Cradle should fall to 90 degrees away from where it started
+    // So that it looks like it's fallen to the platform
+    const cradleRotationLimit = cradleRef.current.rotation.z - Math.PI/2
+    let cradleRotationalVelocity = 0.01
+
     // Function to add a new element to the exhaust FIFO queue
+    // TODO Refactor into a generic queue
     const enqueue = (element) => {
         if (exhaustQueue.current.length === maxNumExhaustMeshes) {
             const oldest = exhaustQueue.current.pop(); // Remove the last element if the queue is full
@@ -35,6 +45,9 @@ export default function CareerArea(props) {
 
     useFrame((state, delta) => {
 
+        // ****************************************************
+        // Backward Exhaust Animation
+        // ****************************************************
         const dodecahedron = new THREE.Mesh(
             new THREE.DodecahedronGeometry(1),
             new THREE.MeshMatcapMaterial({ matcap: smokeMaterials[Math.floor(Math.random() * smokeMaterials.length)] })
@@ -88,6 +101,27 @@ export default function CareerArea(props) {
             element.rotation.z += element.spin.z;
 
         });
+        // end backward exhaust animation
+        // ****************************************************
+
+        // ****************************************************
+        // Rocket Launch Animation
+        // ****************************************************
+        // Move the rocket upwards, slowly at first and then gaining speed
+        rocketGroupRef.current.position.y += initialRocketSpeed;
+        initialRocketSpeed += rocketAcceleration;
+
+        // Rotate the cradle until it falls to a set position
+        if (cradleRef.current.rotation.z > cradleRotationLimit) {
+            // cradleRef.current.rotation.z -= 0.01
+            cradleRef.current.rotation.z -= cradleRotationalVelocity * 0.1;
+            cradleRotationalVelocity += 0.05;
+        }
+
+
+
+        // end rocket launch animation
+        // ****************************************************
 
     });
     
@@ -95,7 +129,20 @@ export default function CareerArea(props) {
 
         <group ref={groupRef} {...props} dispose={null}>
 
-            <GenericArea nodes={nodes} exclusions={[nodes.exhaust_emitter]}/>
+            <GenericArea nodes={nodes} exclusions={[nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzles, nodes.rocket_cradle]}/>
+
+            <group ref={rocketGroupRef}>
+                <mesh geometry={nodes.rocket.geometry}>
+                    <meshMatcapMaterial matcap={matcapManager.getMatcapByName('bright-white')} />
+                </mesh>
+                <mesh geometry={nodes.rocket_nozzles.geometry}>
+                    <meshMatcapMaterial matcap={matcapManager.getMatcapByName('silver')} />
+                </mesh>
+            </group>
+
+            <mesh geometry={nodes.rocket_cradle.geometry} ref={cradleRef} position={nodes.rocket_cradle.position} rotation={nodes.rocket_cradle.rotation} scale={nodes.rocket_cradle.scale}>
+                <meshMatcapMaterial matcap={matcapManager.getMatcapByName('rock-gray')} />
+            </mesh>
 
         </group>
 
