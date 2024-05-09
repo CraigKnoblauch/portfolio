@@ -12,11 +12,18 @@ export default function CareerArea(props) {
     const indicatorRef = useRef()
 
     const exhaustEmitter = nodes.exhaust_emitter
+    const matcapManager = new MatcapManager()
+
+    const smokeMaterials = [
+        matcapManager.getMatcapByName('dish-support'),
+        matcapManager.getMatcapByName('rock-gray'),
+        matcapManager.getMatcapByName('phx-gray'),
+    ]
 
     const maxNumExhaustMeshes = 10
     const exhaustQueue = useRef([])
 
-    // Function to add a new element to the exhaust queue
+    // Function to add a new element to the exhaust FIFO queue
     const enqueue = (element) => {
         if (exhaustQueue.current.length === maxNumExhaustMeshes) {
             const oldest = exhaustQueue.current.pop(); // Remove the last element if the queue is full
@@ -30,7 +37,7 @@ export default function CareerArea(props) {
 
         const dodecahedron = new THREE.Mesh(
             new THREE.DodecahedronGeometry(1),
-            new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff })
+            new THREE.MeshMatcapMaterial({ matcap: smokeMaterials[Math.floor(Math.random() * smokeMaterials.length)] })
         );
         dodecahedron.position.copy(exhaustEmitter.position);
         
