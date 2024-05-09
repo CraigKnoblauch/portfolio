@@ -20,7 +20,7 @@ export default function CareerArea(props) {
         matcapManager.getMatcapByName('phx-gray'),
     ]
 
-    const maxNumExhaustMeshes = 10
+    const maxNumExhaustMeshes = 100
     const exhaustQueue = useRef([])
 
     // Function to add a new element to the exhaust FIFO queue
@@ -40,15 +40,52 @@ export default function CareerArea(props) {
             new THREE.MeshMatcapMaterial({ matcap: smokeMaterials[Math.floor(Math.random() * smokeMaterials.length)] })
         );
         dodecahedron.position.copy(exhaustEmitter.position);
-        
+
+        // Initialize the velocity and spin of the exhaust element
+        dodecahedron.velocity = new THREE.Vector3(
+            1 * Math.sin(exhaustEmitter.rotation.y + 10 + (0.25 * (Math.random()*2-1))), // Last bit adds a random deviation in the x and z directions
+            0.1,
+            -1 * Math.cos(exhaustEmitter.rotation.y + 1 + (0.25 * (Math.random()*2-1)))
+        );
+        dodecahedron.spin = new THREE.Vector3(
+            Math.random() * 0.1,
+            Math.random() * 0.1,
+            Math.random() * 0.1
+        );
+
+        // Add the new element to the exhaust queue
         enqueue(dodecahedron);
 
         exhaustQueue.current.forEach((element) => {
 
-            exhaustQueue.current.forEach((element) => {
-                element.position.x += 0.2 * Math.sin(exhaustEmitter.rotation.y + 10);
-                element.position.z -= 0.2 * Math.cos(exhaustEmitter.rotation.y + 1);
-            });
+            // Calculate the distance to the emitter
+            const distance = element.position.distanceTo(exhaustEmitter.position);
+
+            // Decrease the velocity as a function of the distance to the emitter
+            const distanceScale = Math.random() * (0.1 - 0.001) + 0.001
+            const decreaseFactor = Math.max(0, 1 - distance * .005);
+            
+            element.velocity.multiplyScalar(decreaseFactor);
+
+            // Move the element according to its velocity
+            element.position.add(element.velocity);
+
+            // Increase the y position as a function of the distance to the emitter
+            const increaseFactor = Math.max(0, distance * 0.0075);
+            element.position.y += increaseFactor;
+
+            // Adjust the scale of the element as a function of the distance to the emitter
+            const scaleFactor = Math.max(0.6, distance * 0.075);
+            element.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+            // Decrease the spin as a function of the distance to the emitter
+            const spinDecreaseFactor = Math.max(0, 1 - distance * 0.001);
+            element.spin.multiplyScalar(spinDecreaseFactor);
+
+            // Apply the spin to the element
+            element.rotation.x += element.spin.x;
+            element.rotation.y += element.spin.y;
+            element.rotation.z += element.spin.z;
 
         });
 
@@ -59,10 +96,6 @@ export default function CareerArea(props) {
         <group ref={groupRef} {...props} dispose={null}>
 
             <GenericArea nodes={nodes} exclusions={[nodes.exhaust_emitter]}/>
-
-            {/* Indicators */}
-            <mesh geometry={exhaustEmitter.geometry} material={new THREE.MeshBasicMaterial({ color: 'red' })} position={exhaustEmitter.position} rotation={exhaustEmitter.rotation} />
-            <mesh ref={indicatorRef} geometry={new THREE.BoxGeometry(0.1, 0.1, 5)} material={new THREE.MeshBasicMaterial({ color: 'red' })} position={exhaustEmitter.position} rotation={exhaustEmitter.rotation} />
 
         </group>
 
