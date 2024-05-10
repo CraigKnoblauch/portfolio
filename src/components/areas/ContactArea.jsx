@@ -18,8 +18,6 @@ export default function ContactArea(props) {
   const flagTexuture = useTexture('./textures/usa-flag.png')
   flagTexuture.flipY = false
 
-  console.log(nodes)
-
   return <>
     <group {...props} dispose={null}>
       
