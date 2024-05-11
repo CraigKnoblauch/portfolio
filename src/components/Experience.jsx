@@ -24,7 +24,7 @@ const Experience = () => {
                     <ProjectsArea />
                     <ContactArea />
                     {/* <MovementDebugPlane */}
-                    <Rabbit />
+                    {/* <Rabbit /> */}
                 </group>
             </Physics>
         </>

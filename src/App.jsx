@@ -15,7 +15,7 @@ function App() {
           { name: 'right', keys: [ 'ArrowRight', 'KeyD' ] }
         ] }
       >
-        <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
+        <Canvas camera={{ position: [3, 1, -50], fov: 50 }}>
           <Experience />
         </Canvas>
         {/* <RabbitControlInterface /> */}
