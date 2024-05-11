@@ -1,6 +1,5 @@
 import { useGLTF, useTexture } from "@react-three/drei"
 import { RigidBody } from "@react-three/rapier"
-import AsuCaption from "./captions/AsuCaption"
 
 
 export default function Ground() {
@@ -17,6 +16,5 @@ export default function Ground() {
                 <meshBasicMaterial map={ texture } />
             </mesh>
         </RigidBody>
-        <AsuCaption position={[1, 0.01, -2]} rotation_on_ground={Math.PI/2}/> 
     </>
 }
