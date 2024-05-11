@@ -4,19 +4,42 @@ Command: npx gltfjsx@6.2.16 hobbies-area.glb
 */
 
 import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
-import { RigidBody } from '@react-three/rapier'
+import { useGLTF, useTexture } from '@react-three/drei'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
+  console.log(nodes)
   const matcapManager = new MatcapManager()
+
+  // Easier to make two objects than to rotate the sign
+  const frontSignTexture = useTexture('./textures/construction-sign.png')
+  const backSignTexture = useTexture('./textures/construction-sign.png')
+  backSignTexture.flipY = false
 
   return <>
     <group {...props} dispose={null}>
       
-      <GenericArea nodes={nodes} />
+      <GenericArea nodes={nodes} exclusions={[nodes.construction_sign_front_facing, nodes.construction_sign_rear_facing]}/>
+
+      <mesh geometry={nodes.construction_sign_front_facing.geometry} 
+            position={nodes.construction_sign_front_facing.position} 
+            rotation={nodes.construction_sign_front_facing.rotation} 
+            scale={nodes.construction_sign_front_facing.scale}>
+
+        <meshBasicMaterial map={frontSignTexture} />
+
+      </mesh>
+
+      <mesh geometry={nodes.construction_sign_rear_facing.geometry} 
+            position={nodes.construction_sign_rear_facing.position} 
+            rotation={nodes.construction_sign_rear_facing.rotation} 
+            scale={nodes.construction_sign_rear_facing.scale}>
+              
+        <meshBasicMaterial map={backSignTexture} />
+
+      </mesh>
       
     </group>
   </>
