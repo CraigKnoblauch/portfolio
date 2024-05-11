@@ -10,7 +10,7 @@ import RearwardExhaust from "src/components/RearwardExhaust.jsx"
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-    console.log(nodes)
+    // console.log(nodes)
     const groupRef = useRef()
     const rocketGroupRef = useRef()
     const cradleRef = useRef(nodes.rocket_cradle)
@@ -75,7 +75,7 @@ export default function CareerArea(props) {
                 <meshMatcapMaterial matcap={matcapManager.getMatcapByName('rock-gray')} />
             </mesh>
 
-            <RearwardExhaust emitter={useRef(nodes.exhaust_emitter)} />
+            <RearwardExhaust emitter={nodes.exhaust_emitter} />
 
         </group>
 

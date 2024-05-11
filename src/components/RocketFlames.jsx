@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import MatcapManager from 'src/MatcapManager.js'
 import FifoQueue from 'src/FifoQueue.js'
 
-export default function RocketFlames(nozzleRefs) {
+export default function RocketFlames({nozzleRefs}) {
     if (nozzleRefs.length !== 2) {
         throw new Error('nozzleRefs array length must be equal to 2');
     }
