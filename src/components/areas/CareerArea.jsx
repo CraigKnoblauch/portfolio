@@ -1,19 +1,20 @@
-import { PivotControls, useGLTF } from "@react-three/drei"
-import * as THREE from 'three'
-import { RigidBody } from '@react-three/rapier'
-import { useLoader, useFrame } from "@react-three/fiber"
+import { useGLTF } from "@react-three/drei"
+import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
 import MatcapManager from 'src/MatcapManager.js'
-import FifoQueue from 'src/FifoQueue.js'
 import GenericArea from "src/components/areas/GenericArea"
 import RearwardExhaust from "src/components/RearwardExhaust.jsx"
+import RocketFlames from "../RocketFlames"
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-    // console.log(nodes)
+    console.log(nodes)
     const groupRef = useRef()
     const rocketGroupRef = useRef()
     const cradleRef = useRef(nodes.rocket_cradle)
+
+    const nozzle1Ref = useRef(nodes.rocket_nozzle_1)
+    const nozzle2Ref = useRef(nodes.rocket_nozzle_2)
 
     const matcapManager = new MatcapManager()
 
@@ -33,8 +34,10 @@ export default function CareerArea(props) {
         // Rocket Launch Animation
         // ****************************************************
         // Move the rocket upwards, slowly at first and then gaining speed
-        rocketGroupRef.current.position.y += initialRocketSpeed;
-        initialRocketSpeed += rocketAcceleration;
+        if (rocketGroupRef.current.position.y < 5) { // TODO remove this: Stop the rocket for debugging purposes
+            rocketGroupRef.current.position.y += initialRocketSpeed;
+            initialRocketSpeed += rocketAcceleration;
+        }
 
         // Rotate the cradle until it falls to a set position
         if (cradleRef.current.rotation.z > cradleRotationLimit) {
@@ -52,7 +55,8 @@ export default function CareerArea(props) {
 
         <group ref={groupRef} {...props} dispose={null}>
 
-            <GenericArea nodes={nodes} exclusions={[nodes.fence_segment001, nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle, nodes.rocket_platform]}/>
+            {/* TODO Take the fence segment out of the exclusions list */}
+            <GenericArea nodes={nodes} exclusions={[nodes.fence_segment001, nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle]}/>
 
             <group ref={rocketGroupRef}>
 
@@ -61,11 +65,11 @@ export default function CareerArea(props) {
                 </mesh>
 
                 {/* Todo, the nozzle position isn't changing with the rocket position even though the mesh is moving on the screen */}
-                <mesh geometry={nodes.rocket_nozzle_1.geometry} position={nodes.rocket_nozzle_1.position} rotation={nodes.rocket_nozzle_1.rotation} scale={nodes.rocket_nozzle_1.scale}>
+                <mesh geometry={nodes.rocket_nozzle_1.geometry} ref={nozzle1Ref} position={nodes.rocket_nozzle_1.position} rotation={nodes.rocket_nozzle_1.rotation} scale={nodes.rocket_nozzle_1.scale}>
                     <meshMatcapMaterial matcap={matcapManager.getMatcapByName('silver')} />
                 </mesh>
 
-                <mesh geometry={nodes.rocket_nozzle_2.geometry} position={nodes.rocket_nozzle_2.position} rotation={nodes.rocket_nozzle_2.rotation} scale={nodes.rocket_nozzle_2.scale}>
+                <mesh geometry={nodes.rocket_nozzle_2.geometry} ref={nozzle2Ref} position={nodes.rocket_nozzle_2.position} rotation={nodes.rocket_nozzle_2.rotation} scale={nodes.rocket_nozzle_2.scale}>
                     <meshMatcapMaterial matcap={matcapManager.getMatcapByName('silver')} />
                 </mesh>
 
@@ -76,6 +80,7 @@ export default function CareerArea(props) {
             </mesh>
 
             <RearwardExhaust emitter={nodes.exhaust_emitter} />
+            <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} />
 
         </group>
 
