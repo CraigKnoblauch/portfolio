@@ -1,10 +1,12 @@
 import { useGLTF } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
+
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from "src/components/areas/GenericArea"
 import RearwardExhaust from "src/components/RearwardExhaust.jsx"
-import RocketFlames from "../RocketFlames"
+import RocketFlames from "src/components/RocketFlames.jsx"
+import Caption from "src/components/Caption.jsx"
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
@@ -28,7 +30,7 @@ export default function CareerArea(props) {
 
     useFrame((state, delta) => {
         // temporary for debugging
-        state.camera.lookAt(nodes.rocket.position)
+        // state.camera.lookAt(nodes.rocket.position)
 
         // ****************************************************
         // Rocket Launch Animation
@@ -79,8 +81,17 @@ export default function CareerArea(props) {
                 <meshMatcapMaterial matcap={matcapManager.getMatcapByName('rock-gray')} />
             </mesh>
 
-            <RearwardExhaust emitter={nodes.exhaust_emitter} />
-            <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} />
+            {/* <RearwardExhaust emitter={nodes.exhaust_emitter} />
+            <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} /> */}
+            
+            {/* Captions */}
+            {/* TODO Make these postions dependent on something in the scene */}
+            <Caption path={"./textures/asu-caption.png"}      x={-9.2} z={-14.1} rotation={77.7 * (Math.PI/180)} />
+            <Caption path={"./textures/phoenix-caption.png"}  x={-6}   z={-24.3} rotation={41.8 * (Math.PI/180)} />
+            <Caption path={"./textures/launch-caption.png"}   x={1.6}  z={-25.6}                                 />
+            <Caption path={"./textures/vanguard-caption.png"} x={9}    z={-23.4} rotation={-44.8 * (Math.PI/180)} />
+            <Caption path={"./textures/nrl-caption.png"}      x={11.4} z={-14.1} rotation={-74.5 * (Math.PI/180)} />
+            
 
         </group>
 

@@ -7,6 +7,7 @@ import React, { useRef } from 'react'
 import { useGLTF, useTexture } from '@react-three/drei'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
+import Caption from 'src/components/Caption.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
@@ -40,6 +41,8 @@ export default function HobbiesArea(props) {
         <meshBasicMaterial map={backSignTexture} />
 
       </mesh>
+
+      <Caption path="./textures/keyboard-controls-icon.png" x={1.5} z={1.2} length={2} width={1.5} />
       
     </group>
   </>

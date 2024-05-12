@@ -13,7 +13,7 @@ import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
 const Experience = () => {
     return (
         <>
-            <Physics debug={true}>
+            <Physics debug={false}>
                 <ambientLight />
                 <OrbitControls />
                 <group>
