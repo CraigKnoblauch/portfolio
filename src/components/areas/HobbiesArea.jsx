@@ -5,6 +5,7 @@ Command: npx gltfjsx@6.2.16 hobbies-area.glb
 
 import React, { useRef } from 'react'
 import { useGLTF, useTexture } from '@react-three/drei'
+import { isMobile } from 'react-device-detect'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 import Caption from 'src/components/Caption.jsx'
@@ -42,7 +43,8 @@ export default function HobbiesArea(props) {
 
       </mesh>
 
-      <Caption path="./textures/keyboard-controls-icon.png" x={1.5} z={1.2} length={2} width={1.5} />
+      {/* Show controls on desktop only */}
+      {!isMobile && <Caption path="./textures/keyboard-controls-icon.png" x={1.5} z={1.2} length={2} width={1.5} /> }
       
     </group>
   </>
