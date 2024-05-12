@@ -10,25 +10,26 @@ export default function GenericArea({nodes, exclusions=[]}) {
 
     return <>
 
-        
-        {Object.entries(nodes).map(([key, mesh_obj]) => (
-            
-            //   Popuate this mesh component if the following are true
-            //      1. The object .isObject3D is true
-            //      2. The object type is "Mesh"
-            //      3. The object is not in the exclusions array
-            mesh_obj.isObject3D && mesh_obj.type === "Mesh" && !exclusions.includes(mesh_obj) && (
-                <mesh key={mesh_obj.uuid}
-                      geometry={mesh_obj.geometry}
-                      position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
-                      rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
-                      scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
-                    
-                    <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
+        <RigidBody type="fixed">
+            {Object.entries(nodes).map(([key, mesh_obj]) => (
                 
-                </mesh>
-            )
-        ))} 
+                //   Popuate this mesh component if the following are true
+                //      1. The object .isObject3D is true
+                //      2. The object type is "Mesh"
+                //      3. The object is not in the exclusions array
+                mesh_obj.isObject3D && mesh_obj.type === "Mesh" && !exclusions.includes(mesh_obj) && (
+                    <mesh key={mesh_obj.uuid}
+                        geometry={mesh_obj.geometry}
+                        position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
+                        rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
+                        scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
+                        
+                        <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
+                    
+                    </mesh>
+                )
+            ))} 
+        </RigidBody>
 
     </>
 }

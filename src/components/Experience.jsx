@@ -22,8 +22,8 @@ const Experience = () => {
                     <HobbiesArea />
                     <ProjectsArea />
                     <ContactArea />
-                    {/* <MovementDebugPlane */}
-                    {/* <Rabbit /> */}
+                    {/* <MovementDebugPlane /> */}
+                    <Rabbit />
                 </group>
             </Physics>
         </>

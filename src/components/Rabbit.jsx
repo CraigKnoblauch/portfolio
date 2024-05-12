@@ -1,4 +1,4 @@
-import { RigidBody } from "@react-three/rapier" // NOTE Rapier RigidBody docs: https://rapier.rs/docs/api/javascript/JavaScript3D
+import { RigidBody, CuboidCollider } from "@react-three/rapier" // NOTE Rapier RigidBody docs: https://rapier.rs/docs/api/javascript/JavaScript3D
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
 import { useRef, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"
@@ -59,9 +59,11 @@ export default function Rabbit(props) {
                     angularDamping={0.5}
                     gravityScale={1}
                     position={[0, 0, 0]}
+                    colliders={false}
             >
+                <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} />
                 <group ref={group} name="Scene">
-                    <group name="metarig" rotation={[0.015, 0, 0]} scale={4.716}>
+                    <group name="metarig" rotation={[0.015, 0, 0]} scale={1}>
                     <primitive object={model.nodes.pelvisC} />
                     <primitive object={model.nodes.control_frontl} />
                     <primitive object={model.nodes.pole_target_frontl} />
@@ -80,6 +82,7 @@ export default function Rabbit(props) {
                 </group>
                 
             </RigidBody>
+
         </group>
     </>
 }
