@@ -2,6 +2,7 @@ import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
 import { useLoader } from "@react-three/fiber"
+import { v4 as uuidv4 } from 'uuid'
 import MatcapManager from 'src/MatcapManager.js'
 
 export default function GenericArea({nodes, exclusions=[]}) {
@@ -10,26 +11,50 @@ export default function GenericArea({nodes, exclusions=[]}) {
 
     return <>
 
-        <RigidBody type="fixed">
             {Object.entries(nodes).map(([key, mesh_obj]) => (
                 
                 //   Popuate this mesh component if the following are true
-                //      1. The object .isObject3D is true
-                //      2. The object type is "Mesh"
+                //      1. The object is a mesh
                 //      3. The object is not in the exclusions array
-                mesh_obj.isObject3D && mesh_obj.type === "Mesh" && !exclusions.includes(mesh_obj) && (
-                    <mesh key={mesh_obj.uuid}
-                        geometry={mesh_obj.geometry}
-                        position={[mesh_obj.position.x, mesh_obj.position.y, mesh_obj.position.z]} 
-                        rotation={[mesh_obj.rotation._x, mesh_obj.rotation._y, mesh_obj.rotation._z]} 
-                        scale={[mesh_obj.scale.x, mesh_obj.scale.y, mesh_obj.scale.z]}>
-                        
-                        <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
-                    
-                    </mesh>
+                //
+                //   If the the object is a tile, don't put colliders on the mesh
+                //   NOTE: The better thing would be to have one mesh definition, then have the rigid body
+                //         say something like "colliders={!mesh_obj.name.includes("tile")}" but for whatever reason, colliders={true} creates a ton of errors
+                mesh_obj.isMesh && !exclusions.includes(mesh_obj)) && (
+                    mesh_obj.name.includes("tile") ? (
+                        <RigidBody type="fixed" 
+                                   key={uuidv4()}
+                                   colliders={false}
+                        >
+                            <mesh key={mesh_obj.uuid}
+                                geometry={mesh_obj.geometry}
+                                position={mesh_obj.position} 
+                                rotation={mesh_obj.rotation} 
+                                scale={mesh_obj.scale}
+                            >
+                                
+                                <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
+                            
+                            </mesh>
+                        </RigidBody>
+                    ) : (
+                        <RigidBody type="fixed" 
+                                   key={uuidv4()}
+                        >
+                            <mesh key={mesh_obj.uuid}
+                                  geometry={mesh_obj.geometry}
+                                  position={mesh_obj.position} 
+                                  rotation={mesh_obj.rotation} 
+                                  scale={mesh_obj.scale}
+                            >
+                                
+                                <meshMatcapMaterial matcap={matcapManager.getMatcapByName(mesh_obj.material.name)} />
+                            
+                            </mesh>
+                        </RigidBody>
+                    )
                 )
-            ))} 
-        </RigidBody>
+            )} 
 
     </>
 }
