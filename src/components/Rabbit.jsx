@@ -25,8 +25,8 @@ export default function Rabbit(props) {
         const torque = {x: 0, y: 0, z: 0}
 
         function forward() {
-            impulse.z += Math.cos(rotation.y) * delta * 8000
-            impulse.x += Math.sin(rotation.y) * delta * 8000
+            impulse.z += Math.cos(rotation.y) * delta //* 8000
+            impulse.x += Math.sin(rotation.y) * delta //* 8000
         }
 
         if (keys.forward) {
@@ -36,11 +36,11 @@ export default function Rabbit(props) {
             
         }
         if (keys.left) {
-            torque.y += 1 * delta * 50000
+            torque.y += 1 * delta 
             // forward()
         }
         if (keys.right) {
-            torque.y -= 1 * delta * 50000
+            torque.y -= 1 * delta 
             // forward()
         }
 
@@ -53,12 +53,11 @@ export default function Rabbit(props) {
         <group ref={group} {...props} dispose={null}>
             <RigidBody ref={body} 
                     canSleep={false} 
-                    restitution={0.2} 
                     friction={0.1} 
                     linearDamping={0.5}
                     angularDamping={0.5}
                     gravityScale={1}
-                    position={[0, 0, 0]}
+                    position={[0, 0.2, 0]}
                     colliders={false}
             >
                 <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} />
