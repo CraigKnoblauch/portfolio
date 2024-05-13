@@ -12,6 +12,7 @@ import portalVertexShader from 'src/shaders/portal/vertex.glsl' // TODO not a bi
 import portalFragmentShader from 'src/shaders/portal/fragment.glsl'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
+import FloorButton from 'src/components/FloorButton.jsx'
 
 const PortalMaterial = shaderMaterial(
     {
@@ -30,7 +31,7 @@ export default function RabbitHoleArea(props) {
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
     const matcapManager = new MatcapManager()
 
-    const exclusions = [nodes.rabbit_hole_portal]
+    const exclusions = [nodes.rabbit_hole_portal, nodes.test_button_plane]
 
     // Animate portal
     const portalMaterialRef = useRef()
@@ -53,7 +54,9 @@ export default function RabbitHoleArea(props) {
 
                     <portalMaterial ref={portalMaterialRef} />
 
-            </mesh>                 
+            </mesh>
+
+            <FloorButton mesh_obj={nodes.test_button_plane} />                 
         </group>
     </>
 }

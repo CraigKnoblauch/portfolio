@@ -9,7 +9,7 @@ import CareerArea from "src/components/areas/CareerArea.jsx"
 import ProjectsArea from "src/components/areas/ProjectsArea.jsx"
 import ContactArea from "src/components/areas/ContactArea.jsx"
 import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
-import FloorButton from "src/components/FloorButton.jsx"
+// import FloorButton from "src/components/FloorButton.jsx"
 
 const Experience = () => {
     return (
@@ -24,7 +24,7 @@ const Experience = () => {
                     <ProjectsArea />
                     <ContactArea />
                     {/* <MovementDebugPlane /> */}
-                    <FloorButton />
+                    {/* <FloorButton /> */}
                     <Rabbit />
                 </group>
             </Physics>

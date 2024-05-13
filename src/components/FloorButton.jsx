@@ -11,7 +11,7 @@ import * as THREE from 'three'
 import floorButtonFragmentShader from 'src/shaders/floor-button/fragment.glsl'
 import floorButtonVertexShader from 'src/shaders/floor-button/vertex.glsl'
 
-export default function FloorButton() {
+export default function FloorButton({mesh_obj}) {
 
     const texture = new THREE.TextureLoader().load('./textures/outbound-link-icon.png')
 
@@ -25,12 +25,12 @@ export default function FloorButton() {
     })
 
     return <>
-        <group>
-            <mesh position={[0, 1, 0]} rotation={[0, Math.PI/2, 0]} material={floorButtonMaterial}>
-                <planeGeometry args={[1, 1]} />
-                {/* <meshStandardMaterial color="red" /> */}
-                {/* <floorButtonMaterial /> */}
-            </mesh>
-        </group>
+        <mesh key={mesh_obj.uuid}
+              geometry={mesh_obj.geometry}
+              position={mesh_obj.position} 
+              rotation={mesh_obj.rotation} 
+              scale={mesh_obj.scale}
+              material={floorButtonMaterial}
+        />
     </>
 }
