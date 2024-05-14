@@ -4,33 +4,24 @@
  * 2. Drawing the enter icon hovering above the floor when the rabbit is in the trigger volume
  * 3. Drawing the floating border when the rabbit is in the trigger volume
  */
-import { shaderMaterial } from "@react-three/drei"
-import { extend } from "@react-three/fiber"
+import { shaderMaterial, useTexture } from "@react-three/drei"
 import * as THREE from 'three'
 
-import floorButtonFragmentShader from 'src/shaders/floor-button/fragment.glsl'
-import floorButtonVertexShader from 'src/shaders/floor-button/vertex.glsl'
+// NOTE: Technically all I'm using the plane for is the position
+export default function FloorButton({plane, texturePath, rotation=0}) {
 
-export default function FloorButton({mesh_obj}) {
-
-    const texture = new THREE.TextureLoader().load('./textures/outbound-link-icon.png')
-
-    const floorButtonMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-            uTexture: { value: texture }
-        },
-        vertexShader: floorButtonVertexShader,
-        fragmentShader: floorButtonFragmentShader,
-        transparent: true
-    })
+    // TODO Respond to a trigger volume event here.
+    
+    const texture = useTexture(texturePath)
 
     return <>
-        <mesh key={mesh_obj.uuid}
-              geometry={mesh_obj.geometry}
-              position={mesh_obj.position} 
-              rotation={mesh_obj.rotation} 
-              scale={mesh_obj.scale}
-              material={floorButtonMaterial}
-        />
+        <mesh key={plane.uuid}
+              position={[plane.position.x, 0.05, plane.position.z]} 
+              rotation={[-Math.PI / 2, 0, rotation]}
+              scale={plane.scale}
+        >
+            <planeGeometry args={[1.5, 1.5]} />
+            <meshBasicMaterial alphaMap={ texture } transparent={ true } color="white" />
+        </mesh>
     </>
 }

@@ -8,6 +8,7 @@ import { useGLTF, useTexture } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
+import FloorButton from 'src/components/FloorButton.jsx'
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three'
 
@@ -22,7 +23,11 @@ export default function ContactArea(props) {
     <group {...props} dispose={null}>
       
       {/* Exclude the flag */}
-      <GenericArea nodes={nodes} exclusions={[nodes.Plane002]}/>
+      <GenericArea nodes={nodes} exclusions={[nodes.Plane002,
+                                              nodes.linkedin_floor_button,
+                                              nodes.linkedin_trigger_volume,
+                                              nodes.email_floor_button,
+                                              nodes.email_trigger_volume]}/>
 
       <mesh key={nodes.Plane002.uuid}
             geometry={nodes.Plane002.geometry}
@@ -33,6 +38,9 @@ export default function ContactArea(props) {
         <meshBasicMaterial map={flagTexuture} />
 
       </mesh> 
+
+      <FloorButton plane={nodes.linkedin_floor_button} texturePath={"./textures/outbound-link-icon.png"} rotation={Math.PI/4} />
+      <FloorButton plane={nodes.email_floor_button} texturePath={"./textures/send-mail-link-icon.png"} rotation={Math.PI/4} />
 
       
     </group>

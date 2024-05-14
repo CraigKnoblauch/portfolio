@@ -9,6 +9,7 @@ import { isMobile } from 'react-device-detect'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 import Caption from 'src/components/Caption.jsx'
+import FloorButton from 'src/components/FloorButton.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
@@ -23,7 +24,12 @@ export default function HobbiesArea(props) {
   return <>
     <group {...props} dispose={null}>
       
-      <GenericArea nodes={nodes} exclusions={[nodes.construction_sign_front_facing, nodes.construction_sign_rear_facing]}/>
+      <GenericArea nodes={nodes} exclusions={[
+        nodes.construction_sign_front_facing, 
+        nodes.construction_sign_rear_facing, 
+        nodes.github_floor_button,
+        nodes.github_trigger_volume
+      ]}/>
 
       <mesh geometry={nodes.construction_sign_front_facing.geometry} 
             position={nodes.construction_sign_front_facing.position} 
@@ -45,6 +51,8 @@ export default function HobbiesArea(props) {
 
       {/* Show controls on desktop only */}
       {!isMobile && <Caption path="./textures/keyboard-controls-icon.png" x={1.5} z={1.2} length={2} width={1.5} /> }
+
+      <FloorButton plane={nodes.github_floor_button} texturePath={"./textures/outbound-link-icon.png"} />
       
     </group>
   </>
