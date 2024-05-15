@@ -18,15 +18,16 @@ export default function Rabbit(props) {
 
         // actions["walk/jump"].play()
 
-        // Get current rotation
-        const rotation = body.current.rotation()
+        // Convert rotation to Euler
+        const rotation = new THREE.Euler().setFromQuaternion(body.current.rotation, 'YXZ')
+        console.log("Rotation: ", rotation)
 
         const impulse = {x: 0, y: 0, z: 0}
         const torque = {x: 0, y: 0, z: 0}
 
         function forward() {
-            impulse.z += Math.cos(rotation.y) * delta //* 8000
-            impulse.x += Math.sin(rotation.y) * delta //* 8000
+            impulse.z += Math.cos(rotation.y) * delta 
+            impulse.x += Math.sin(rotation.y) * delta
         }
 
         if (keys.forward) {
@@ -57,7 +58,7 @@ export default function Rabbit(props) {
                     linearDamping={0.5}
                     angularDamping={0.5}
                     gravityScale={1}
-                    position={[0, 0.2, 0]}
+                    position={[0, 0.25, 0]}
                     colliders={false}
             >
                 <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} />

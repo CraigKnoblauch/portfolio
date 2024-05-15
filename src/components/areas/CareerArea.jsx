@@ -10,7 +10,6 @@ import Caption from "src/components/Caption.jsx"
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-    console.log(nodes)
     const groupRef = useRef()
     const rocketGroupRef = useRef()
     const cradleRef = useRef(nodes.rocket_cradle)

@@ -13,7 +13,6 @@ import FloorButton from 'src/components/FloorButton.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
-  console.log(nodes)
   const matcapManager = new MatcapManager()
 
   // Easier to make two objects than to rotate the sign

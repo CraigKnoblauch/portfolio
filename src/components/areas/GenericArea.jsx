@@ -13,6 +13,8 @@ export default function GenericArea({nodes, exclusions=[]}) {
 
             {Object.entries(nodes).map(([key, mesh_obj]) => (
                 
+                // TODO Idea for performance improvement: If the object sits higher than the height of the rabbit, don't put a collider on it
+                
                 //   Popuate this mesh component if the following are true
                 //      1. The object is a mesh
                 //      3. The object is not in the exclusions array
