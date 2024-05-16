@@ -54,6 +54,23 @@ export default function Rabbit(props) {
 
         }
 
+        function turn(direction) {
+            if (direction === "right") {
+                direction = -1
+            } else {
+                direction = 1
+            }
+
+            // Get current rotation as an euler
+            const rotation = euler().setFromQuaternion(
+                quat(body.current.rotation())
+              );
+
+            rotation.y += direction * delta
+
+            body.current.setRotation(quat().setFromEuler(rotation))
+        }
+
         if (keys.forward) {
             forward()
         }
@@ -61,12 +78,10 @@ export default function Rabbit(props) {
             
         }
         if (keys.left) {
-            torque.y += 1 * delta 
-            // forward()
+            turn("left")
         }
         if (keys.right) {
-            torque.y -= 1 * delta 
-            // forward()
+            turn("right")
         }
 
         // Update the body position and rotation
