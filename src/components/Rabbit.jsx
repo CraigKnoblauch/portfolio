@@ -1,4 +1,4 @@
-import { RigidBody, CuboidCollider } from "@react-three/rapier" // NOTE Rapier RigidBody docs: https://rapier.rs/docs/api/javascript/JavaScript3D
+import { RapierRigidBody, euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier" // NOTE Rapier RigidBody docs: https://rapier.rs/docs/api/javascript/JavaScript3D
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
 import { useRef, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"
@@ -11,6 +11,22 @@ export default function Rabbit(props) {
     const model = useGLTF('./models/rabbit.glb')
     const { actions, names } = useAnimations(model.animations, group)
 
+    // useEffect from the docs: https://pmndrs.github.io/react-three-rapier/#moving-things-around-and-applying-forces
+    useEffect(() => {
+        if (body.current) {
+            const position = vec3(body.current.translation());
+            const quaternion = quat(body.current.rotation());
+            const eulerRot = euler().setFromQuaternion(
+              quat(body.current.rotation())
+            );
+      
+            // While Rapier's return types need conversion, setting values can be done directly with Three.js types
+            body.current.setTranslation(position, true);
+            body.current.setRotation(quaternion, true);
+            body.current.setAngvel({ x: 0, y: 2, z: 0 }, true);
+        }
+    }, [])
+
     // Keyboard controls
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
     useFrame((state, delta) => {
@@ -18,16 +34,24 @@ export default function Rabbit(props) {
 
         // actions["walk/jump"].play()
 
-        // Convert rotation to Euler
-        const rotation = new THREE.Euler().setFromQuaternion(body.current.rotation, 'YXZ')
-        console.log("Rotation: ", rotation)
-
         const impulse = {x: 0, y: 0, z: 0}
         const torque = {x: 0, y: 0, z: 0}
 
         function forward() {
-            impulse.z += Math.cos(rotation.y) * delta 
-            impulse.x += Math.sin(rotation.y) * delta
+
+            // Get current rotation as an euler
+            const rotation = euler().setFromQuaternion(
+                quat(body.current.rotation())
+              );
+
+            // Get current position
+            const position = body.current.translation()
+
+            position.z += Math.cos(rotation.y) * delta 
+            position.x += Math.sin(rotation.y) * delta
+
+            body.current.setTranslation(position)
+
         }
 
         if (keys.forward) {
@@ -46,22 +70,23 @@ export default function Rabbit(props) {
         }
 
         // Update the body position and rotation
-        body.current.applyImpulse(impulse)
-        body.current.applyTorqueImpulse(torque)
+        // body.current.applyImpulse(impulse)
+        // body.current.applyTorqueImpulse(torque)
     })
 
     return <>
         <group ref={group} {...props} dispose={null}>
             <RigidBody ref={body} 
+                       type="kinematicPositionBased"
                     canSleep={false} 
-                    friction={0.1} 
-                    linearDamping={0.5}
-                    angularDamping={0.5}
+                    friction={0} 
+                    // linearDamping={0.5}
+                    // angularDamping={0.5}
                     gravityScale={1}
                     position={[0, 0.25, 0]}
-                    colliders={false}
+                    // colliders={false}
             >
-                <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} />
+                {/* <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} /> */}
                 <group ref={group} name="Scene">
                     <group name="metarig" rotation={[0.015, 0, 0]} scale={1}>
                     <primitive object={model.nodes.pelvisC} />

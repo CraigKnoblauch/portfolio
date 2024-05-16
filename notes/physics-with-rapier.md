@@ -1,4 +1,5 @@
 Rapier JS docs: https://rapier.rs/docs/user_guides/javascript/getting_started_js
+react-three-rapier: https://pmndrs.github.io/react-three-rapier/
 
 # Rigid Bodies
 https://rapier.rs/docs/user_guides/rust/rigid_bodies/
@@ -10,7 +11,7 @@ From the Rapier documentation:
 `RigidBodyType::KinematicPositionBased`: Indicates that the body position must not be altered by the physics engine. The user is free to set its next position and the body velocity will be deduced at each update accordingly to ensure a realistic behavior of dynamic bodies in contact with it. This is typically used for moving platforms, elevators, etc.
 `RigidBodyType::KinematicVelocityBased`: Indicates that the body velocity must not be altered by the physics engine. The user is free to set its velocity and the next body position will be deduced at each update accordingly to ensure a realistic behavior of dynamic bodies in contact with it. This is typically used for moving platforms, elevators, etc.
 
-For the rabbit, I believe I want `RigidBodyType::KinematicPositionBased`. In that case, to set the position, we would use specific methods for modifying the position (`RigidBody::set_next_kinematic_rotation`, `RigidBody::set_next_kinematic_translation`). If we modify the position directly, it's akin to teleporting it.
+For the rabbit, I believe I want `RigidBodyType::KinematicPositionBased`. In that case, to set the position, we would use specific methods for modifying the position (`RigidBody::set_next_kinematic_rotation`, `RigidBody::set_next_kinematic_translation`). If we modify the position directly, it's akin to teleporting it. I'm a little concerned about this though, because it looks like kinematic bodies won't be affected by colliders. Will have to test it.
 
 ## Rotation (aka Orientation)
 The rotation values on Rigid bodies oscillate from -1 to 1.
