@@ -80,8 +80,8 @@ export default function CareerArea(props) {
                 <meshMatcapMaterial matcap={matcapManager.getMatcapByName('rock-gray')} />
             </mesh>
 
-            {/* <RearwardExhaust emitter={nodes.exhaust_emitter} />
-            <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} /> */}
+            {/* <RearwardExhaust emitter={nodes.exhaust_emitter} /> */}
+            {/* <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} /> */}
             
             {/* Captions */}
             {/* TODO Make these postions dependent on something in the scene */}

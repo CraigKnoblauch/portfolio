@@ -11,13 +11,15 @@ body,
 }
 
 /**
-* Rabbit controls interfaces style
+* Mobile controls interface
 */
-.rabbit-control-interface
+.mobile-interface
 {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    margin: 20px;
+    opacity: 0.2;
 }

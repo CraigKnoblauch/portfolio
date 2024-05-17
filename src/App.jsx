@@ -1,7 +1,9 @@
 import { Canvas } from "@react-three/fiber"
-import Experience from "./components/Experience"
-import RabbitControlInterface from "./components/RabbitControlInterface"
+import Experience from "src/components/Experience.jsx"
 import { KeyboardControls } from "@react-three/drei"
+import { isMobile } from "react-device-detect"
+import MobileInterface from "src/components/MobileInterface.jsx"
+
 
 function App() {
 
@@ -20,7 +22,8 @@ function App() {
           <Experience />
         </Canvas>
         {/* <RabbitControlInterface /> */}
-      </KeyboardControls>
+      </KeyboardControls>  
+      {isMobile && <MobileInterface />}
     </>
   )
 }
