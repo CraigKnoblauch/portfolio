@@ -39,36 +39,33 @@ export default function Rabbit(props) {
 
         function forward() {
 
-            // Get current rotation as an euler
-            const rotation = euler().setFromQuaternion(
+            // Define the forward vector
+            const forwardVector = new THREE.Vector3(0, 0, 1);
+            
+            // Rotate the forward vector by the current quaternion rotation
+            forwardVector.applyQuaternion(
                 quat(body.current.rotation())
-              );
-
-            // Get current position
-            const position = body.current.translation()
-
-            position.z += Math.cos(rotation.y) * delta 
-            position.x += Math.sin(rotation.y) * delta
-
-            body.current.setTranslation(position)
+            );
+            
+            // Define movement speed
+            const speed = 1; // Adjust speed as needed
+            
+            // Calculate the new position
+            const newPosition = vec3(body.current.translation())
+            newPosition.add(forwardVector.multiplyScalar(speed * delta));
+            
+            // Update the object's position
+            body.current.setTranslation(newPosition);
 
         }
 
         function turn(direction) {
-            if (direction === "right") {
-                direction = -1
-            } else {
-                direction = 1
-            }
 
-            // Get current rotation as an euler
-            const rotation = euler().setFromQuaternion(
-                quat(body.current.rotation())
-              );
+            const rotationQuaternion = quat(body.current.rotation())
+            const rotationDelta = new THREE.Quaternion().setFromAxisAngle(direction, delta)
+            rotationQuaternion.multiply(rotationDelta)
+            body.current.setRotation(rotationQuaternion)
 
-            rotation.y += direction * delta
-
-            body.current.setRotation(quat().setFromEuler(rotation))
         }
 
         if (keys.forward) {
@@ -78,30 +75,29 @@ export default function Rabbit(props) {
             
         }
         if (keys.left) {
-            turn("left")
+            turn(new THREE.Vector3(0, 1, 0))
+            forward()
         }
         if (keys.right) {
-            turn("right")
+            turn(new THREE.Vector3(0, -1, 0))
+            forward()
         }
 
-        // Update the body position and rotation
-        // body.current.applyImpulse(impulse)
-        // body.current.applyTorqueImpulse(torque)
     })
 
     return <>
         <group ref={group} {...props} dispose={null}>
             <RigidBody ref={body} 
-                       type="kinematicPositionBased"
+                       type="dynamic"
                     canSleep={false} 
                     friction={0} 
                     // linearDamping={0.5}
                     // angularDamping={0.5}
                     gravityScale={1}
                     position={[0, 0.25, 0]}
-                    // colliders={false}
+                    colliders={false}
             >
-                {/* <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} /> */}
+                <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} />
                 <group ref={group} name="Scene">
                     <group name="metarig" rotation={[0.015, 0, 0]} scale={1}>
                     <primitive object={model.nodes.pelvisC} />

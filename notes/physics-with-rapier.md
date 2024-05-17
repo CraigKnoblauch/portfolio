@@ -24,3 +24,7 @@ Liner and angular damping are both available to slow down the movement of a rigi
 Make sure the rabbit doesn't sleep. Meaning that physics computations will no longer run on it if it's idle too long. 
 
 Although, if a sleeping rabbit doesn't fall through the floor, this could be a good thing for us. We might be able to catch the go to sleep signal and use it to trigger the idle rabbit animation. Just an idea.
+
+# Quaternions
+Quaternions are used for the rotation number system. I've seen with the turn methods that they're useful for getting the rabbit to turn beyond the -PI, PI threshold that euler angles have. But dang they're confusing at the moment. My forward currently works between -PI and PI, but when the rabbit 'turns around' the forward direction isn't computed correctly. The forward direction is still computed as if the rabbit is facing the other way. Understanding how the quaternion system is working will probably yield any easy way to move the rabbit in the right direction.
+
