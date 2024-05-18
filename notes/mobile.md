@@ -20,3 +20,5 @@ After that, a common identifier for the choice of direction should be used to ke
 
 # Interupting physics engine?
 When I move the rabbit with the mobile UI, it glithces through the floor. My only guess is that the mobile ui is interupting the physics engine somehow. The physics debug view glitches off when I interact with it. That's all I got.
+
+Found this fix: ![alt text](image-7.png)
