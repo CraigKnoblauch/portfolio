@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
-import { useTexture, Float } from "@react-three/drei"
+import { useTexture, Float, useKeyboardControls } from "@react-three/drei"
 
 export default function TriggerVolume({model, link}) {
 
@@ -45,12 +45,17 @@ export default function TriggerVolume({model, link}) {
         interactionIconRef.current.visible = false
     }
 
+    const [subscribeKeys, getKeys] = useKeyboardControls()
     useFrame((state, delta) => {
         /**
-         * Rotate the interaction icon to face the camera
-         * Only do this when the icon is visible
+         * Actions will only occur if the interaction icon is visible.
+         * This is an indication that the rabbit is in the trigger volume
          */
         if (interactionIconRef.current.visible) {
+
+            /**
+             * Rotate the interaction icon to face the camera
+             */
             const camera = state.camera
             const interactionIcon = interactionIconRef.current
 
@@ -59,6 +64,16 @@ export default function TriggerVolume({model, link}) {
                 vector.setFromMatrixPosition(camera.matrixWorld)
                 interactionIcon.lookAt(vector)
             }
+
+            /**
+             * If the user is on desktop and has pressed enter, open the link in a new tab
+             */
+            if (!isMobile) {
+                if (getKeys().enter) {
+                    window.open(link, '_blank')
+                }
+            }
+
         }
     })
 
@@ -75,11 +90,9 @@ export default function TriggerVolume({model, link}) {
                           position={model.position}
                           rotation={model.rotation}
                           scale={model.scale}
-                          visible={true}
                           onClick={() => window.open(link, '_blank')}
-                    >
-                        <meshBasicMaterial color="red" wireframe />
-                    </mesh>
+                          material={new THREE.MeshBasicMaterial({visible: false})}
+                    />
                 </RigidBody>
 
                 {interactionIcon}

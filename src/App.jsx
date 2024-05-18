@@ -14,7 +14,8 @@ function App() {
           { name: 'forward', keys: [ 'ArrowUp', 'KeyW' ] },
           { name: 'backward', keys: [ 'ArrowDown', 'KeyS' ] },
           { name: 'left', keys: [ 'ArrowLeft', 'KeyA' ] },
-          { name: 'right', keys: [ 'ArrowRight', 'KeyD' ] }
+          { name: 'right', keys: [ 'ArrowRight', 'KeyD' ] },
+          { name: 'enter', keys: [ 'Enter' ] }
         ] }
       >
         {/* NOTE Camera position to debug rocket: [3, 3, -40] */}
