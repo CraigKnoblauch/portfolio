@@ -1,30 +1,86 @@
 import { isMobile } from "react-device-detect"
 import { RigidBody, CuboidCollider } from "@react-three/rapier"
 import { v4 as uuidv4 } from 'uuid'
+import { useRef } from "react"
+import { useFrame } from "@react-three/fiber"
+import * as THREE from 'three'
+import { useTexture } from "@react-three/drei"
 
 export default function TriggerVolume({model, link}) {
 
-    console.log(model.geometry)
-    // const { length, width, height } = model.geometry.parameters;
+    /**
+     * Indicator material.
+     * Defaults to desktop icon. If mobile, use mobile icon
+     */
+    let interactionIconTexture = useTexture('./textures/enter-icon.png')
+    if (isMobile) {
+        interactionIconTexture = useTexture('./textures/enter-touch-icon.png')
+    }
+
+    const interactionIconRef = useRef()
+
+    /**
+     * Create the interaction icon at the same position as the model
+     */
+    const interactionIcon = (
+        <mesh ref={interactionIconRef}
+              position={[model.position.x, model.position.y + 1, model.position.z]}
+              visible={false} // Initially invisible
+              onClick={() => window.location.href = link}
+        >
+            <planeGeometry args={[1, 1]} />
+            <meshBasicMaterial alphaMap={ interactionIconTexture } transparent={true} color="white" />
+        </mesh>
+    )
+
+    function showInteractionIcon() {
+        interactionIconRef.current.visible = true
+    }
+
+    function hideInteractionIcon() {
+        interactionIconRef.current.visible = false
+    }
+
+    useFrame((state, delta) => {
+        /**
+         * Rotate the interaction icon to face the camera
+         * Only do this when the icon is visible
+         */
+        if (interactionIconRef.current.visible) {
+            const camera = state.camera
+            const interactionIcon = interactionIconRef.current
+
+            if (camera && interactionIcon) {
+                const vector = new THREE.Vector3()
+                vector.setFromMatrixPosition(camera.matrixWorld)
+                interactionIcon.lookAt(vector)
+            }
+        }
+    })
 
     return (
         <>
-            <RigidBody type="fixed"
-                       onIntersectionEnter={() => {console.log("Intersection Enter")}}
-                       onIntersectionExit={() => {console.log("Intersection Exit")}}
-                       sensor={true}
-            >
-                
-                <mesh geometry={model.geometry}
-                        position={model.position}
-                        rotation={model.rotation}
-                        scale={model.scale}
-                        visible={true}
-                        onClick={() => window.location.href = link}
+            <group>
+                <RigidBody type="fixed"
+                           onIntersectionEnter={() => {showInteractionIcon()}}
+                           onIntersectionExit={() => {hideInteractionIcon()}}
+                           sensor={true}
                 >
-                    <meshBasicMaterial color="red" wireframe />
-                </mesh>
-            </RigidBody>
+                    
+                    <mesh geometry={model.geometry}
+                          position={model.position}
+                          rotation={model.rotation}
+                          scale={model.scale}
+                          visible={true}
+                          onClick={() => window.location.href = link}
+                    >
+                        <meshBasicMaterial color="red" wireframe />
+                    </mesh>
+                </RigidBody>
+
+                {interactionIcon}
+
+            </group>
         </>
     );
 }
