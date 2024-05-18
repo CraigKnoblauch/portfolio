@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.2.16 rabbit-hole-area.glb
 */
 
 import React, { useRef } from 'react'
-import { useGLTF, useMatcapTexture, useTexture, shaderMaterial } from '@react-three/drei'
+import { useGLTF, useMatcapTexture, useTexture, shaderMaterial, Float, Text } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
 import { useLoader, extend, useFrame } from '@react-three/fiber'
@@ -54,6 +54,25 @@ export default function RabbitHoleArea(props) {
                     <portalMaterial ref={portalMaterialRef} />
 
             </mesh>
+
+            {/* 
+                TODO remove in final release
+                Indicates to Beta users that the rabbit hole feature is not currently available
+            */}
+            <Float floatIntensity={ 0.25 } rotationIntensity={ 0.25 }>
+                <Text
+                    font="./fonts/bebas-neue-v9-latin-regular.woff"
+                    scale={ 0.5 }
+                    maxWidth={ 5 }
+                    lineHeight={ 0.75 }
+                    textAlign="center"
+                    position={ [-13, 1, -0.5] }
+                    rotation-y={ Math.PI/2 }
+                    >
+                    Beta Users! This feature is not available yet.
+                    <meshBasicMaterial toneMapped={ false } />
+                </Text>
+            </Float>
                
         </group>
     </>
