@@ -85,11 +85,12 @@ export default function CareerArea(props) {
             
             {/* Captions */}
             {/* TODO Make these postions dependent on something in the scene */}
-            <Caption path={"./textures/asu-caption.png"}      x={-9.2} z={-14.1} rotation={77.7 * (Math.PI/180)} />
-            <Caption path={"./textures/phoenix-caption.png"}  x={-6}   z={-24.3} rotation={41.8 * (Math.PI/180)} />
-            <Caption path={"./textures/launch-caption.png"}   x={1.6}  z={-25.6}                                 />
-            <Caption path={"./textures/vanguard-caption.png"} x={9}    z={-23.4} rotation={-44.8 * (Math.PI/180)} />
-            <Caption path={"./textures/nrl-caption.png"}      x={11.4} z={-14.1} rotation={-74.5 * (Math.PI/180)} />
+            <Caption path={"./textures/asu-caption.png"}           x={-9.2}    z={-14.1} rotation={77.7 * (Math.PI/180)}                   />
+            <Caption path={"./textures/phoenix-caption.png"}       x={-6}      z={-24.3} rotation={41.8 * (Math.PI/180)}                   />
+            <Caption path={"./textures/launch-caption.png"}        x={1.6}     z={-25.6}                                                   />
+            <Caption path={"./textures/launch-button-caption.png"} x={3.72}    z={-26.1}                                   textColor="red" />
+            <Caption path={"./textures/vanguard-caption.png"}      x={9}       z={-23.4} rotation={-44.8 * (Math.PI/180)}                  />
+            <Caption path={"./textures/nrl-caption.png"}           x={11.4}    z={-14.1} rotation={-74.5 * (Math.PI/180)}                  />
             
 
         </group>
