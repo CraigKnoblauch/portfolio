@@ -28,7 +28,7 @@ export default function TriggerVolume({model, link}) {
             <mesh ref={interactionIconRef}
                 position={[model.position.x, model.position.y + 1, model.position.z]}
                 visible={false} // Initially invisible
-                onClick={() => window.location.href = link}
+                onClick={() => window.open(link, '_blank')}
             >
                 <planeGeometry args={[1, 1]} />
                 <meshBasicMaterial alphaMap={ interactionIconTexture } transparent={true} color="white" />
@@ -76,7 +76,7 @@ export default function TriggerVolume({model, link}) {
                           rotation={model.rotation}
                           scale={model.scale}
                           visible={true}
-                          onClick={() => window.location.href = link}
+                          onClick={() => window.open(link, '_blank')}
                     >
                         <meshBasicMaterial color="red" wireframe />
                     </mesh>
