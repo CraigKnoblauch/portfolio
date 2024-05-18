@@ -3,6 +3,8 @@ import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
 import { useRef, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
+import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
+import { isMobile } from "react-device-detect"
 
 export default function Rabbit(props) {
 
@@ -27,15 +29,15 @@ export default function Rabbit(props) {
         }
     }, [])
 
-    // Keyboard controls
+    /**
+     * The React docs very explicitly state that hooks should not be called conditionally
+     * https://legacy.reactjs.org/docs/hooks-rules.html
+     * 
+     * Therefore, call both hooks for mobile and desktop control
+     */
+    const mobileControls = useMobileControlsStore()
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
     useFrame((state, delta) => {
-        const keys = getKeys()
-
-        // actions["walk/jump"].play()
-
-        const impulse = {x: 0, y: 0, z: 0}
-        const torque = {x: 0, y: 0, z: 0}
 
         function forward() {
 
@@ -68,19 +70,60 @@ export default function Rabbit(props) {
 
         }
 
-        if (keys.forward) {
+        // actions["walk/jump"].play()
+
+        /**
+         * Determine the direction the rabbit should move in
+         * 
+         * TODO What if the user is holding "right" + "forward"?
+         * TODO What if the user is holding another combination of keys?
+         */
+        let direction = ""
+        if (isMobile) {
+
+            direction = mobileControls.direction.toLowerCase()
+            console.log("detected mobile, direction: ", direction)
+
+        } else {
+
+            const keys = getKeys()
+            console.log("detected desktop, keys: ", keys)
+            if (keys.forward) {
+                direction = "forward"
+            }
+            if (keys.backward) {
+                direction = "backward"
+            }
+            if (keys.left) {
+                direction = "left"
+            }
+            if (keys.right) {
+                direction = "right"
+            }
+
+        }
+
+        /**
+         * Move the rabbit
+         */
+        if (direction === "forward") {
+
             forward()
-        }
-        if (keys.backward) {
-            
-        }
-        if (keys.left) {
+
+        } else if (direction === "backward") {
+
+            // TODO
+
+        } else if (direction === "left") {
+
             turn(new THREE.Vector3(0, 1, 0))
             forward()
-        }
-        if (keys.right) {
+
+        } else if (direction === "right") {
+
             turn(new THREE.Vector3(0, -1, 0))
             forward()
+
         }
 
     })

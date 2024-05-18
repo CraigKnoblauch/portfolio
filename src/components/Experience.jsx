@@ -9,17 +9,9 @@ import CareerArea from "src/components/areas/CareerArea.jsx"
 import ProjectsArea from "src/components/areas/ProjectsArea.jsx"
 import ContactArea from "src/components/areas/ContactArea.jsx"
 import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
-// import FloorButton from "src/components/FloorButton.jsx"
-import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
-import { useFrame } from "@react-three/fiber"
+import FloorButton from "src/components/FloorButton.jsx"
 
 export default function Experience() {
-
-    const direction = useMobileControlsStore()
-
-    useFrame((state, delta) => {
-        console.log(direction)
-    })
 
     return (
         <>
