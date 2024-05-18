@@ -11,6 +11,7 @@ import GenericArea from 'src/components/areas/GenericArea.jsx'
 import FloorButton from 'src/components/FloorButton.jsx'
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three'
+import TriggerVolume from 'src/components/TriggerVolume.jsx'
 
 export default function ContactArea(props) {
   const { nodes } = useGLTF('./models/contact-area.glb')
@@ -40,6 +41,8 @@ export default function ContactArea(props) {
       </mesh> 
 
       <FloorButton plane={nodes.linkedin_floor_button} texturePath={"./textures/outbound-link-icon.png"} rotation={Math.PI/4} />
+      <TriggerVolume model={nodes.linkedin_trigger_volume} link={"https://www.linkedin.com/in/craig-knoblauch-b88563124/"} />
+
       <FloorButton plane={nodes.email_floor_button} texturePath={"./textures/send-mail-link-icon.png"} rotation={Math.PI/4} />
 
       

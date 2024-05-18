@@ -82,12 +82,10 @@ export default function Rabbit(props) {
         if (isMobile) {
 
             direction = mobileControls.direction.toLowerCase()
-            console.log("detected mobile, direction: ", direction)
 
         } else {
 
             const keys = getKeys()
-            console.log("detected desktop, keys: ", keys)
             if (keys.forward) {
                 direction = "forward"
             }
