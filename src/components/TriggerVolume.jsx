@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
-import { useTexture } from "@react-three/drei"
+import { useTexture, Float } from "@react-three/drei"
 
 export default function TriggerVolume({model, link}) {
 
@@ -23,14 +23,18 @@ export default function TriggerVolume({model, link}) {
      * Create the interaction icon at the same position as the model
      */
     const interactionIcon = (
-        <mesh ref={interactionIconRef}
-              position={[model.position.x, model.position.y + 1, model.position.z]}
-              visible={false} // Initially invisible
-              onClick={() => window.location.href = link}
-        >
-            <planeGeometry args={[1, 1]} />
-            <meshBasicMaterial alphaMap={ interactionIconTexture } transparent={true} color="white" />
-        </mesh>
+        <Float floatIntensity={ 0.25 } rotationIntensity={ 0 }>
+
+            <mesh ref={interactionIconRef}
+                position={[model.position.x, model.position.y + 1, model.position.z]}
+                visible={false} // Initially invisible
+                onClick={() => window.location.href = link}
+            >
+                <planeGeometry args={[1, 1]} />
+                <meshBasicMaterial alphaMap={ interactionIconTexture } transparent={true} color="white" />
+            </mesh>
+
+        </Float>
     )
 
     function showInteractionIcon() {
