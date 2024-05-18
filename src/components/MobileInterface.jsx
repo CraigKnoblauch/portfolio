@@ -22,10 +22,11 @@ export default React.memo(function MobileInterface() {
 
                 <Joystick move={(data) => {setDirection(data.direction)}}
                           stop={() => stop()} 
-                          size={125} 
+                          size={150}
+                          stickSize={80} 
                           sticky={false} 
                           baseColor="white" 
-                          stickColor="limegreen" />
+                          stickColor="black" />
 
             </div>
         </>
