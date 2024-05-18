@@ -44,6 +44,7 @@ export default function ContactArea(props) {
       <TriggerVolume model={nodes.linkedin_trigger_volume} link={"https://www.linkedin.com/in/craig-knoblauch-b88563124/"} />
 
       <FloorButton plane={nodes.email_floor_button} texturePath={"./textures/send-mail-link-icon.png"} rotation={Math.PI/4} />
+      <TriggerVolume model={nodes.email_trigger_volume} link={"mailto:craigknoblauch@gmail.com"} />
 
       
     </group>

@@ -10,6 +10,7 @@ import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 import Caption from 'src/components/Caption.jsx'
 import FloorButton from 'src/components/FloorButton.jsx'
+import TriggerVolume from 'src/components/TriggerVolume.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
@@ -52,6 +53,7 @@ export default function HobbiesArea(props) {
       {!isMobile && <Caption path="./textures/keyboard-controls-icon.png" x={1.5} z={1.2} length={2} width={1.5} /> }
 
       <FloorButton plane={nodes.github_floor_button} texturePath={"./textures/outbound-link-icon.png"} />
+      <TriggerVolume model={nodes.github_trigger_volume} link={"https://github.com/CraigKnoblauch"} />
       
     </group>
   </>
