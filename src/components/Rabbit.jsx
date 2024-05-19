@@ -138,7 +138,7 @@ export default function Rabbit(props) {
                     position={[0, 0.25, 0]}
                     colliders={false}
             >
-                <CuboidCollider args={[0.13777, 0.28, 0.3]} position={[0, 0.285, 0]} />
+                <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[0, 0.285, 0]} />
                 <group ref={group} name="Scene">
                     <group name="metarig" rotation={[0.015, 0, 0]} scale={1}>
                     <primitive object={model.nodes.pelvisC} />
