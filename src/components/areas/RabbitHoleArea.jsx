@@ -39,6 +39,17 @@ export default function RabbitHoleArea(props) {
         portalMaterialRef.current.uTime += delta
     })
 
+    /**
+     * Currently teleports rabbit back to beginning.
+     * Real implementation reserved for v1.0
+     */
+    function portalAction(payload) {
+
+        const rabbitRef = payload.other.rigidBody.userData.rabbitRef
+        rabbitRef.current.setTranslation({ x: 0, y: 0.25, z: 0 })
+        
+    }
+
     return <>
         <group {...props} dispose={null}>
             <GenericArea nodes={nodes} exclusions={exclusions} />
@@ -46,15 +57,22 @@ export default function RabbitHoleArea(props) {
             {/* The portal is in the exclusions so it shouldn't be added by the generic area.
                 Add it here so we can contol the shader material
             */}
-            <mesh key={nodes.rabbit_hole_portal.uuid}
-                  geometry={nodes.rabbit_hole_portal.geometry}
-                  position={[nodes.rabbit_hole_portal.position.x, nodes.rabbit_hole_portal.position.y, nodes.rabbit_hole_portal.position.z]} 
-                  rotation={[nodes.rabbit_hole_portal.rotation._x, nodes.rabbit_hole_portal.rotation._y, nodes.rabbit_hole_portal.rotation._z]} 
-                  scale={[nodes.rabbit_hole_portal.scale.x, nodes.rabbit_hole_portal.scale.y, nodes.rabbit_hole_portal.scale.z]}>
+            <RigidBody type="fixed"
+                       key={uuidv4()} 
+                       colliders="trimesh" 
+                       sensor={true}
+                       onIntersectionEnter={(payload) => portalAction(payload)}
+            >
+                <mesh key={nodes.rabbit_hole_portal.uuid}
+                    geometry={nodes.rabbit_hole_portal.geometry}
+                    position={[nodes.rabbit_hole_portal.position.x, nodes.rabbit_hole_portal.position.y, nodes.rabbit_hole_portal.position.z]} 
+                    rotation={[nodes.rabbit_hole_portal.rotation._x, nodes.rabbit_hole_portal.rotation._y, nodes.rabbit_hole_portal.rotation._z]} 
+                    scale={[nodes.rabbit_hole_portal.scale.x, nodes.rabbit_hole_portal.scale.y, nodes.rabbit_hole_portal.scale.z]}>
 
-                    <portalMaterial ref={portalMaterialRef} />
+                        <portalMaterial ref={portalMaterialRef} />
 
-            </mesh>
+                </mesh>
+            </RigidBody>
 
             {/* Detailed colliders on the rabbit hole section of this area's ground */}
             <RigidBody type="fixed" colliders="trimesh" key={uuidv4()}>
@@ -80,10 +98,10 @@ export default function RabbitHoleArea(props) {
                     maxWidth={ 5 }
                     lineHeight={ 0.75 }
                     textAlign="center"
-                    position={ [-13, 1, -0.5] }
+                    position={ [-13, 1.5, -0.5] }
                     rotation-y={ Math.PI/2 }
                     >
-                    Beta Users! This feature is not available yet.
+                    Beta Users! Note this is not yet fully featured.
                     <meshBasicMaterial toneMapped={ false } />
                 </Text>
             </Float>

@@ -137,6 +137,7 @@ export default function Rabbit(props) {
                     gravityScale={1}
                     position={[0, 0.25, 0]}
                     colliders={false}
+                    userData={{ rabbitRef: body }} // Include a body ref so receivers can manipulate the rabbit. NOTE TODO not a good solution. Can easily lead to side effects. 
             >
                 <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[0, 0.285, 0]} />
                 <group ref={group} name="Scene">
