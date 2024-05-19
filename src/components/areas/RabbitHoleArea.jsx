@@ -8,6 +8,7 @@ import { useGLTF, useMatcapTexture, useTexture, shaderMaterial, Float, Text } fr
 import { RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
 import { useLoader, extend, useFrame } from '@react-three/fiber'
+import { v4 as uuidv4 } from 'uuid'
 import portalVertexShader from 'src/shaders/portal/vertex.glsl' // TODO not a big fan of paths like this
 import portalFragmentShader from 'src/shaders/portal/fragment.glsl'
 import MatcapManager from 'src/MatcapManager.js'
@@ -30,7 +31,7 @@ export default function RabbitHoleArea(props) {
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
     const matcapManager = new MatcapManager()
 
-    const exclusions = [nodes.rabbit_hole_portal]
+    const exclusions = [nodes.rabbit_hole_portal, nodes.rabbit_hole_ground]
 
     // Animate portal
     const portalMaterialRef = useRef()
@@ -54,6 +55,19 @@ export default function RabbitHoleArea(props) {
                     <portalMaterial ref={portalMaterialRef} />
 
             </mesh>
+
+            {/* Detailed colliders on the rabbit hole section of this area's ground */}
+            <RigidBody type="fixed" colliders="trimesh" key={uuidv4()}>
+                <mesh key={nodes.rabbit_hole_ground.uuid}
+                    geometry={nodes.rabbit_hole_ground.geometry}
+                    position={nodes.rabbit_hole_ground.position}
+                    rotation={nodes.rabbit_hole_ground.rotation}
+                    scale={nodes.rabbit_hole_ground.scale}
+                >
+                    <meshMatcapMaterial matcap={matcapManager.getMatcapByName('ground')} />
+                </mesh>
+            </RigidBody>
+
 
             {/* 
                 TODO remove in final release
