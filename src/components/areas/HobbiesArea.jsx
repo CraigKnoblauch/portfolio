@@ -11,6 +11,7 @@ import GenericArea from 'src/components/areas/GenericArea.jsx'
 import Caption from 'src/components/Caption.jsx'
 import FloorButton from 'src/components/FloorButton.jsx'
 import TriggerVolume from 'src/components/TriggerVolume.jsx'
+import { RigidBody } from '@react-three/rapier'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
@@ -21,6 +22,9 @@ export default function HobbiesArea(props) {
   const backSignTexture = useTexture('./textures/construction-sign.png')
   backSignTexture.flipY = false
 
+  const groundTexture = useTexture('./textures/hobbies-area-baked.jpg')
+  groundTexture.flipY = false
+
   return <>
     <group {...props} dispose={null}>
       
@@ -28,7 +32,8 @@ export default function HobbiesArea(props) {
         nodes.construction_sign_front_facing, 
         nodes.construction_sign_rear_facing, 
         nodes.github_floor_button,
-        nodes.github_trigger_volume
+        nodes.github_trigger_volume,
+        nodes.hobbies_ground
       ]}/>
 
       <mesh geometry={nodes.construction_sign_front_facing.geometry} 
@@ -48,6 +53,19 @@ export default function HobbiesArea(props) {
         <meshBasicMaterial map={backSignTexture} />
 
       </mesh>
+
+      {/* Floor with baked material */}
+      <RigidBody type="fixed">
+        <mesh key={nodes.hobbies_ground.uuid}
+              geometry={nodes.hobbies_ground.geometry} 
+              position={nodes.hobbies_ground.position} 
+              rotation={nodes.hobbies_ground.rotation} 
+              scale={nodes.hobbies_ground.scale}>
+
+          <meshBasicMaterial map={groundTexture} />
+
+        </mesh>
+      </RigidBody>
 
       {/* Show controls on desktop only */}
       {!isMobile && <Caption path="./textures/keyboard-controls-icon.png" x={1.5} z={1.2} length={2} width={1.5} /> }
