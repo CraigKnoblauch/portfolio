@@ -16,8 +16,8 @@ import GenericArea from 'src/components/areas/GenericArea.jsx'
 const PortalMaterial = shaderMaterial(
     {
         uTime: 0,
-        uColorStart: new THREE.Color('#ffffff'),
-        uColorEnd: new THREE.Color('#000000')
+        uColorStart: new THREE.Color('#F2E3C6'), // Copilot came up with the inner color!
+        uColorEnd: new THREE.Color('#BFA26B')
     },
     portalVertexShader,
     portalFragmentShader
