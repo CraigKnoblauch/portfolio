@@ -15,7 +15,7 @@ export default function Experience() {
 
     return (
         <>
-            <Physics debug={true}>
+            <Physics debug={false}>
                 <ambientLight />
                 <OrbitControls />
                 <group>
