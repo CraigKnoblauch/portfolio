@@ -31,7 +31,11 @@ export default function RabbitHoleArea(props) {
     const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
     const matcapManager = new MatcapManager()
 
-    const exclusions = [nodes.rabbit_hole_portal, nodes.rabbit_hole_ground]
+    const frontGroundTexture = useTexture('./textures/rabbit-hole-front-baked.jpg')
+    frontGroundTexture.flipY = false
+
+    const rearGroundTexture = useTexture('./textures/rabbit-hole-rear-baked.jpg')
+    rearGroundTexture.flipY = false
 
     // Animate portal
     const portalMaterialRef = useRef()
@@ -52,7 +56,34 @@ export default function RabbitHoleArea(props) {
 
     return <>
         <group {...props} dispose={null}>
-            <GenericArea nodes={nodes} exclusions={exclusions} />
+            <GenericArea nodes={nodes} exclusions={[nodes.rabbit_hole_ground_front, nodes.rabbit_hole_ground_rear,
+                                                    nodes.rabbit_hole_portal, nodes.rabbit_hole_ground]} />
+
+            {/* Floors with baked materials */}
+            <RigidBody type="fixed">
+                <mesh key={nodes.rabbit_hole_ground_front.uuid}
+                      geometry={nodes.rabbit_hole_ground_front.geometry} 
+                      position={nodes.rabbit_hole_ground_front.position} 
+                      rotation={nodes.rabbit_hole_ground_front.rotation} 
+                      scale={nodes.rabbit_hole_ground_front.scale}>
+
+                    <meshBasicMaterial map={frontGroundTexture} />
+
+                </mesh>
+            </RigidBody>
+
+            {/* Add detailed colliders to the section containing the rabbit hole */}
+            <RigidBody type="fixed" colliders="trimesh" key={uuidv4()}>
+                <mesh key={nodes.rabbit_hole_ground_rear.uuid}
+                      geometry={nodes.rabbit_hole_ground_rear.geometry} 
+                      position={nodes.rabbit_hole_ground_rear.position} 
+                      rotation={nodes.rabbit_hole_ground_rear.rotation} 
+                      scale={nodes.rabbit_hole_ground_rear.scale}>
+
+                    <meshBasicMaterial map={rearGroundTexture} />
+
+                </mesh>
+            </RigidBody>
 
             {/* The portal is in the exclusions so it shouldn't be added by the generic area.
                 Add it here so we can contol the shader material
@@ -73,19 +104,6 @@ export default function RabbitHoleArea(props) {
 
                 </mesh>
             </RigidBody>
-
-            {/* Detailed colliders on the rabbit hole section of this area's ground */}
-            <RigidBody type="fixed" colliders="trimesh" key={uuidv4()}>
-                <mesh key={nodes.rabbit_hole_ground.uuid}
-                    geometry={nodes.rabbit_hole_ground.geometry}
-                    position={nodes.rabbit_hole_ground.position}
-                    rotation={nodes.rabbit_hole_ground.rotation}
-                    scale={nodes.rabbit_hole_ground.scale}
-                >
-                    <meshMatcapMaterial matcap={matcapManager.getMatcapByName('ground')} />
-                </mesh>
-            </RigidBody>
-
 
             {/* 
                 TODO remove in final release

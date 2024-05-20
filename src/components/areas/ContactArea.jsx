@@ -17,18 +17,34 @@ export default function ContactArea(props) {
   const { nodes } = useGLTF('./models/contact-area.glb')
   const matcapManager = new MatcapManager()
 
+  const groundTexture = useTexture('./textures/contact-area-baked.jpg')
+  groundTexture.flipY = false
+
   const flagTexuture = useTexture('./textures/usa-flag.png')
   flagTexuture.flipY = false
 
   return <>
     <group {...props} dispose={null}>
       
-      {/* Exclude the flag */}
-      <GenericArea nodes={nodes} exclusions={[nodes.Plane002,
+      <GenericArea nodes={nodes} exclusions={[nodes.contact_ground,
+                                              nodes.Plane002,
                                               nodes.linkedin_floor_button,
                                               nodes.linkedin_trigger_volume,
                                               nodes.email_floor_button,
                                               nodes.email_trigger_volume]}/>
+
+      {/* Floor with baked material */}
+      <RigidBody type="fixed">
+        <mesh key={nodes.contact_ground.uuid}
+              geometry={nodes.contact_ground.geometry} 
+              position={nodes.contact_ground.position} 
+              rotation={nodes.contact_ground.rotation} 
+              scale={nodes.contact_ground.scale}>
+
+          <meshBasicMaterial map={groundTexture} />
+
+        </mesh>
+      </RigidBody>
 
       <mesh key={nodes.Plane002.uuid}
             geometry={nodes.Plane002.geometry}

@@ -4,18 +4,33 @@ Command: npx gltfjsx@6.2.16 projects-area.glb
 */
 
 import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 
 export default function ProjectsArea(props) {
   const { nodes, materials } = useGLTF('./models/projects-area.glb')
-  const matcapManager = new MatcapManager()
+  const groundTexture = useTexture('./textures/projects-area-baked.jpg')
+  groundTexture.flipY = false
+
   return <>
     <group {...props} dispose={null}>
 
-      <GenericArea nodes={nodes} />
+      <GenericArea nodes={nodes} exclusions={[nodes.projects_ground]} />
+
+      {/* Floor with baked material */}
+      <RigidBody type="fixed">
+        <mesh key={nodes.projects_ground.uuid}
+              geometry={nodes.projects_ground.geometry} 
+              position={nodes.projects_ground.position} 
+              rotation={nodes.projects_ground.rotation} 
+              scale={nodes.projects_ground.scale}>
+
+          <meshBasicMaterial map={groundTexture} />
+
+        </mesh>
+      </RigidBody>
       
     </group>
   </>

@@ -1,4 +1,4 @@
-import { useGLTF } from "@react-three/drei"
+import { useGLTF, useTexture } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
 
@@ -12,6 +12,10 @@ import { RigidBody } from "@react-three/rapier"
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
     const groupRef = useRef()
+
+    const groundTexture = useTexture('./textures/career-area-baked.jpg')
+    groundTexture.flipY = false
+
     const rocketGroupRef = useRef()
     const cradleRef = useRef(nodes.rocket_cradle)
 
@@ -83,10 +87,24 @@ export default function CareerArea(props) {
         <group ref={groupRef} {...props} dispose={null}>
 
             {/* TODO Take the fence segment out of the exclusions list */}
-            <GenericArea nodes={nodes} exclusions={[nodes.fence_segment001, 
+            <GenericArea nodes={nodes} exclusions={[nodes.fence_segment001,
+                                                    nodes.career_ground, 
                                                     nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle,
                                                     nodes.launch_button]}
             />
+
+            {/* Floor with baked material */}
+            <RigidBody type="fixed">
+                <mesh key={nodes.career_ground.uuid}
+                      geometry={nodes.career_ground.geometry} 
+                      position={nodes.career_ground.position} 
+                      rotation={nodes.career_ground.rotation} 
+                      scale={nodes.career_ground.scale}>
+
+                    <meshBasicMaterial map={groundTexture} />
+
+                </mesh>
+            </RigidBody>
 
             <group ref={rocketGroupRef}>
 
