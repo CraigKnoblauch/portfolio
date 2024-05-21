@@ -19,7 +19,8 @@ function App() {
         ] }
       >
         {/* NOTE Camera position to debug rocket: [3, 3, -40] */}
-        <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
+        {/* NOTE Starting camera position before beta release: [3, 1, 2] */}
+        <Canvas camera={{ position: [3, 3, -40], fov: 50 }}>
           <Experience />
         </Canvas>
 

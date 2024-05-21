@@ -1,6 +1,8 @@
-import { useGLTF, useTexture } from "@react-three/drei"
+import { useGLTF, useTexture, shaderMaterial } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
+import * as THREE from 'three'
+import { extend } from "@react-three/fiber"
 
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from "src/components/areas/GenericArea"
@@ -9,8 +11,24 @@ import RocketFlames from "src/components/RocketFlames.jsx"
 import Caption from "src/components/Caption.jsx"
 import { RigidBody } from "@react-three/rapier"
 
+import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
+import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
+
+const YellowFlamesMaterial = shaderMaterial(
+    {
+        uTime: 0,
+        uColorStart: new THREE.Color('#F2E3C6'), // Copilot came up with the inner color!
+        uColorEnd: new THREE.Color('#BFA26B')
+    },
+    yellowFlamesVertexShader,
+    yellowFlamesFragmentShader
+)
+
+extend({ YellowFlamesMaterial })
+
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
+    console.log(nodes)
     const groupRef = useRef()
 
     const groundTexture = useTexture('./textures/career-area-baked.jpg')
@@ -39,6 +57,9 @@ export default function CareerArea(props) {
         hasLaunched: false
     }
     const exhaustIsVisibleRef = useRef(false)
+
+    // Animate flames
+    const yellowFlamesMaterialRef = useRef()
 
     /**
      * [x] Move the launch button into the launch button platform so it appears to be pressed
@@ -80,6 +101,9 @@ export default function CareerArea(props) {
         }
         // TODO Under what conditions can I say the launch has completed?
 
+        // TEMP Working on yellow flames animation
+        yellowFlamesMaterialRef.current.uTime += delta
+
     });
     
     return <>
@@ -90,6 +114,7 @@ export default function CareerArea(props) {
             <GenericArea nodes={nodes} exclusions={[nodes.fence_segment001,
                                                     nodes.career_ground, 
                                                     nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle,
+                                                    nodes.rocket_yellow_flames_2,
                                                     nodes.launch_button]}
             />
 
@@ -119,6 +144,10 @@ export default function CareerArea(props) {
 
                 <mesh geometry={nodes.rocket_nozzle_2.geometry} ref={nozzle2Ref} position={nodes.rocket_nozzle_2.position} rotation={nodes.rocket_nozzle_2.rotation} scale={nodes.rocket_nozzle_2.scale}>
                     <meshMatcapMaterial matcap={matcapManager.getMatcapByName('silver')} />
+                </mesh>
+
+                <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} />
                 </mesh>
 
             </group>
