@@ -17,8 +17,8 @@ import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragmen
 const YellowFlamesMaterial = shaderMaterial(
     {
         uTime: 0,
-        uColorStart: new THREE.Color('#F2E3C6'), // Copilot came up with the inner color!
-        uColorEnd: new THREE.Color('#BFA26B')
+        uColorStart: new THREE.Color('#ff0000'), // Copilot came up with the inner color!
+        uColorEnd: new THREE.Color('#00ff00')
     },
     yellowFlamesVertexShader,
     yellowFlamesFragmentShader
