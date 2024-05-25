@@ -1,17 +1,18 @@
-import { RapierRigidBody, euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier" // NOTE Rapier RigidBody docs: https://rapier.rs/docs/api/javascript/JavaScript3D
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
-import { useRef, useEffect } from "react"
+import { RapierRigidBody, euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
+import { useEffect, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
-import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
 import { isMobile } from "react-device-detect"
 
-export default function Rabbit(props) {
+import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
 
-    const group = useRef()
-    const body = useRef()
+export default function NewRabbit() {
+
     const model = useGLTF('./models/rabbit.glb')
-    const { actions, names } = useAnimations(model.animations, group)
+    const body = useRef()
+
+    const { actions, names } = useAnimations(model.animations, model.scene)
 
     // useEffect from the docs: https://pmndrs.github.io/react-three-rapier/#moving-things-around-and-applying-forces
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function Rabbit(props) {
             // While Rapier's return types need conversion, setting values can be done directly with Three.js types
             body.current.setTranslation(position, true);
             body.current.setRotation(quaternion, true);
-            body.current.setAngvel({ x: 0, y: 2, z: 0 }, true);
+            body.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
         }
     }, [])
 
@@ -127,40 +128,16 @@ export default function Rabbit(props) {
     })
 
     return <>
-        <group ref={group} {...props} dispose={null}>
-            <RigidBody ref={body} 
-                       type="dynamic"
-                    canSleep={false} 
-                    friction={0} 
-                    // linearDamping={0.5}
-                    // angularDamping={0.5}
-                    gravityScale={1}
-                    position={[0, 0.25, 0]}
-                    colliders={false}
-                    userData={{ rabbitRef: body }} // Include a body ref so receivers can manipulate the rabbit. NOTE TODO not a good solution. Can easily lead to side effects. 
-            >
-                <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[0, 0.285, 0]} />
-                <group ref={group} name="Scene">
-                    <group name="metarig" rotation={[0.015, 0, 0]} scale={1}>
-                    <primitive object={model.nodes.pelvisC} />
-                    <primitive object={model.nodes.control_frontl} />
-                    <primitive object={model.nodes.pole_target_frontl} />
-                    <primitive object={model.nodes.control_frontr} />
-                    <primitive object={model.nodes.pole_target_frontr} />
-                    <primitive object={model.nodes.control_backl} />
-                    <primitive object={model.nodes.pole_backl} />
-                    <primitive object={model.nodes.control_backr} />
-                    <primitive object={model.nodes.pole_backr} />
-                    <group name="rabbit">
-                        <skinnedMesh name="Plane" geometry={model.nodes.Plane.geometry} material={model.materials.brown} skeleton={model.nodes.Plane.skeleton} />
-                        <skinnedMesh name="Plane_1" geometry={model.nodes.Plane_1.geometry} material={model.materials.white} skeleton={model.nodes.Plane_1.skeleton} />
-                        <skinnedMesh name="Plane_2" geometry={model.nodes.Plane_2.geometry} material={model.materials.black} skeleton={model.nodes.Plane_2.skeleton} />
-                    </group>
-                    </group>
-                </group>
-                
-            </RigidBody>
-
-        </group>
+        <RigidBody type="dynamic" 
+                   ref={ body }
+                   colliders={false} 
+                   canSleep={false}
+                   gravityScale={0} // Here for debugging purposes only
+        >
+            <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[0, 0.285, 0]} />
+            <primitive object={model.scene} position={[0, 0, 0]} scale={0.25}/>
+        </RigidBody>
     </>
 }
+
+useGLTF.preload('./models/rabbit.glb')

@@ -16,7 +16,6 @@ import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragmen
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-    console.log(nodes)
     const groupRef = useRef()
 
     const groundTexture = useTexture('./textures/career-area-baked.jpg')
