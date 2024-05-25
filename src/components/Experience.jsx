@@ -10,6 +10,8 @@ import ProjectsArea from "src/components/areas/ProjectsArea.jsx"
 import ContactArea from "src/components/areas/ContactArea.jsx"
 import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
 import FloorButton from "src/components/FloorButton.jsx"
+import { Suspense } from "react"
+import RabbitSpawn from "./RabbitSpawn"
 
 export default function Experience() {
 
@@ -18,7 +20,11 @@ export default function Experience() {
             <Physics debug={true}>
                 <ambientLight />
                 <OrbitControls />
-                <group>
+
+                {/* Load the Rabbit spawn first */}
+                <RabbitSpawn />
+                <Rabbit />
+                <Suspense>
                     <RabbitHoleArea />
                     <CareerArea />
                     <HobbiesArea />
@@ -26,8 +32,7 @@ export default function Experience() {
                     <ContactArea />
                     {/* <MovementDebugPlane /> */}
                     {/* <FloorButton /> */}
-                    <Rabbit />
-                </group>
+                </Suspense>
             </Physics>
         </>
     )

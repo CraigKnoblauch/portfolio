@@ -15,7 +15,7 @@ const LoadingIndicatorMaterial = shaderMaterial(
 
 extend({ LoadingIndicatorMaterial })
 
-export default function LoadingIndicator() {
+export default function LoadingIndicator(props) {
 
     const meshRef = useRef()
     const loadingIndicatorMaterialRef = useRef()
@@ -31,8 +31,8 @@ export default function LoadingIndicator() {
     })
     
     return <>
-        <mesh ref={meshRef} rotation={[-89.5, 0, 90]}>
-            <planeGeometry args={[6, 6, 10, 10]} />
+        <mesh ref={meshRef} rotation={props.rotation} position={props.position}>
+            <planeGeometry args={props.args} />
             <loadingIndicatorMaterial ref={loadingIndicatorMaterialRef} />
         </mesh>
     </>
