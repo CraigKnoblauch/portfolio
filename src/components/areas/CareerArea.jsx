@@ -34,9 +34,10 @@ export default function CareerArea(props) {
     const rocketAcceleration = 0.001;
 
     // Yellow flames material definitions
-    const perlinTexture = useTexture('./textures/perlin.png')
-    perlinTexture.wrapS = THREE.RepeatWrapping
-    perlinTexture.wrapT = THREE.RepeatWrapping
+    const perlinTexture = useTexture('./textures/red-square.png')
+    // perlinTexture.wrapS = THREE.RepeatWrapping
+    // perlinTexture.wrapT = THREE.RepeatWrapping
+    // perlinTexture.flipY = false
 
     const YellowFlamesMaterial = shaderMaterial(
         {
@@ -153,7 +154,7 @@ export default function CareerArea(props) {
                 </mesh>
 
                 <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
-                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} wireframe />
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} />
                 </mesh>
 
             </group>
