@@ -1,12 +1,21 @@
+uniform float uTime;
+uniform sampler2D uPerlinTexture;
+
 varying vec2 vUv;
 
 void main()
 {
-    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-    vec4 viewPosition = viewMatrix * modelPosition;
-    vec4 projectionPosition = projectionMatrix * viewPosition;
+    vec3 newPosition = position;
 
-    gl_Position = projectionPosition;
+    // Jumpiness in the bottom of the mesh
+    // float jumpyPerlin = texture(
+    //     uPerlinTexture,
+    //     vec2(0.5, uTime)
+    // ).r;
+
+    // newPosition.y += sin(uTime);
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 
     vUv = uv;
 }

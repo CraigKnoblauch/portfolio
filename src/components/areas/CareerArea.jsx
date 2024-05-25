@@ -1,4 +1,4 @@
-import { useGLTF, useTexture, shaderMaterial } from "@react-three/drei"
+import { useGLTF, useTexture, shaderMaterial, Wireframe } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
 import * as THREE from 'three'
@@ -13,18 +13,6 @@ import { RigidBody } from "@react-three/rapier"
 
 import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
-
-const YellowFlamesMaterial = shaderMaterial(
-    {
-        uTime: 0,
-        uColorStart: new THREE.Color('#ff0000'), // Copilot came up with the inner color!
-        uColorEnd: new THREE.Color('#00ff00')
-    },
-    yellowFlamesVertexShader,
-    yellowFlamesFragmentShader
-)
-
-extend({ YellowFlamesMaterial })
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
@@ -44,6 +32,24 @@ export default function CareerArea(props) {
 
     let initialRocketSpeed = 0.01;
     const rocketAcceleration = 0.001;
+
+    // Yellow flames material definitions
+    const perlinTexture = useTexture('./textures/perlin.png')
+    perlinTexture.wrapS = THREE.RepeatWrapping
+    perlinTexture.wrapT = THREE.RepeatWrapping
+
+    const YellowFlamesMaterial = shaderMaterial(
+        {
+            uTime: new THREE.Uniform(0),
+            uPerlinTexture: new THREE.Uniform(perlinTexture),
+            uHotFlameColor: new THREE.Uniform(new THREE.Color('#ff0000')), 
+            uCoolFlameColor: new THREE.Uniform(new THREE.Color('#00ff00'))
+        },
+        yellowFlamesVertexShader,
+        yellowFlamesFragmentShader
+    )
+    
+    extend({ YellowFlamesMaterial })
 
     // Cradle should fall to 90 degrees away from where it started
     // So that it looks like it's fallen to the platform
@@ -102,7 +108,7 @@ export default function CareerArea(props) {
         // TODO Under what conditions can I say the launch has completed?
 
         // TEMP Working on yellow flames animation
-        yellowFlamesMaterialRef.current.uTime += delta
+        yellowFlamesMaterialRef.current.uTime.value += delta
 
     });
     
@@ -147,7 +153,7 @@ export default function CareerArea(props) {
                 </mesh>
 
                 <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
-                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} />
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} wireframe />
                 </mesh>
 
             </group>

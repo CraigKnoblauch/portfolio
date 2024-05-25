@@ -6,20 +6,7 @@ varying vec2 vUv;
 
 void main()
 {
-    float strength = 1.0;
-
-    // Outer glow
-    float outerGlow = distance(vUv, vec2(0.5)) * 9.0 - 1.4;
-    strength += outerGlow;
-
-    // Apply cool step
-    strength += step(- 0.2, strength) * 0.8;
-
-    // // Clamp the value from 0 to 1
-    // strength = clamp(strength, 0.0, 1.0);
-
-    // Final color
-    vec3 color = mix(uColorStart, uColorEnd, uTime*0.1);
-
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
 }
