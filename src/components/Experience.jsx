@@ -10,12 +10,13 @@ import ProjectsArea from "src/components/areas/ProjectsArea.jsx"
 import ContactArea from "src/components/areas/ContactArea.jsx"
 import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
 import FloorButton from "src/components/FloorButton.jsx"
+import NewRabbit from "./NewRabbit"
 
 export default function Experience() {
 
     return (
         <>
-            <Physics debug={false}>
+            <Physics debug={true}>
                 <ambientLight />
                 <OrbitControls />
                 <group>
@@ -26,7 +27,8 @@ export default function Experience() {
                     <ContactArea />
                     {/* <MovementDebugPlane /> */}
                     {/* <FloorButton /> */}
-                    <Rabbit />
+                    {/* <Rabbit /> */}
+                    <NewRabbit />
                 </group>
             </Physics>
         </>
