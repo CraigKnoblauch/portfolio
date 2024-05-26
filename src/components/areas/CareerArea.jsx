@@ -14,6 +14,19 @@ import { RigidBody } from "@react-three/rapier"
 import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
 
+const YellowFlamesMaterial = shaderMaterial(
+    {
+        uTime: new THREE.Uniform(0),
+        uPerlinTexture: new THREE.Uniform(null),
+        uHotFlameColor: new THREE.Uniform(new THREE.Color('#ff0000')), 
+        uCoolFlameColor: new THREE.Uniform(new THREE.Color('#00ff00'))
+    },
+    yellowFlamesVertexShader,
+    yellowFlamesFragmentShader
+)
+
+extend({ YellowFlamesMaterial })
+
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
     const groupRef = useRef()
@@ -32,24 +45,10 @@ export default function CareerArea(props) {
     let initialRocketSpeed = 0.01;
     const rocketAcceleration = 0.001;
 
-    // Yellow flames material definitions
-    const perlinTexture = useTexture('./textures/red-square.png')
-    // perlinTexture.wrapS = THREE.RepeatWrapping
-    // perlinTexture.wrapT = THREE.RepeatWrapping
-    // perlinTexture.flipY = false
-
-    const YellowFlamesMaterial = shaderMaterial(
-        {
-            uTime: new THREE.Uniform(0),
-            uPerlinTexture: new THREE.Uniform(perlinTexture),
-            uHotFlameColor: new THREE.Uniform(new THREE.Color('#ff0000')), 
-            uCoolFlameColor: new THREE.Uniform(new THREE.Color('#00ff00'))
-        },
-        yellowFlamesVertexShader,
-        yellowFlamesFragmentShader
-    )
-    
-    extend({ YellowFlamesMaterial })
+    // Yellow flames perlin noise texture
+    const perlinTexture = useTexture('./textures/perlin.png')
+    perlinTexture.wrapS = THREE.RepeatWrapping
+    perlinTexture.wrapT = THREE.RepeatWrapping
 
     // Cradle should fall to 90 degrees away from where it started
     // So that it looks like it's fallen to the platform
@@ -153,7 +152,7 @@ export default function CareerArea(props) {
                 </mesh>
 
                 <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
-                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} />
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} uPerlinTexture={perlinTexture} />
                 </mesh>
 
             </group>

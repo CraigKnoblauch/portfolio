@@ -8,7 +8,7 @@ void main()
     // Flames
     float flames = texture(uPerlinTexture, vUv).r;
 
-    gl_FragColor = vec4(vUv, 1.0, 1.0);
+    gl_FragColor = vec4(vec3(flames), 1.0);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }
