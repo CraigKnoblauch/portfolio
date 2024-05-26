@@ -23,15 +23,14 @@ export default function Experience() {
 
                 {/* Load the Rabbit spawn first */}
                 <RabbitSpawn />
-                <Rabbit />
+
+                {/* Wait for the rest of the areas to load */}
                 <Suspense>
                     <RabbitHoleArea />
                     <CareerArea />
                     <HobbiesArea />
                     <ProjectsArea />
                     <ContactArea />
-                    {/* <MovementDebugPlane /> */}
-                    {/* <FloorButton /> */}
                 </Suspense>
             </Physics>
         </>

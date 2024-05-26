@@ -7,7 +7,7 @@ import { isMobile } from "react-device-detect"
 
 import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
 
-export default function NewRabbit() {
+export default function Rabbit(props) {
 
     const model = useGLTF('./models/rabbit.glb')
     const body = useRef()
@@ -132,10 +132,13 @@ export default function NewRabbit() {
                    ref={ body }
                    colliders={false} 
                    canSleep={false}
-                   gravityScale={0} // Here for debugging purposes only
+                   gravityScale={1}
+                //    restitution={0}
+                   linearDamping={0.95}
+                   angularDamping={0.95}
         >
-            <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[0, 0.285, 0]} />
-            <primitive object={model.scene} position={[0, 0, 0]} scale={0.25}/>
+            <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[props.position[0], props.position[1] + 0.285, props.position[2]]} />
+            <primitive object={model.scene} position={props.position} scale={0.25}/>
         </RigidBody>
     </>
 }
