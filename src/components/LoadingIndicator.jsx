@@ -19,10 +19,10 @@ export default function LoadingIndicator(props) {
 
     const meshRef = useRef()
     const loadingIndicatorMaterialRef = useRef()
-    let { progress } = useProgress()
+    // let { progress } = useProgress()
 
     useFrame((state, delta) => {
-        loadingIndicatorMaterialRef.current.uProgress = progress/100
+        // loadingIndicatorMaterialRef.current.uProgress = progress/100
     })
     
     return <>
