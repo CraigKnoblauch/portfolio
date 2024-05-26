@@ -3,6 +3,7 @@
 varying vec2 vUv;
 
 uniform float uProgress;
+uniform vec3 uGroundColor;
 
 void main()
 {
@@ -45,7 +46,9 @@ void main()
     // mix with the step value strength works as a decision
     // If strehgth is 0, the first arg will be the color. Black in this case
     // If strength is 1, the second arg will be the color. White in this case
-    vec3 mixedColor = mix(vec3(0.0), vec3(1.0), strength);
+    vec3 mixedColor = mix(vec3(0.0), uGroundColor, strength);
 
     gl_FragColor = vec4(mixedColor, 1.0);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
 }

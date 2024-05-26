@@ -7,7 +7,8 @@ import { useFrame, extend } from '@react-three/fiber'
 
 const LoadingIndicatorMaterial = shaderMaterial(
     {
-        uProgress: 0.0
+        uProgress: 0.0,
+        uGroundColor: new Three.Color('#b9a46f'),
     },
     loadingIndicatorVertexShader,
     loadingIndicatorFragmentShader
