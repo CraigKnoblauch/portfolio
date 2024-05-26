@@ -1,6 +1,6 @@
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
 import { RapierRigidBody, euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { isMobile } from "react-device-detect"
@@ -13,6 +13,7 @@ export default function Rabbit(props) {
     const body = useRef()
 
     const { actions, names } = useAnimations(model.animations, model.scene)
+    const [isMoving, setIsMoving] = useState(false)
 
     // useEffect from the docs: https://pmndrs.github.io/react-three-rapier/#moving-things-around-and-applying-forces
     useEffect(() => {
@@ -30,6 +31,17 @@ export default function Rabbit(props) {
         }
     }, [])
 
+    useEffect(() => {
+        // Play the walk animation if the rabbit is moving
+        if(isMoving) {
+            actions["walk/jump"].reset().fadeIn(0.5).play()
+        }
+
+        // Fade out the walk animation if the rabbit is not moving
+        return () => {actions["walk/jump"].fadeOut(0.5)}
+
+    }, [isMoving]) // [] means run when that var changes
+
     /**
      * The React docs very explicitly state that hooks should not be called conditionally
      * https://legacy.reactjs.org/docs/hooks-rules.html
@@ -41,6 +53,9 @@ export default function Rabbit(props) {
     useFrame((state, delta) => {
 
         function forward() {
+
+            // Label the rabbit as moving
+            setIsMoving(true)
 
             // Define the forward vector
             const forwardVector = new THREE.Vector3(0, 0, 1);
@@ -70,8 +85,6 @@ export default function Rabbit(props) {
             body.current.setRotation(rotationQuaternion)
 
         }
-
-        // actions["walk/jump"].play()
 
         /**
          * Determine the direction the rabbit should move in
@@ -123,6 +136,10 @@ export default function Rabbit(props) {
             turn(new THREE.Vector3(0, -1, 0))
             forward()
 
+        } else {
+
+            setIsMoving(false)
+
         }
 
     })
@@ -136,6 +153,7 @@ export default function Rabbit(props) {
                 //    restitution={0}
                    linearDamping={0.95}
                    angularDamping={0.95}
+                   userData={{ rabbitRef: body }} // Include a body ref so receivers can manipulate the rabbit. NOTE TODO not a good solution. Can easily lead to side effects.
         >
             <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[props.position[0], props.position[1] + 0.285, props.position[2]]} />
             <primitive object={model.scene} position={props.position} scale={0.25}/>
