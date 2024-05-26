@@ -15,12 +15,19 @@ import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.gl
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
 
 // new THREE.Vector3(0xfa, 0xf6, 0xd2)
+/**
+ * Color options
+ * 1. hot white and cool yellow
+ *      uHotFlameColor: new THREE.Color('#faf6d2'),
+ *      uCoolFlameColor: new THREE.Color('#fad482')
+ */
 const YellowFlamesMaterial = shaderMaterial(
     {
         uTime: 0,
         uPerlinTexture: new THREE.Uniform(null),
-        uHotFlameColor: new THREE.Color('#faf6d2'),
-        uCoolFlameColor: new THREE.Color('#fad482')
+        uJumpyPerlinTexture: new THREE.Uniform(null),
+        uHotFlameColor: new THREE.Color('#fabd07'),
+        uCoolFlameColor: new THREE.Color('#077cfa')
     },
     yellowFlamesVertexShader,
     yellowFlamesFragmentShader
@@ -46,10 +53,15 @@ export default function CareerArea(props) {
     let initialRocketSpeed = 0.01;
     const rocketAcceleration = 0.001;
 
-    // Yellow flames perlin noise texture
+    // Flames perlin texture
     const perlinTexture = useTexture('./textures/perlin.png')
     perlinTexture.wrapS = THREE.RepeatWrapping
     perlinTexture.wrapT = THREE.RepeatWrapping
+
+    // Texture to use for flame jumpiness
+    const jumpyPerlinTexture = useTexture('./textures/jumpy-perlin.png')
+    jumpyPerlinTexture.wrapS = THREE.RepeatWrapping
+    jumpyPerlinTexture.wrapT = THREE.RepeatWrapping
 
     // Cradle should fall to 90 degrees away from where it started
     // So that it looks like it's fallen to the platform
@@ -153,7 +165,11 @@ export default function CareerArea(props) {
                 </mesh>
 
                 <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
-                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} uPerlinTexture={perlinTexture} transparent />
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} 
+                                          uPerlinTexture={perlinTexture} 
+                                          uJumpyPerlinTexture={jumpyPerlinTexture}
+                                          transparent 
+                    />
                 </mesh>
 
             </group>
