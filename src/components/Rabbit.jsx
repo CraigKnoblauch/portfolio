@@ -52,13 +52,13 @@ export default function Rabbit(props) {
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
     useFrame((state, delta) => {
 
-        function forward() {
+        function translate(directionScalar) { // translate instead and use 1 for forward, -1 for backward
 
             // Label the rabbit as moving
             setIsMoving(true)
 
             // Define the forward vector
-            const forwardVector = new THREE.Vector3(0, 0, 1);
+            const forwardVector = new THREE.Vector3(0, 0, directionScalar);
             
             // Rotate the forward vector by the current quaternion rotation
             forwardVector.applyQuaternion(
@@ -120,21 +120,21 @@ export default function Rabbit(props) {
          */
         if (direction === "forward") {
 
-            forward()
+            translate(1)
 
         } else if (direction === "backward") {
 
-            // TODO
+            translate(-1)
 
         } else if (direction === "left") {
 
             turn(new THREE.Vector3(0, 1, 0))
-            forward()
+            translate(1)
 
         } else if (direction === "right") {
 
             turn(new THREE.Vector3(0, -1, 0))
-            forward()
+            translate(1)
 
         } else {
 
