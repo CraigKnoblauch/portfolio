@@ -14,12 +14,13 @@ import { RigidBody } from "@react-three/rapier"
 import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
 
+// new THREE.Vector3(0xfa, 0xf6, 0xd2)
 const YellowFlamesMaterial = shaderMaterial(
     {
-        uTime: new THREE.Uniform(0),
+        uTime: 0,
         uPerlinTexture: new THREE.Uniform(null),
-        uHotFlameColor: new THREE.Uniform(new THREE.Color('#ff0000')), 
-        uCoolFlameColor: new THREE.Uniform(new THREE.Color('#00ff00'))
+        uHotFlameColor: new THREE.Color('#faf6d2'),
+        uCoolFlameColor: new THREE.Color('#fad482')
     },
     yellowFlamesVertexShader,
     yellowFlamesFragmentShader
@@ -107,7 +108,7 @@ export default function CareerArea(props) {
         // TODO Under what conditions can I say the launch has completed?
 
         // TEMP Working on yellow flames animation
-        yellowFlamesMaterialRef.current.uTime.value += delta
+        yellowFlamesMaterialRef.current.uTime += delta
 
     });
     
@@ -152,7 +153,7 @@ export default function CareerArea(props) {
                 </mesh>
 
                 <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
-                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} uPerlinTexture={perlinTexture} />
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} uPerlinTexture={perlinTexture} transparent />
                 </mesh>
 
             </group>
