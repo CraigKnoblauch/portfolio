@@ -17,9 +17,9 @@ export default function Experience() {
 
     return (
         <>
-            <Physics debug={true}>
+            <Physics debug={false}>
                 <ambientLight />
-                <OrbitControls />
+                {/* <OrbitControls /> */}
 
                 {/* Load the Rabbit spawn first */}
                 <RabbitSpawn />

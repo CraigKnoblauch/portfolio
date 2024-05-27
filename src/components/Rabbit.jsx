@@ -15,6 +15,9 @@ export default function Rabbit(props) {
     const { actions, names } = useAnimations(model.animations, model.scene)
     const [isMoving, setIsMoving] = useState(false)
 
+    const [ smoothCameraPosition ] = useState(() => new THREE.Vector3(3, 1, 2))
+    const [ smoothCameraTarget ] = useState(() => new THREE.Vector3())
+
     // useEffect from the docs: https://pmndrs.github.io/react-three-rapier/#moving-things-around-and-applying-forces
     useEffect(() => {
         if (body.current) {
@@ -24,7 +27,7 @@ export default function Rabbit(props) {
               quat(body.current.rotation())
             );
       
-            // While Rapier's return types need conversion, setting values can be done directly with Three.js types
+            // While Rapier's return types need conversion, setting values can be done directly with THREE.js types
             body.current.setTranslation(position, true);
             body.current.setRotation(quaternion, true);
             body.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
@@ -52,6 +55,29 @@ export default function Rabbit(props) {
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
     useFrame((state, delta) => {
 
+        /**
+         * Camera
+         */
+        const bodyPosition = body.current.translation()
+
+        const cameraPosition = new THREE.Vector3()
+        cameraPosition.copy(bodyPosition)
+        cameraPosition.z += 5
+        cameraPosition.y += 4
+        cameraPosition.x += 5
+
+        const cameraTarget = new THREE.Vector3()
+        cameraTarget.copy(bodyPosition)
+        // cameraTarget.y += 0.25
+
+        // Smooth out camera animations by lerping
+        // Use of delta ensures movement is consistent across all systems
+        smoothCameraPosition.lerp(cameraPosition, 5 * delta)
+        smoothCameraTarget.lerp(cameraTarget, 5 * delta)
+
+        state.camera.position.copy(smoothCameraPosition)
+        state.camera.lookAt(smoothCameraTarget)
+
         function translate(directionScalar) { // translate instead and use 1 for forward, -1 for backward
 
             // Label the rabbit as moving
@@ -66,7 +92,7 @@ export default function Rabbit(props) {
             );
             
             // Define movement speed
-            const speed = 1; // Adjust speed as needed
+            const speed = 1.5; // Adjust speed as needed
             
             // Calculate the new position
             const newPosition = vec3(body.current.translation())
