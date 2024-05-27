@@ -122,7 +122,7 @@ export default function CareerArea(props) {
                 // Rotate the cradle until it falls to a set position
                 if (cradleRef.current.rotation.z > cradleRotationLimit) {
                     // cradleRef.current.rotation.z -= 0.01
-                    cradleRef.current.rotation.z -= cradleRotationalVelocity * 0.1;
+                    cradleRef.current.rotation.z -= cradleRotationalVelocity * 0.01;
                     cradleRotationalVelocity += 0.05;
                 }
 
