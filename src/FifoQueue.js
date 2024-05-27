@@ -20,6 +20,10 @@ export default class FifoQueue {
         }
     }
 
+    shift() {
+        return this.queue.shift();
+    }
+
     /**
      * FifoQueue's iterator
      */

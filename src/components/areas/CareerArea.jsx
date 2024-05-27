@@ -117,10 +117,10 @@ export default function CareerArea(props) {
                 // Rocket Launch Animation
                 // ****************************************************
                 // Move the rocket upwards, slowly at first and then gaining speed
-                if (rocketGroupRef.current.position.y < 5) { // TODO remove this: Stop the rocket for debugging purposes
+                // if (rocketGroupRef.current.position.y < 5) { // TODO remove this: Stop the rocket for debugging purposes
                     rocketGroupRef.current.position.y += initialRocketSpeed;
                     initialRocketSpeed += rocketAcceleration;
-                }
+                // }
 
                 // Rotate the cradle until it falls to a set position
                 if (cradleRef.current.rotation.z > cradleRotationLimit) {
@@ -135,11 +135,11 @@ export default function CareerArea(props) {
 
             // When the rocket reaches a certain position, stop the launch animation
             // TODO this is a hacky, impatient solution. Refactor to be based on the camera view
-            if (rocketGroupRef.current.position.y >= 5) {
+            if (rocketGroupRef.current.position.y >= 20) {
                 launchState.hasLaunched = true
 
                 // Stop the exhaust fumes
-
+                exhaustRef.current.terminate = true
             }
         }
         // TODO Under what conditions can I say the launch has completed?

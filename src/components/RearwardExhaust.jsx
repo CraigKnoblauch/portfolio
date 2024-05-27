@@ -53,12 +53,16 @@ export default function RearwardExhaust({emitter, exhaustRef}) {
             // If terminated, don't add new elements to the group or the queue, instead, remove them one by one
             // TODO Refactor the above to only happen when necessary (v1.0 fix)
 
-            // Add the new element to the group and the queue
-            // If an element was removed from the queue, remove it from the group
-            groupRef.current.add(dodecahedron);
-            const last = queue.enqueue(dodecahedron);
-            if (last) {
-                groupRef.current.remove(last);
+            if (!exhaustRef.current.terminate) {
+                // Add the new element to the group and the queue
+                // If an element was removed from the queue, remove it from the group
+                groupRef.current.add(dodecahedron);
+                const last = queue.enqueue(dodecahedron);
+                if (last) {
+                    groupRef.current.remove(last);
+                }
+            } else {
+                groupRef.current.remove(queue.shift());
             }
 
             for (const element of queue) {
