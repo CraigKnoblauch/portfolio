@@ -73,6 +73,7 @@ export default function CareerArea(props) {
     const launchButtonZTarget = nodes.launch_button.position.z - 0.09
     const launchState = {
         initLaunch: false,
+        isTimeToFly: false, // There will be a small delay before the rocket actually flys up, but the exhaust needs to be going in that time.
         hasLaunched: false
     }
     const exhaustIsVisibleRef = useRef(false)
@@ -80,6 +81,13 @@ export default function CareerArea(props) {
     // Animate flames
     const yellowFlamesMaterialRef1 = useRef()
     const yellowFlamesMaterialRef2 = useRef()
+
+    function startLaunch() {
+        launchState.initLaunch = true
+        window.setTimeout(() => {
+            launchState.isTimeToFly = true
+        }, 500)
+    }
 
     /**
      * [x] Move the launch button into the launch button platform so it appears to be pressed
@@ -100,24 +108,27 @@ export default function CareerArea(props) {
             // Show the exhaust fumes
             exhaustIsVisibleRef.current = true
 
-            // ****************************************************
-            // Rocket Launch Animation
-            // ****************************************************
-            // Move the rocket upwards, slowly at first and then gaining speed
-            if (rocketGroupRef.current.position.y < 5) { // TODO remove this: Stop the rocket for debugging purposes
-                rocketGroupRef.current.position.y += initialRocketSpeed;
-                initialRocketSpeed += rocketAcceleration;
-            }
+            // If it's time to fly, run the rocket launch animation
+            if (launchState.isTimeToFly) {
+                // ****************************************************
+                // Rocket Launch Animation
+                // ****************************************************
+                // Move the rocket upwards, slowly at first and then gaining speed
+                if (rocketGroupRef.current.position.y < 5) { // TODO remove this: Stop the rocket for debugging purposes
+                    rocketGroupRef.current.position.y += initialRocketSpeed;
+                    initialRocketSpeed += rocketAcceleration;
+                }
 
-            // Rotate the cradle until it falls to a set position
-            if (cradleRef.current.rotation.z > cradleRotationLimit) {
-                // cradleRef.current.rotation.z -= 0.01
-                cradleRef.current.rotation.z -= cradleRotationalVelocity * 0.1;
-                cradleRotationalVelocity += 0.05;
-            }
+                // Rotate the cradle until it falls to a set position
+                if (cradleRef.current.rotation.z > cradleRotationLimit) {
+                    // cradleRef.current.rotation.z -= 0.01
+                    cradleRef.current.rotation.z -= cradleRotationalVelocity * 0.1;
+                    cradleRotationalVelocity += 0.05;
+                }
 
-            // end rocket launch animation
-            // ****************************************************
+                // end rocket launch animation
+                // ****************************************************
+            }
         }
         // TODO Under what conditions can I say the launch has completed?
 
@@ -194,13 +205,13 @@ export default function CareerArea(props) {
             {/* <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} /> */}
 
             {/* Launch button */}
-            <RigidBody type="fixed" onCollisionEnter={() => { launchState.initLaunch = true }}>
+            <RigidBody type="fixed" onCollisionEnter={startLaunch}>
                 <mesh ref={launchButtonRef}
                       geometry={nodes.launch_button.geometry} 
                       position={nodes.launch_button.position} 
                       rotation={nodes.launch_button.rotation} 
                       scale={nodes.launch_button.scale}
-                      onClick={() => {launchState.initLaunch = true}}> {/* Include this click for debugging only */}
+                      onClick={startLaunch}> {/* Include this click for debugging only */}
 
                     <meshMatcapMaterial matcap={matcapManager.getMatcapByName('vanguard-red')} />
                     
