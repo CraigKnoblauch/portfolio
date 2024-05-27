@@ -1,4 +1,4 @@
-import { useGLTF, useTexture, shaderMaterial, Wireframe } from "@react-three/drei"
+import { useGLTF, useTexture, shaderMaterial, Float, Text } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
 import * as THREE from 'three'
@@ -229,13 +229,32 @@ export default function CareerArea(props) {
                     
                 </mesh>
             </RigidBody>
+
+            {/* 
+                Launch button caption, floating text because I can't figure out the z fighting right now
+            */}
+            <Float floatIntensity={ 0.3 } rotationIntensity={ 0 }>
+                <Text
+                    font="./fonts/bebas-neue-v9-latin-regular.woff"
+                    scale={ 0.5 }
+                    maxWidth={ 5 }
+                    lineHeight={ 0.75 }
+                    textAlign="center"
+                    position={ [3.45, 1.25, -26.1] }
+                    rotation-y={ 0 }
+                    color="red"
+                    >
+                    LAUNCH
+                    <meshBasicMaterial toneMapped={ false } />
+                </Text>
+            </Float>
             
             {/* Captions */}
             {/* TODO Make these postions dependent on something in the scene */}
             <Caption path={"./textures/asu-caption.png"}           x={-9.2}    z={-14.1} rotation={77.7 * (Math.PI/180)}                   />
             <Caption path={"./textures/phoenix-caption.png"}       x={-6}      z={-24.3} rotation={41.8 * (Math.PI/180)}                   />
             <Caption path={"./textures/launch-caption.png"}        x={1.6}     z={-25.6}                                                   />
-            <Caption path={"./textures/launch-button-caption.png"} x={3.72}    z={-26.1}                                   textColor="red" />
+            {/* <Caption path={"./textures/launch-button-caption.png"} x={3.72}    z={-26.1}                                   textColor="red" /> */}
             <Caption path={"./textures/vanguard-caption.png"}      x={9}       z={-23.4} rotation={-44.8 * (Math.PI/180)}                  />
             <Caption path={"./textures/nrl-caption.png"}           x={11.4}    z={-14.1} rotation={-74.5 * (Math.PI/180)}                  />
             
