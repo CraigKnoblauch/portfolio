@@ -1,5 +1,6 @@
 uniform float uTime;
 uniform sampler2D uJumpyPerlinTexture;
+uniform float uJumpyPerlinTextureVertical;
 
 varying vec2 vUv;
 
@@ -11,7 +12,7 @@ void main()
 
         float jumpyPerlin = texture(
             uJumpyPerlinTexture, 
-            vec2(0.5, uv.y * 0.2 - uTime)
+            vec2(uJumpyPerlinTextureVertical, uv.y * 0.2 - uTime)
         ).r;
 
         newPosition.y -= jumpyPerlin * 2.0;

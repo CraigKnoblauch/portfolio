@@ -26,6 +26,7 @@ const YellowFlamesMaterial = shaderMaterial(
         uTime: 0,
         uPerlinTexture: new THREE.Uniform(null),
         uJumpyPerlinTexture: new THREE.Uniform(null),
+        uJumpyPerlinTextureVertical: 0,
         uHotFlameColor: new THREE.Color('#fabd07'),
         uCoolFlameColor: new THREE.Color('#077cfa')
     },
@@ -77,7 +78,8 @@ export default function CareerArea(props) {
     const exhaustIsVisibleRef = useRef(false)
 
     // Animate flames
-    const yellowFlamesMaterialRef = useRef()
+    const yellowFlamesMaterialRef1 = useRef()
+    const yellowFlamesMaterialRef2 = useRef()
 
     /**
      * [x] Move the launch button into the launch button platform so it appears to be pressed
@@ -120,7 +122,8 @@ export default function CareerArea(props) {
         // TODO Under what conditions can I say the launch has completed?
 
         // TEMP Working on yellow flames animation
-        yellowFlamesMaterialRef.current.uTime += delta
+        yellowFlamesMaterialRef1.current.uTime += delta
+        yellowFlamesMaterialRef2.current.uTime += delta
 
     });
     
@@ -129,10 +132,9 @@ export default function CareerArea(props) {
         <group ref={groupRef} {...props} dispose={null}>
 
             {/* TODO Take the fence segment out of the exclusions list */}
-            <GenericArea nodes={nodes} exclusions={[nodes.fence_segment001,
-                                                    nodes.career_ground, 
+            <GenericArea nodes={nodes} exclusions={[nodes.career_ground, 
                                                     nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle,
-                                                    nodes.rocket_yellow_flames_2,
+                                                    nodes.rocket_yellow_flames_1, nodes.rocket_yellow_flames_2,
                                                     nodes.launch_button]}
             />
 
@@ -164,10 +166,20 @@ export default function CareerArea(props) {
                     <meshMatcapMaterial matcap={matcapManager.getMatcapByName('silver')} />
                 </mesh>
 
-                <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
-                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef} 
+                <mesh geometry={nodes.rocket_yellow_flames_1.geometry} position={nodes.rocket_yellow_flames_1.position} rotation={nodes.rocket_yellow_flames_1.rotation} scale={nodes.rocket_yellow_flames_1.scale}>
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef1} 
                                           uPerlinTexture={perlinTexture} 
                                           uJumpyPerlinTexture={jumpyPerlinTexture}
+                                          uJumpyPerlinTextureVertical={0.5}
+                                          transparent 
+                    />
+                </mesh>
+
+                <mesh geometry={nodes.rocket_yellow_flames_2.geometry} position={nodes.rocket_yellow_flames_2.position} rotation={nodes.rocket_yellow_flames_2.rotation} scale={nodes.rocket_yellow_flames_2.scale}>
+                    <yellowFlamesMaterial ref={yellowFlamesMaterialRef2} 
+                                          uPerlinTexture={perlinTexture} 
+                                          uJumpyPerlinTexture={jumpyPerlinTexture}
+                                          uJumpyPerlinTextureVertical={0.25}
                                           transparent 
                     />
                 </mesh>
