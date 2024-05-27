@@ -153,7 +153,7 @@ export default function CareerArea(props) {
 
             <group ref={rocketGroupRef}>
 
-                <mesh geometry={nodes.rocket.geometry}>
+                <mesh geometry={nodes.rocket.geometry} position={nodes.rocket.position}>
                     <meshMatcapMaterial matcap={matcapManager.getMatcapByName('bright-white')} />
                 </mesh>
 

@@ -19,6 +19,7 @@ function App() {
         ] }
       >
         {/* NOTE Camera position to debug rocket: [3, 3, -40] */}
+        {/* NOTE Camera position to debug flames shader: [1.6, 5.9, -32.4] */}
         {/* NOTE Starting camera position before beta release: [3, 1, 2] */}
         <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
           <Experience />
