@@ -5,7 +5,13 @@ import * as THREE from 'three'
 import MatcapManager from 'src/MatcapManager.js'
 import FifoQueue from 'src/FifoQueue.js'
 
-export default function RearwardExhaust({emitter, isVisibleRef}) {
+/**
+ * TODO
+ * Put isVisible and terminate in a ref object
+ * isVisible initiates the animation
+ * terminate stops the animation. In this case I can't just delete all elements, I have to pop the queue until it's empty
+ */
+export default function RearwardExhaust({emitter, exhaustRef}) {
 
     if (!emitter) {
         throw new Error("Emitter for rearward exhaust is not defined.");
@@ -25,7 +31,7 @@ export default function RearwardExhaust({emitter, isVisibleRef}) {
 
     useFrame((state, delta) => {
         
-        if ( isVisibleRef.current ) { // NOTE TODO Using a ref like this is not the best way to handle this. It's a workaround for now.
+        if ( exhaustRef.current.isVisible ) { // NOTE TODO Using a ref like this is not the best way to handle this. It's a workaround for now.
             const dodecahedron = new THREE.Mesh(
                 new THREE.DodecahedronGeometry(1),
                 new THREE.MeshMatcapMaterial({ matcap: materials[Math.floor(Math.random() * materials.length)] })
@@ -43,6 +49,9 @@ export default function RearwardExhaust({emitter, isVisibleRef}) {
                 Math.random() * 0.1,
                 Math.random() * 0.1
             );
+
+            // If terminated, don't add new elements to the group or the queue, instead, remove them one by one
+            // TODO Refactor the above to only happen when necessary (v1.0 fix)
 
             // Add the new element to the group and the queue
             // If an element was removed from the queue, remove it from the group

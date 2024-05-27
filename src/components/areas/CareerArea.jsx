@@ -76,7 +76,10 @@ export default function CareerArea(props) {
         isTimeToFly: false, // There will be a small delay before the rocket actually flys up, but the exhaust needs to be going in that time.
         hasLaunched: false
     }
-    const exhaustIsVisibleRef = useRef(false)
+    const exhaustRef = useRef({
+        isVisible: false,
+        terminate: false
+    })
 
     // Animate flames
     const yellowFlamesMaterialRef1 = useRef()
@@ -106,7 +109,7 @@ export default function CareerArea(props) {
             }
 
             // Show the exhaust fumes
-            exhaustIsVisibleRef.current = true
+            exhaustRef.current.isVisible = true
 
             // If it's time to fly, run the rocket launch animation
             if (launchState.isTimeToFly) {
@@ -128,6 +131,15 @@ export default function CareerArea(props) {
 
                 // end rocket launch animation
                 // ****************************************************
+            }
+
+            // When the rocket reaches a certain position, stop the launch animation
+            // TODO this is a hacky, impatient solution. Refactor to be based on the camera view
+            if (rocketGroupRef.current.position.y >= 5) {
+                launchState.hasLaunched = true
+
+                // Stop the exhaust fumes
+
             }
         }
         // TODO Under what conditions can I say the launch has completed?
@@ -201,7 +213,7 @@ export default function CareerArea(props) {
                 <meshMatcapMaterial matcap={matcapManager.getMatcapByName('rock-gray')} />
             </mesh>
 
-            <RearwardExhaust emitter={nodes.exhaust_emitter} isVisibleRef={exhaustIsVisibleRef} />
+            <RearwardExhaust emitter={nodes.exhaust_emitter} exhaustRef={exhaustRef} />
             {/* <RocketFlames nozzleRefs={[nozzle1Ref, nozzle2Ref]} /> */}
 
             {/* Launch button */}
