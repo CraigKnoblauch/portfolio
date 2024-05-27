@@ -28,7 +28,7 @@ extend({ PortalMaterial })
 
 export default function RabbitHoleArea(props) {
 
-    const { nodes, materials } = useGLTF('./models/rabbit-hole-area.glb')
+    const { nodes, materials } = useGLTF('/models/rabbit-hole-area.glb')
     const matcapManager = new MatcapManager()
 
     const frontGroundTexture = useTexture('./textures/rabbit-hole-front-baked.jpg')
