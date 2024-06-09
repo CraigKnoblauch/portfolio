@@ -12,11 +12,12 @@ export default function TriggerVolume({model, link}) {
      * Indicator material.
      * Defaults to desktop icon. If mobile, use mobile icon
      */
-    let interactionIconTexture = useTexture('./textures/enter-icon.png')
+    let interactionIconTexturePath = './textures/enter-icon.png'
     if (isMobile) {
-        interactionIconTexture = useTexture('./textures/enter-touch-icon.png')
+        interactionIconTexturePath = './textures/enter-touch-icon.png'
     }
 
+    const interactionIconTexture = useTexture(interactionIconTexturePath)
     const interactionIconRef = useRef()
 
     /**
