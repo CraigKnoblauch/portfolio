@@ -12,7 +12,7 @@ import { useMobileControlsStore } from "src/stores/useMobileControlsStore"
  * When the user stops moving the joystick, the stop function from the useMobileControlsStore is called
  * Currently useMobileControlsStore can be accessed from any component in the app
  */
-export default React.memo(function MobileInterface() {
+const MobileInterface = React.memo(function MobileInterface() {
 
     const setDirection = useMobileControlsStore(state => state.setDirection)
     const stop = useMobileControlsStore(state => state.stop)
@@ -32,4 +32,6 @@ export default React.memo(function MobileInterface() {
             </div>
         </>
     );
-})
+});
+
+export default MobileInterface;
