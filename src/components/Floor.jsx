@@ -1,9 +1,10 @@
 import * as Three from 'three'
-import { PivotControls, shaderMaterial } from "@react-three/drei"
+import { PivotControls } from "@react-three/drei"
+import { useRef, useMemo } from 'react'
+
 import floorFragmentShader from '../shaders/floor/fragment.glsl'
 import floorVertexShader from '../shaders/floor/vertex.glsl'
-import { extend } from '@react-three/fiber'
-import { useRef, useMemo } from 'react'
+
 
 // Temporary to figure out texture
 // const BackgroundTexture = new Three.TextureLoader().load('../textures/sky.jpg')

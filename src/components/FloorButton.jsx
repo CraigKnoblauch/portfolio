@@ -4,8 +4,8 @@
  * 2. Drawing the enter icon hovering above the floor when the rabbit is in the trigger volume
  * 3. Drawing the floating border when the rabbit is in the trigger volume
  */
-import { shaderMaterial, useTexture } from "@react-three/drei"
-import * as THREE from 'three'
+import { useTexture } from "@react-three/drei"
+
 
 // NOTE: Technically all I'm using the plane for is the position
 export default function FloorButton({plane, texturePath, rotation=0}) {

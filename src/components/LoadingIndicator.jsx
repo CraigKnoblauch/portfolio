@@ -5,6 +5,7 @@ import loadingIndicatorVertexShader from '../shaders/loading-indicator/vertex.gl
 import { useRef } from 'react'
 import { useFrame, extend } from '@react-three/fiber'
 
+
 const LoadingIndicatorMaterial = shaderMaterial(
     {
         uProgress: 0.0,

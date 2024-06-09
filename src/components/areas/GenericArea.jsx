@@ -1,9 +1,8 @@
-import { useGLTF } from "@react-three/drei"
-import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
-import { useLoader } from "@react-three/fiber"
 import { v4 as uuidv4 } from 'uuid'
+
 import MatcapManager from 'src/MatcapManager.js'
+
 
 export default function GenericArea({nodes, exclusions=[]}) {
 

@@ -3,16 +3,16 @@ import { useFrame } from "@react-three/fiber"
 import { useRef } from 'react'
 import * as THREE from 'three'
 import { extend } from "@react-three/fiber"
+import { RigidBody } from "@react-three/rapier"
 
 import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from "src/components/areas/GenericArea"
 import RearwardExhaust from "src/components/RearwardExhaust.jsx"
-import RocketFlames from "src/components/RocketFlames.jsx"
 import Caption from "src/components/Caption.jsx"
-import { RigidBody } from "@react-three/rapier"
 
 import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
+
 
 // new THREE.Vector3(0xfa, 0xf6, 0xd2)
 /**

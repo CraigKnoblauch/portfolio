@@ -1,6 +1,7 @@
 import { useTexture } from "@react-three/drei"
 import * as THREE from "three"
 
+
 export default function Caption({x=0, z=0, rotation=0, length=3, width=1, path, textColor="white"}) {
 
     if (!path) {

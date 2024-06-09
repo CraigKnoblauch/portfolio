@@ -5,7 +5,7 @@ import { useProgress } from '@react-three/drei'
 
 import LoadingIndicator from 'src/components/LoadingIndicator.jsx'
 import Rabbit from 'src/components/Rabbit.jsx'
-import { useFrame } from '@react-three/fiber'
+
 
 export default function RabbitSpawn() {
 

@@ -1,11 +1,12 @@
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
-import { RapierRigidBody, euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
+import { euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
 import { useEffect, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { isMobile } from "react-device-detect"
 
 import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
+
 
 export default function Rabbit(props) {
 
