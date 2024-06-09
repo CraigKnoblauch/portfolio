@@ -1,3 +1,6 @@
+There's a way to blend colors across the floor planes and have shadow maps. Keeping some idea code here:
+
+```jsx
 import * as Three from 'three'
 import { PivotControls } from "@react-three/drei"
 import { useRef, useMemo } from 'react'
@@ -57,3 +60,4 @@ export default function Floor() {
         </PivotControls>
     </>
 }
+```
