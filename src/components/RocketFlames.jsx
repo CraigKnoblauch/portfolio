@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three'
+import PropTypes from 'prop-types'
 
 import MatcapManager from 'src/MatcapManager.js'
 import FifoQueue from 'src/FifoQueue.js'
@@ -71,4 +72,7 @@ export default function RocketFlames({nozzleRefs}) {
             {/* Flame elements will be populated in here */}
         </group>
     </>
+}
+RocketFlames.propTypes = {
+    nozzleRefs: PropTypes.arrayOf(PropTypes.object).isRequired
 }

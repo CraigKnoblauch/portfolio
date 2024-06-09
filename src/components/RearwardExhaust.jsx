@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three'
+import PropTypes from 'prop-types'
 
 import MatcapManager from 'src/MatcapManager.js'
 import FifoQueue from 'src/FifoQueue.js'
@@ -106,4 +107,8 @@ export default function RearwardExhaust({emitter, exhaustRef}) {
             {/* Exhaust elements added to this group */}
         </group>
     </>
+}
+RearwardExhaust.propTypes = {
+    emitter: PropTypes.object.isRequired,
+    exhaustRef: PropTypes.object.isRequired
 }

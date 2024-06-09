@@ -5,6 +5,7 @@
  * 3. Drawing the floating border when the rabbit is in the trigger volume
  */
 import { useTexture } from "@react-three/drei"
+import PropTypes from 'prop-types'
 
 
 // NOTE: Technically all I'm using the plane for is the position
@@ -24,4 +25,9 @@ export default function FloorButton({plane, texturePath, rotation=0}) {
             <meshBasicMaterial alphaMap={ texture } transparent={ true } color="white" />
         </mesh>
     </>
+}
+FloorButton.propTypes = {
+    plane: PropTypes.object.isRequired,
+    texturePath: PropTypes.string.isRequired,
+    rotation: PropTypes.number
 }

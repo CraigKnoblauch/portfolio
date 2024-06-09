@@ -1,5 +1,6 @@
 import { useTexture } from "@react-three/drei"
 import * as THREE from "three"
+import PropTypes from 'prop-types'
 
 
 export default function Caption({x=0, z=0, rotation=0, length=3, width=1, path, textColor="white"}) {
@@ -19,3 +20,12 @@ export default function Caption({x=0, z=0, rotation=0, length=3, width=1, path, 
         </mesh>
     </>
 }
+Caption.propTypes = {
+    x: PropTypes.number,
+    z: PropTypes.number,
+    rotation: PropTypes.number,
+    length: PropTypes.number,
+    width: PropTypes.number,
+    path: PropTypes.string.isRequired,
+    textColor: PropTypes.string
+  };

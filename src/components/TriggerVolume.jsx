@@ -4,6 +4,7 @@ import { useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import { useTexture, Float, useKeyboardControls } from "@react-three/drei"
+import PropTypes from 'prop-types'
 
 
 export default function TriggerVolume({model, link}) {
@@ -101,4 +102,8 @@ export default function TriggerVolume({model, link}) {
             </group>
         </>
     );
+}
+TriggerVolume.propTypes = {
+    model: PropTypes.object.isRequired,
+    link: PropTypes.string.isRequired
 }

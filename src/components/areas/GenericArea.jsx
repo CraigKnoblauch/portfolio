@@ -1,5 +1,6 @@
 import { RigidBody } from '@react-three/rapier'
 import { v4 as uuidv4 } from 'uuid'
+import PropTypes from 'prop-types'
 
 import MatcapManager from 'src/MatcapManager.js'
 
@@ -58,4 +59,8 @@ export default function GenericArea({nodes, exclusions=[]}) {
             )} 
 
     </>
+}
+GenericArea.propTypes = {
+    nodes: PropTypes.object.isRequired,
+    exclusions: PropTypes.arrayOf(PropTypes.object)
 }
