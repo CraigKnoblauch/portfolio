@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { isMobile } from "react-device-detect"
+import PropTypes from 'prop-types'
 
 import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
 
@@ -186,6 +187,9 @@ export default function Rabbit(props) {
             <primitive object={model.scene} position={props.position} scale={0.25}/>
         </RigidBody>
     </>
+}
+Rabbit.propTypes = {
+    position: PropTypes.arrayOf(PropTypes.number)
 }
 
 useGLTF.preload('./models/rabbit.glb')
