@@ -17,5 +17,36 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'react/no-unknown-property': [
+      "error", { 
+        ignore: [
+          "geometry",
+          "position",
+          "rotation",
+          "scale",
+          "map",
+          "matcap",
+          "transparent",
+          "toneMapped",
+          "object",
+          "material",
+          "skeleton",
+          "args",
+          "alphaMap",
+          "dispose",
+          "frustumCulled",
+          "rotation-x",
+          "matrixAutoUpdate",
+          "uniforms",
+          "fragmentShader",
+          "vertexShader",
+          "uPerlinTexture",
+          "uJumpyPerlinTexture",
+          "uPerlinTextureVertical",
+          "uJumpyPerlinTextureVertical",
+          "visible",
+        ] 
+      }
+    ],
   },
 }
