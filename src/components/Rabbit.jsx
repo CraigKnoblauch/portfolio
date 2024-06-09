@@ -42,7 +42,7 @@ export default function Rabbit(props) {
         // Fade out the walk animation if the rabbit is not moving
         return () => {actions["walk/jump"].fadeOut(0.5)}
 
-    }, [isMoving]) // [] means run when that var changes
+    }, [isMoving, actions]) // [] means run when that var changes
 
     /**
      * The React docs very explicitly state that hooks should not be called conditionally
