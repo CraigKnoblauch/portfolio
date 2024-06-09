@@ -1,9 +1,11 @@
 import * as Three from 'three'
 import { shaderMaterial, useProgress } from "@react-three/drei"
-import loadingIndicatorFragmentShader from '../shaders/loading-indicator/fragment.glsl'
-import loadingIndicatorVertexShader from '../shaders/loading-indicator/vertex.glsl'
 import { useRef } from 'react'
 import { useFrame, extend } from '@react-three/fiber'
+import PropTypes from 'prop-types'
+
+import loadingIndicatorFragmentShader from '../shaders/loading-indicator/fragment.glsl'
+import loadingIndicatorVertexShader from '../shaders/loading-indicator/vertex.glsl'
 
 
 const LoadingIndicatorMaterial = shaderMaterial(
@@ -34,4 +36,9 @@ export default function LoadingIndicator(props) {
             <loadingIndicatorMaterial ref={loadingIndicatorMaterialRef} />
         </mesh>
     </>
+}
+LoadingIndicator.propTypes = {
+    rotation: PropTypes.arrayOf(PropTypes.number),
+    position: PropTypes.arrayOf(PropTypes.number),
+    args: PropTypes.arrayOf(PropTypes.number)
 }
