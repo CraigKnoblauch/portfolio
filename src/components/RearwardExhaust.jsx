@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import MatcapManager from 'src/MatcapManager.js'
 import FifoQueue from 'src/FifoQueue.js'
 
+
 /**
  * TODO
  * Put isVisible and terminate in a ref object

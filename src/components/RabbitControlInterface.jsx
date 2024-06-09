@@ -1,5 +1,5 @@
-import { exp } from "three/examples/jsm/nodes/Nodes.js"
 import { useRabbitAnimations } from "../contexts/RabbitAnimationsContext"
+
 
 export const RabbitControlInterface = () => {
 

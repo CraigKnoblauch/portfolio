@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
+
 const RabbitAnimationsContext = createContext({})
 
 export const RabbitAnimationsProvider = (props) => {

@@ -1,10 +1,10 @@
 import { isMobile } from "react-device-detect"
-import { RigidBody, CuboidCollider } from "@react-three/rapier"
-import { v4 as uuidv4 } from 'uuid'
+import { RigidBody } from "@react-three/rapier"
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import { useTexture, Float, useKeyboardControls } from "@react-three/drei"
+
 
 export default function TriggerVolume({model, link}) {
 

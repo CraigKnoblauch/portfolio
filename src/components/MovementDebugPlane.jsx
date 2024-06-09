@@ -1,5 +1,6 @@
 import { RigidBody } from "@react-three/rapier"
 
+
 export default function MovementDebugPlane() {
     return <>
         <RigidBody type="fixed"
