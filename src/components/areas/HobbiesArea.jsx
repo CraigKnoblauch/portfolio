@@ -7,7 +7,6 @@ import { useGLTF, useTexture } from '@react-three/drei'
 import { isMobile } from 'react-device-detect'
 import { RigidBody } from '@react-three/rapier'
 
-import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 import Caption from 'src/components/Caption.jsx'
 import FloorButton from 'src/components/FloorButton.jsx'
@@ -16,7 +15,6 @@ import TriggerVolume from 'src/components/TriggerVolume.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
-  const matcapManager = new MatcapManager()
 
   // Easier to make two objects than to rotate the sign
   const frontSignTexture = useTexture('./textures/construction-sign.png')

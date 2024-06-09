@@ -31,6 +31,7 @@ export default function RearwardExhaust({emitter, exhaustRef}) {
 
     const queue = new FifoQueue(100)
 
+    // eslint-disable-next-line no-unused-vars
     useFrame((state, delta) => {
         
         if ( exhaustRef.current.isVisible ) { // NOTE TODO Using a ref like this is not the best way to handle this. It's a workaround for now.
@@ -73,7 +74,6 @@ export default function RearwardExhaust({emitter, exhaustRef}) {
                 const distance = element.position.distanceTo(emitter.position);
 
                 // Decrease the velocity as a function of the distance to the emitter
-                const distanceScale = Math.random() * (0.1 - 0.001) + 0.001
                 const decreaseFactor = Math.max(0, 1 - distance * .005);
                 
                 element.velocity.multiplyScalar(decreaseFactor);
@@ -98,7 +98,7 @@ export default function RearwardExhaust({emitter, exhaustRef}) {
                 element.rotation.y += element.spin.y;
                 element.rotation.z += element.spin.z;
 
-            };
+            }
         }
     })
 

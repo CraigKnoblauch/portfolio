@@ -12,7 +12,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import portalVertexShader from 'src/shaders/portal/vertex.glsl' // TODO not a big fan of paths like this
 import portalFragmentShader from 'src/shaders/portal/fragment.glsl'
-import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 
 
@@ -30,8 +29,7 @@ extend({ PortalMaterial })
 
 export default function RabbitHoleArea(props) {
 
-    const { nodes, materials } = useGLTF('/models/rabbit-hole-area.glb')
-    const matcapManager = new MatcapManager()
+    const { nodes } = useGLTF('/models/rabbit-hole-area.glb')
 
     const frontGroundTexture = useTexture('./textures/rabbit-hole-front-baked.jpg')
     frontGroundTexture.flipY = false

@@ -20,6 +20,7 @@ export default function RocketFlames({nozzleRefs}) {
 
     const queue = new FifoQueue(100)
 
+    // eslint-disable-next-line no-unused-vars
     useFrame((state, delta) => {
 
         // Create a new piece of flame exhaust

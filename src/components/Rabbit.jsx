@@ -1,5 +1,5 @@
 import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
-import { euler, quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
+import { quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
 import { useEffect, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
@@ -14,7 +14,7 @@ export default function Rabbit(props) {
     const model = useGLTF('./models/rabbit.glb')
     const body = useRef()
 
-    const { actions, names } = useAnimations(model.animations, model.scene)
+    const { actions } = useAnimations(model.animations, model.scene)
     const [isMoving, setIsMoving] = useState(false)
 
     const [ smoothCameraPosition ] = useState(() => new THREE.Vector3(3, 1, 2))
@@ -25,9 +25,6 @@ export default function Rabbit(props) {
         if (body.current) {
             const position = vec3(body.current.translation());
             const quaternion = quat(body.current.rotation());
-            const eulerRot = euler().setFromQuaternion(
-              quat(body.current.rotation())
-            );
       
             // While Rapier's return types need conversion, setting values can be done directly with THREE.js types
             body.current.setTranslation(position, true);
@@ -53,8 +50,9 @@ export default function Rabbit(props) {
      * 
      * Therefore, call both hooks for mobile and desktop control
      */
-    const mobileControls = useMobileControlsStore()
+    // eslint-disable-next-line no-unused-vars
     const [ subscribeKeys, getKeys ] = useKeyboardControls()
+    const mobileControls = useMobileControlsStore()
     useFrame((state, delta) => {
 
         /**

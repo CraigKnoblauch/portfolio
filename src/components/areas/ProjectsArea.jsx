@@ -10,7 +10,7 @@ import GenericArea from 'src/components/areas/GenericArea.jsx'
 
 
 export default function ProjectsArea(props) {
-  const { nodes, materials } = useGLTF('./models/projects-area.glb')
+  const { nodes } = useGLTF('./models/projects-area.glb')
   const groundTexture = useTexture('./textures/projects-area-baked.jpg')
   groundTexture.flipY = false
 

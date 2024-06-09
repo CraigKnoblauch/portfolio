@@ -5,7 +5,6 @@ Command: npx gltfjsx@6.2.16 contact-area.glb
 import { useGLTF, useTexture } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 
-import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from 'src/components/areas/GenericArea.jsx'
 import FloorButton from 'src/components/FloorButton.jsx'
 import TriggerVolume from 'src/components/TriggerVolume.jsx'
@@ -13,7 +12,6 @@ import TriggerVolume from 'src/components/TriggerVolume.jsx'
 
 export default function ContactArea(props) {
   const { nodes } = useGLTF('./models/contact-area.glb')
-  const matcapManager = new MatcapManager()
 
   const groundTexture = useTexture('./textures/contact-area-baked.jpg')
   groundTexture.flipY = false

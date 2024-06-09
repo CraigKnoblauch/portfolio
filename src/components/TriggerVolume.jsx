@@ -47,8 +47,9 @@ export default function TriggerVolume({model, link}) {
         interactionIconRef.current.visible = false
     }
 
+    // eslint-disable-next-line no-unused-vars
     const [subscribeKeys, getKeys] = useKeyboardControls()
-    useFrame((state, delta) => {
+    useFrame((state) => {
         /**
          * Actions will only occur if the interaction icon is visible.
          * This is an indication that the rabbit is in the trigger volume

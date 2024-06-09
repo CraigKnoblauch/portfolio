@@ -11,7 +11,7 @@ export default function GenericArea({nodes, exclusions=[]}) {
 
     return <>
 
-            {Object.entries(nodes).map(([key, mesh_obj]) => (
+            {Object.entries(nodes).map(([, mesh_obj]) => (
                 
                 // TODO Idea for performance improvement: If the object sits higher than the height of the rabbit, don't put a collider on it
                 

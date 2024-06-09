@@ -23,6 +23,7 @@ export default function LoadingIndicator(props) {
     const loadingIndicatorMaterialRef = useRef()
     let { progress } = useProgress()
 
+    // eslint-disable-next-line no-unused-vars
     useFrame((state, delta) => {
         loadingIndicatorMaterialRef.current.uProgress = progress/100
     })
