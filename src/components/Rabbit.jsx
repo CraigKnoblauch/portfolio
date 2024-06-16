@@ -81,6 +81,10 @@ export default function Rabbit(props) {
         // state.camera.position.copy(smoothCameraPosition)
         // state.camera.lookAt(smoothCameraTarget)
 
+        // Get the direction vector for the camera
+        const cameraDirection = new THREE.Vector3()
+        cameraDirection.subVectors(cameraTarget, state.camera.position).negate().normalize()
+
         function translate(directionScalar) { // translate instead and use 1 for forward, -1 for backward
 
             // Label the rabbit as moving
