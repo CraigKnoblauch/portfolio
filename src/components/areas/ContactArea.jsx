@@ -27,7 +27,9 @@ export default function ContactArea(props) {
                                               nodes.linkedin_floor_button,
                                               nodes.linkedin_trigger_volume,
                                               nodes.email_floor_button,
-                                              nodes.email_trigger_volume]}/>
+                                              nodes.email_trigger_volume,
+                                              nodes.github_floor_button,
+                                              nodes.github_trigger_volume]}/>
 
       {/* Floor with baked material */}
       <RigidBody type="fixed">
@@ -57,6 +59,9 @@ export default function ContactArea(props) {
 
       <FloorButton plane={nodes.email_floor_button} texturePath={"./textures/send-mail-link-icon.png"} rotation={Math.PI/4} />
       <TriggerVolume model={nodes.email_trigger_volume} link={"mailto:craigknoblauch@gmail.com"} />
+
+      <FloorButton plane={nodes.github_floor_button} texturePath={"./textures/outbound-link-icon.png"} />
+      <TriggerVolume model={nodes.github_trigger_volume} link={"https://github.com/CraigKnoblauch"} />
 
       
     </group>

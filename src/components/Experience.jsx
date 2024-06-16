@@ -1,5 +1,6 @@
 import { Physics } from "@react-three/rapier"
 import { Suspense } from "react"
+import { OrbitControls } from "@react-three/drei"
 
 import RabbitHoleArea from "src/components/areas/RabbitHoleArea.jsx"
 import CareerArea from "src/components/areas/CareerArea.jsx"
@@ -13,12 +14,12 @@ export default function Experience() {
 
     return (
         <>
-            <Physics debug={false}>
+            <Physics debug={true}>
                 <ambientLight />
-                {/* <OrbitControls /> */}
+                <OrbitControls />
 
                 {/* Load the Rabbit spawn first */}
-                <RabbitSpawn />
+                {/* <RabbitSpawn /> */}
 
                 {/* Wait for the rest of the areas to load */}
                 <Suspense>
