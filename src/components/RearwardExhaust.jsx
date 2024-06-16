@@ -41,11 +41,10 @@ export default function RearwardExhaust({emitter, exhaustRef}) {
             );
             dodecahedron.position.copy(emitter.position);
 
-            // Initialize the velocity and spin of the exhaust element
             dodecahedron.velocity = new THREE.Vector3(
-                1 * Math.sin(emitter.rotation.y + 10 + (0.25 * (Math.random()*2-1))), // Last bit adds a random deviation in the x and z directions
+                Math.sin(-emitter.rotation.z + (0.25 * (Math.random()*2-1))), // Last bit adds a random deviation in the x and z directions
                 0.1,
-                -1 * Math.cos(emitter.rotation.y + 1 + (0.25 * (Math.random()*2-1)))
+                Math.cos(-emitter.rotation.z + (0.25 * (Math.random()*2-1)))
             );
             dodecahedron.spin = new THREE.Vector3(
                 Math.random() * 0.1,
