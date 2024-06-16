@@ -1,4 +1,4 @@
-import { useGLTF, useKeyboardControls, useAnimations } from "@react-three/drei"
+import { useGLTF, useKeyboardControls, useAnimations, useTexture } from "@react-three/drei"
 import { quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
 import { useEffect, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
@@ -13,6 +13,8 @@ export default function Rabbit(props) {
 
     const model = useGLTF('./models/rabbit.glb')
     const body = useRef()
+    
+    const rabbitShadowTexture = useTexture('./textures/rabbit-shadow.png')
 
     const { actions } = useAnimations(model.animations, model.scene)
     const [isMoving, setIsMoving] = useState(false)
@@ -75,8 +77,9 @@ export default function Rabbit(props) {
         smoothCameraPosition.lerp(cameraPosition, 5 * delta)
         smoothCameraTarget.lerp(cameraTarget, 5 * delta)
 
-        state.camera.position.copy(smoothCameraPosition)
-        state.camera.lookAt(smoothCameraTarget)
+        // NOTE TODO Disabled for development
+        // state.camera.position.copy(smoothCameraPosition)
+        // state.camera.lookAt(smoothCameraTarget)
 
         function translate(directionScalar) { // translate instead and use 1 for forward, -1 for backward
 
@@ -171,19 +174,32 @@ export default function Rabbit(props) {
     })
 
     return <>
-        <RigidBody type="dynamic" 
-                   ref={ body }
-                   colliders={false} 
-                   canSleep={false}
-                   gravityScale={1}
-                //    restitution={0}
-                   linearDamping={0.95}
-                   angularDamping={0.95}
-                   userData={{ rabbitRef: body }} // Include a body ref so receivers can manipulate the rabbit. NOTE TODO not a good solution. Can easily lead to side effects.
-        >
-            <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[props.position[0], props.position[1] + 0.285, props.position[2]]} />
-            <primitive object={model.scene} position={props.position} scale={0.25}/>
-        </RigidBody>
+            <RigidBody type="dynamic" 
+                    ref={ body }
+                    colliders={false} 
+                    canSleep={false}
+                    gravityScale={1}
+                    //    restitution={0}
+                    linearDamping={0.95}
+                    angularDamping={0.95}
+                    userData={{ rabbitRef: body }} // Include a body ref so receivers can manipulate the rabbit. NOTE TODO not a good solution. Can easily lead to side effects.
+            >
+                <CuboidCollider args={[0.13777, 0.28, 0.325]} position={[props.position[0], props.position[1] + 0.285, props.position[2]]} />
+                <primitive object={model.scene} position={props.position} scale={0.25}/>
+
+                {/* "Shadow" */}
+                <mesh position={ [
+                            props.position[0], 
+                            0.01, 
+                            props.position[2]
+                        ]} 
+                        rotation={[-Math.PI/2, 0, 0]} 
+                        scale={0.75}
+                >
+                    <planeGeometry args={[1, 1]}/>
+                    <meshBasicMaterial map={rabbitShadowTexture} transparent opacity={0.5} />
+                </mesh>
+            </RigidBody>
     </>
 }
 Rabbit.propTypes = {

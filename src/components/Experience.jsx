@@ -19,7 +19,7 @@ export default function Experience() {
                 <OrbitControls />
 
                 {/* Load the Rabbit spawn first */}
-                {/* <RabbitSpawn /> */}
+                <RabbitSpawn />
 
                 {/* Wait for the rest of the areas to load */}
                 <Suspense>
