@@ -43,6 +43,10 @@ export default function CareerArea(props) {
     const groundTexture = useTexture('./textures/career-area-baked.jpg')
     groundTexture.flipY = false
 
+    const rocketTexture = useTexture('./textures/rocket-uv-map.jpg')
+    rocketTexture.flipY = false
+    rocketTexture.extend = true
+
     const rocketGroupRef = useRef()
     const cradleRef = useRef(nodes.rocket_cradle)
 
@@ -177,7 +181,7 @@ export default function CareerArea(props) {
             <group ref={rocketGroupRef}>
 
                 <mesh geometry={nodes.rocket.geometry} position={nodes.rocket.position}>
-                    <meshMatcapMaterial matcap={matcapManager.getMatcapByName('bright-white')} />
+                    <meshBasicMaterial map={rocketTexture} />
                 </mesh>
 
                 {/* Todo, the nozzle position isn't changing with the rocket position even though the mesh is moving on the screen */}
