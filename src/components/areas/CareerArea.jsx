@@ -40,7 +40,7 @@ export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
     const groupRef = useRef()
 
-    const groundTexture = useTexture('./textures/career-area-baked.jpg')
+    const groundTexture = useTexture('./textures/career-area-baked-with-text.jpg')
     groundTexture.flipY = false
 
     const rocketTexture = useTexture('./textures/rocket-uv-map.jpg')
