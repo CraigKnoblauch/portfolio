@@ -13,7 +13,6 @@ import Caption from 'src/components/Caption.jsx'
 
 export default function HobbiesArea(props) {
   const { nodes } = useGLTF('./models/hobbies-area.glb')
-  console.log(nodes)
 
   // Easier to make two objects than to rotate the sign
   const frontSignTexture = useTexture('./textures/construction-sign.png')

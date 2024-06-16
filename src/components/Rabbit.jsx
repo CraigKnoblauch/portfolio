@@ -38,7 +38,7 @@ export default function Rabbit(props) {
     useEffect(() => {
         // Play the walk animation if the rabbit is moving
         if(isMoving) {
-            actions["walk/jump"].reset().fadeIn(0.5).play()
+            actions["walk/jump"].reset().fadeIn(0.1).play()
         }
 
         // Fade out the walk animation if the rabbit is not moving

@@ -3,7 +3,6 @@ import React from "react"
 
 import { useMobileControlsStore } from "src/stores/useMobileControlsStore"
 
-
 /**
  * Implementation notes
  * 
@@ -14,15 +13,21 @@ import { useMobileControlsStore } from "src/stores/useMobileControlsStore"
  */
 const MobileInterface = React.memo(function MobileInterface() {
 
-    const setDirection = useMobileControlsStore(state => state.setDirection)
+    // const setDirection = useMobileControlsStore(state => state.setDirection)
+    // const setX = useMobileControlsStore(state => state.setX)
+    // const setY = useMobileControlsStore(state => state.setY)
+
+    const setData = useMobileControlsStore(state => state.setData)
+
     const stop = useMobileControlsStore(state => state.stop)
 
     return (
         <>
             <div className="mobile-interface">
 
-                <Joystick move={(data) => {setDirection(data.direction)}}
+                <Joystick move={(data) => {setData(data)}}
                           stop={() => stop()} 
+                          start={(data) => setData(data)}
                           size={150}
                           stickSize={80} 
                           sticky={false} 
