@@ -84,5 +84,3 @@ React recommends I implement this as a hook. I can set the camera from `useThree
 - the event for which to switch in response to
 
 How do I have events called anywhere and captured anywhere? 
-
-## React stuff
