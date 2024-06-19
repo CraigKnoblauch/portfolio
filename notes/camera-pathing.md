@@ -71,9 +71,18 @@ That reveals that in these cases and the area cases we're concerned about switch
 2. Have a system for managing the active camera. Interpolate to next camera.
 3. Abstract logic enough such that each camera can control itself. And that there's nothing fundamentally special about switching to an area camera or an arbitrary camera.
 
+### Calculating intersections
+I want to take advantage of the Rigid Body sensor. It solves the intersection problem. I don't, however, want to have a mesh in my blender project that combpletely obsures the mode. I will end up having ot hide it and I'll eventually forget to export it. It will be hard to work around, etc.
+
+Instead, I could keep the circle approach, and draw the rest of the geometry in threejs. I think I could do this with a buffer geometry where I copy the circle, move the copy by y+10 or something, then fill in between.
+
+If that works I can refeactor the TriggerVolume to either use this pattern, or use a hook that encapsulates this behaviour. 
+
 # Architecture to manage active camera
 React recommends I implement this as a hook. I can set the camera from `useThree`. To do this in a minimal way, the hook just needs to know
 - the camera object to switch to
 - the event for which to switch in response to
 
 How do I have events called anywhere and captured anywhere? 
+
+## React stuff
