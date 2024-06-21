@@ -1,5 +1,10 @@
 In teh beta, I threw stuff together. AS I move towards a v1 release, there's probably a bunch o fcleanring and such that I have to do.
 
+# Rules of React
+During review, go through and see if any are violated
+
+https://react.dev/reference/rules
+
 # Components. What they are really and what their scope should be
 Components are meant to be kept pure. Given the same input, always the same output. Components are not meant to modify their inputs. I'm probably doing that quite a bit.
 
@@ -59,6 +64,7 @@ Events will propogate **up the component tree**. To stop this propogation, catch
 
 ## Managing state in a component. 
 Pick up from here: https://react.dev/learn/state-a-components-memory
+
 
 
 ## Render and commit
