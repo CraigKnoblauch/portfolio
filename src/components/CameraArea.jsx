@@ -2,6 +2,29 @@ import * as THREE from 'three'
 
 import useCameraOnEvent from "src/hooks/useCameraOnEvent.jsx"
 
+function generateGeometryWallIndices(numVerticesHalf) {
+    const indices = [];
+
+    for (let i = 0; i < numVerticesHalf - 1; i++) {
+        // Bottom vertex index
+        const bottomIndex = i;
+        // Corresponding top vertex index
+        const topIndex = i + numVerticesHalf;
+
+        // Indices for the first triangle
+        indices.push(bottomIndex, (bottomIndex + 1), topIndex + 1);
+
+        // Indices for the second triangle
+        indices.push(bottomIndex, topIndex + 1, topIndex);
+    }
+
+    // Handle the last quad, wrapping around to the first vertex
+    indices.push(numVerticesHalf - 1, 0, numVerticesHalf);
+    indices.push(numVerticesHalf - 1, numVerticesHalf, (2 * numVerticesHalf) - 1);
+
+    return new Uint16Array(indices);
+}
+
 export default function CameraArea({ cameraAreaBase, camera }) {
     // Your component logic here
     console.log("CameraArea", cameraAreaBase)
@@ -28,6 +51,10 @@ export default function CameraArea({ cameraAreaBase, camera }) {
     // Create a geometry with the combined vertices
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+
+    // Create indices for the geometry
+    const indices = generateGeometryWallIndices(cameraAreaBaseVertices.length / 3)
+    geometry.setIndex(new THREE.BufferAttribute(indices, 1))
 
     return <>
         <mesh geometry={geometry} position={cameraAreaBase.position}>
