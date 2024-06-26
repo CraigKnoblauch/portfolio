@@ -1,6 +1,27 @@
 import * as THREE from 'three'
 
 import useCameraOnEvent from "src/hooks/useCameraOnEvent.jsx"
+import { or } from 'three/examples/jsm/nodes/Nodes.js'
+
+function generateGeometryVertices(originalVertices) {
+    // Create a copy of the vertices to modify
+    const modifiedVertices = new Float32Array(originalVertices.length)
+    for (let i = 0; i < originalVertices.length; i++) {
+        // Increase the y values by 5
+        if ((i + 2) % 3 === 0) {
+            modifiedVertices[i] = originalVertices[i] + 5
+        } else {
+            modifiedVertices[i] = originalVertices[i]
+        }
+    }
+
+    // Combine the original and modified vertices into a single array
+    const vertices = new Float32Array(originalVertices.length * 2)
+    vertices.set(originalVertices)
+    vertices.set(modifiedVertices, originalVertices.length)
+
+    return vertices
+}
 
 function generateGeometryWallIndices(numVerticesHalf) {
     const indices = [];
@@ -29,31 +50,15 @@ export default function CameraArea({ cameraAreaBase, camera }) {
     // Your component logic here
     console.log("CameraArea", cameraAreaBase)
 
-    // Get the vertices of the camera area base
-    const cameraAreaBaseVertices = cameraAreaBase.geometry.attributes.position.array
-
-    // Create a copy of the vertices to modify
-    const modifiedVertices = new Float32Array(cameraAreaBaseVertices.length)
-    for (let i = 0; i < cameraAreaBaseVertices.length; i++) {
-        // Increase the y values by 5
-        if ((i + 2) % 3 === 0) {
-            modifiedVertices[i] = cameraAreaBaseVertices[i] + 5
-        } else {
-            modifiedVertices[i] = cameraAreaBaseVertices[i]
-        }
-    }
-
-    // Combine the original and modified vertices into a single array
-    const vertices = new Float32Array(cameraAreaBaseVertices.length * 2)
-    vertices.set(cameraAreaBaseVertices)
-    vertices.set(modifiedVertices, cameraAreaBaseVertices.length)
-
-    // Create a geometry with the combined vertices
+    // Create a new geometry with the vertices of the camera area base
     const geometry = new THREE.BufferGeometry()
+
+    // Get the vertices for the new geometry, set them
+    const vertices = generateGeometryVertices(cameraAreaBase.geometry.attributes.position.array)
     geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
 
-    // Create indices for the geometry
-    const indices = generateGeometryWallIndices(cameraAreaBaseVertices.length / 3)
+    // Create indices for the geometry, set them
+    const indices = generateGeometryWallIndices(cameraAreaBase.geometry.attributes.position.array.length / 3)
     geometry.setIndex(new THREE.BufferAttribute(indices, 1))
 
     return <>
