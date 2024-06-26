@@ -1,7 +1,7 @@
 import * as THREE from 'three'
+import { RigidBody } from '@react-three/rapier'
 
 import useCameraOnEvent from "src/hooks/useCameraOnEvent.jsx"
-import { or } from 'three/examples/jsm/nodes/Nodes.js'
 
 function generateGeometryVertices(originalVertices) {
     // Create a copy of the vertices to modify
@@ -62,8 +62,15 @@ export default function CameraArea({ cameraAreaBase, camera }) {
     geometry.setIndex(new THREE.BufferAttribute(indices, 1))
 
     return <>
-        <mesh geometry={geometry} position={cameraAreaBase.position}>
-            <meshBasicMaterial color="red" />
-        </mesh>
+        <RigidBody type="fixed"
+                   onIntersectionEnter={() => {console.log("Camera area entered")}}
+                   onIntersectionExit={() => {console.log("Camera area exited")}}
+                   sensor={true}
+                   colliders="trimesh"
+        >
+            <mesh geometry={geometry} position={cameraAreaBase.position}>
+                <meshBasicMaterial color="red" wireframe />
+            </mesh>
+        </RigidBody>
     </>
 }
