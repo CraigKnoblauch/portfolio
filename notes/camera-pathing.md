@@ -84,3 +84,35 @@ React recommends I implement this as a hook. I can set the camera from `useThree
 - the event for which to switch in response to
 
 How do I have events called anywhere and captured anywhere? 
+
+I'm thinking it's good to have everything:
+- the construction of the area mesh
+- the managing the state of the camera
+- the event on player intersection
+
+handled by this entity. If all the logic is contained here, then it becomes a component.
+
+So I would have a component that:
+- Draws the camera area mesh
+- Provides an event for when the player intersects with it
+
+I would have a hook that switches to the provided camera on the provided event. I could then use that hook in other places besides the camera area components.
+
+## useCameraOnEvent
+Takes as prop: camera to switch to
+
+Returns: function handle to use for event
+
+It feels like I could get away with using a standard class instead of a hook, but React docs recommend using hooks when the stateful logic uses hooks itself.
+
+## CameraArea component
+Takes as props: mesh for camera area base, camera for the camera area
+
+Returns to renderer: Rigid body as a sensor. Calls useCameraOnEvent callback when intersection with player occurs
+
+# Notes from implementing
+Found that I have to select "loose edges" on export to have the camera area geometry exported.
+
+I think there's a lot of loose points in the ASU model and the phoenix logo model. When I selected "loose points" in the export, the sun and most components of the phoenix logo appeared in the middle of the level.
+
+

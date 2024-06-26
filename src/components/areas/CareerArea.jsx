@@ -9,6 +9,7 @@ import MatcapManager from 'src/MatcapManager.js'
 import GenericArea from "src/components/areas/GenericArea"
 import RearwardExhaust from "src/components/RearwardExhaust.jsx"
 import Caption from "src/components/Caption.jsx"
+import CameraArea from "src/components/CameraArea.jsx"
 
 import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
@@ -161,6 +162,7 @@ export default function CareerArea(props) {
 
             {/* TODO Take the fence segment out of the exclusions list */}
             <GenericArea nodes={nodes} exclusions={[nodes.career_ground, 
+                                                    nodes.asu_camera_area, nodes.asu_camera,
                                                     nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle,
                                                     nodes.rocket_yellow_flames_1, nodes.rocket_yellow_flames_2,
                                                     nodes.launch_button]}
@@ -178,6 +180,9 @@ export default function CareerArea(props) {
 
                 </mesh>
             </RigidBody>
+
+            {/* ASU Camera area */}
+            <CameraArea cameraAreaBase={nodes.asu_camera_area} camera={nodes.asu_camera} />
 
             <group ref={rocketGroupRef}>
 
