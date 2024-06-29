@@ -29,9 +29,9 @@ export default function CameraZone({ cameraZoneBase, height=5, camera }) {
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeOptions)
 
     return <>
+        {/* Using onCollisionExit only fires if the player has completely entered or completely exited the zone */}
         <RigidBody type="fixed"
-                   onIntersectionEnter={() => {console.log("Camera area entered")}}
-                   onIntersectionExit={() => {console.log("Camera area exited")}}
+                   onCollisionExit={() => {console.log("Collision event")}} 
                    sensor={true}
                    colliders="trimesh"
         >
