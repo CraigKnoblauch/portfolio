@@ -163,6 +163,7 @@ export default function CareerArea(props) {
             {/* TODO Take the fence segment out of the exclusions list */}
             <GenericArea nodes={nodes} exclusions={[nodes.career_ground, 
                                                     nodes.asu_camera_zone, nodes.asu_camera,
+                                                    nodes.nrl_camera_zone, nodes.nrl_camera,
                                                     nodes.exhaust_emitter, nodes.rocket, nodes.rocket_nozzle_1, nodes.rocket_nozzle_2, nodes.rocket_cradle,
                                                     nodes.rocket_yellow_flames_1, nodes.rocket_yellow_flames_2,
                                                     nodes.launch_button]}
@@ -181,8 +182,9 @@ export default function CareerArea(props) {
                 </mesh>
             </RigidBody>
 
-            {/* ASU Camera area */}
+            {/* Camera zones */}
             <CameraZone cameraZoneBase={nodes.asu_camera_zone} camera={nodes.asu_camera} />
+            <CameraZone cameraZoneBase={nodes.nrl_camera_zone} camera={nodes.nrl_camera} />
 
             <group ref={rocketGroupRef}>
 
