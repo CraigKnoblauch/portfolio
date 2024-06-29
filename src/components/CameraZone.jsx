@@ -28,10 +28,12 @@ export default function CameraZone({ cameraZoneBase, height=5, camera }) {
     // Create an extrusion goemetry from the shape
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeOptions)
 
+    const switchCamera = useCameraOnEvent(camera)
+
     return <>
         {/* Using onCollisionExit only fires if the player has completely entered or completely exited the zone */}
         <RigidBody type="fixed"
-                   onCollisionExit={() => {console.log("Collision event")}} 
+                   onCollisionExit={switchCamera} 
                    sensor={true}
                    colliders="trimesh"
         >
