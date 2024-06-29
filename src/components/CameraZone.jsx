@@ -4,14 +4,14 @@ import { RigidBody } from '@react-three/rapier'
 import useCameraOnEvent from "src/hooks/useCameraOnEvent.jsx"
 
 
-export default function CameraArea({ cameraAreaBase, height=5, camera }) {
+export default function CameraZone({ cameraZoneBase, height=5, camera }) {
 
-    const cameraAreaBaseVertices = cameraAreaBase.geometry.attributes.position.array
-    const cameraAreaBaseCenter = cameraAreaBase.position
+    const cameraZoneBaseVertices = cameraZoneBase.geometry.attributes.position.array
+    const cameraZoneBaseCenter = cameraZoneBase.position
 
     let points = [] 
-    for(let i = 0; i < cameraAreaBaseVertices.length; i += 3) {
-        let newPoint = new THREE.Vector2(cameraAreaBaseVertices[i], cameraAreaBaseVertices[i+2]) // capture points x and z
+    for(let i = 0; i < cameraZoneBaseVertices.length; i += 3) {
+        let newPoint = new THREE.Vector2(cameraZoneBaseVertices[i], cameraZoneBaseVertices[i+2]) // capture points x and z
         points.push(newPoint)
     }
 
@@ -35,7 +35,7 @@ export default function CameraArea({ cameraAreaBase, height=5, camera }) {
                    sensor={true}
                    colliders="trimesh"
         >
-            <mesh geometry={geometry} position={cameraAreaBaseCenter} rotation={[-Math.PI/2, 0, 0]}> 
+            <mesh geometry={geometry} position={cameraZoneBaseCenter} rotation={[-Math.PI/2, 0, 0]}> 
                 <meshBasicMaterial color="red" wireframe />
             </mesh>
         </RigidBody>
