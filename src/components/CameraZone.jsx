@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
 
-import useCameraOnEvent from "src/hooks/useCameraOnEvent.jsx"
+import useSwitchCamera from "src/hooks/useSwitchCamera.jsx"
 
 
 export default function CameraZone({ cameraZoneBase, height=5, camera }) {
@@ -28,7 +28,7 @@ export default function CameraZone({ cameraZoneBase, height=5, camera }) {
     // Create an extrusion goemetry from the shape
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeOptions)
 
-    const switchCamera = useCameraOnEvent(camera)
+    const switchCamera = useSwitchCamera(camera)
 
     return <>
         {/* Using onCollisionExit only fires if the player has completely entered or completely exited the zone */}
