@@ -9,10 +9,10 @@ void main()
 {
     // Scale and animate
     vec2 fogUv = vUv;
-    // fogUv.x *= 0.25; /// Use these to scale the fog if you choose
+    fogUv.x *= 7.5; /// Use these to scale the fog if you choose
     fogUv.y *= 0.5;
 
-    fogUv.y -= uTime * 1.2;
+    fogUv.y += uTime * 0.05;
 
     // Fog
     float fog = texture(uPerlinTexture, fogUv).r;
