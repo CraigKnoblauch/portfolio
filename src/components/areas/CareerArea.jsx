@@ -185,6 +185,7 @@ export default function CareerArea(props) {
             {/* Camera zones */}
             <CameraZone cameraZoneBase={nodes.asu_camera_zone} camera={nodes.asu_camera} />
             <CameraZone cameraZoneBase={nodes.nrl_camera_zone} camera={nodes.nrl_camera} />
+            <CameraZone cameraZoneBase={nodes.vanguard_camera_zone} camera={nodes.vanguard_camera} />
 
             <group ref={rocketGroupRef}>
 
