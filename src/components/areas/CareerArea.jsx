@@ -39,7 +39,6 @@ extend({ YellowFlamesMaterial })
 
 export default function CareerArea(props) {
     const { nodes } = useGLTF('./models/career-area.glb')
-    console.log(nodes)
     const groupRef = useRef()
 
     const groundTexture = useTexture('./textures/career-area-baked-with-text.jpg')

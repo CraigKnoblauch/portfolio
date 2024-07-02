@@ -7,17 +7,19 @@ import { useGLTF, useTexture } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 
 import GenericArea from 'src/components/areas/GenericArea.jsx'
+import FogWall from 'src/components/FogWall.jsx'
 
 
 export default function ProjectsArea(props) {
   const { nodes } = useGLTF('./models/projects-area.glb')
+  console.log(nodes)
   const groundTexture = useTexture('./textures/projects-area-baked.jpg')
   groundTexture.flipY = false
 
   return <>
     <group {...props} dispose={null}>
 
-      <GenericArea nodes={nodes} exclusions={[nodes.projects_ground]} />
+      <GenericArea nodes={nodes} exclusions={[nodes.projects_ground, nodes.fog_wall]} />
 
       {/* Floor with baked material */}
       <RigidBody type="fixed">
@@ -31,6 +33,9 @@ export default function ProjectsArea(props) {
 
         </mesh>
       </RigidBody>
+
+      {/* Fog wall */}
+      <FogWall wallMesh={nodes.fog_wall} />
       
     </group>
   </>
