@@ -27,24 +27,24 @@ const useSwitchCamera = (targetCamera) => {
          */
         if (goForSwitch.current) {
 
+            // NOTE TODO This check may never fail after move. Not sure
             if (state.camera.position != targetCamera.position || state.camera.rotation != targetCamera.rotation) {
-                console.log("Camera at: ", state.camera.position)
+                
                 const targetCameraPosAsVec3 = new THREE.Vector3().copy(targetCamera.position)
-                smoothedTargetCameraPosition.current.lerp(targetCameraPosAsVec3, 5 * delta)
-                // smoothedTargetCameraRotation.current.lerp(targetCamera.rotation, 5 * delta)
+                smoothedTargetCameraPosition.current.lerp(targetCameraPosAsVec3, 3 * delta)
 
-                state.camera.position.copy(smoothedTargetCameraPosition)
-                state.camera.lookAt(new THREE.Vector3(0, 0, 0))
-                // state.camera.rotation.copy(smoothedTargetCameraRotation)
-                console.log("Camera at: ", state.camera.position)
+                // const targetCameraRotAsVec3 = new THREE.Vector3().copy(targetCamera.rotation)
+                // smoothedTargetCameraRotation.current.lerp(targetCameraRotAsVec3, 5 * delta)
+                
+                state.camera.position.copy(smoothedTargetCameraPosition.current)
+                // state.camera.rotation.copy(smoothedTargetCameraRotation.current)
 
-                console.log("state.camera.position", state.camera.position)
-                console.log("targetCamPostion", targetCamera.position)
-                console.log("targetCameraPosAsVec3", targetCameraPosAsVec3)
-                console.log("smoothedTargetCameraPosition", smoothedTargetCameraPosition.current)
-                goForSwitch.current = false
+                // TODO interpolate FOV if want to keep the cameras in the same position
+
             } else {
+
                 goForSwitch.current = false
+
             }
         }
         
