@@ -14,6 +14,8 @@ import CameraZone from "src/components/CameraZone.jsx"
 import yellowFlamesVertexShader from 'src/shaders/rocket-flames/yellow/vertex.glsl'
 import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragment.glsl'
 
+// Comments marked CR for code review
+
 
 // new THREE.Vector3(0xfa, 0xf6, 0xd2)
 /**
@@ -21,6 +23,12 @@ import yellowFlamesFragmentShader from 'src/shaders/rocket-flames/yellow/fragmen
  * 1. hot white and cool yellow
  *      uHotFlameColor: new THREE.Color('#faf6d2'),
  *      uCoolFlameColor: new THREE.Color('#fad482')
+ */
+/**
+ * CR Ended up only using one material for both yellow and blue flames. 
+ * I should rename the flames material to reflect that.
+ * Also, the flames material is something that can easily be refactored into a separate component
+ * Just like I built FogWall as its own component.
  */
 const YellowFlamesMaterial = shaderMaterial(
     {
@@ -44,6 +52,11 @@ export default function CareerArea(props) {
     const groundTexture = useTexture('./textures/career-area-baked-with-text.jpg')
     groundTexture.flipY = false
 
+    /**
+     * CR
+     * All of these pieces that relate to different parts of the rocket and its animation should live in separate components
+     * The components should be discrete enough that they're easily testable. 
+     */
     const rocketTexture = useTexture('./textures/rocket-uv-map.jpg')
     rocketTexture.flipY = false
     rocketTexture.extend = true
@@ -74,6 +87,10 @@ export default function CareerArea(props) {
     const cradleRotationLimit = cradleRef.current.rotation.z - Math.PI/2
     let cradleRotationalVelocity = 0.01
 
+    /**
+     * CR
+     * Managing the launch button this way is too hacky.
+     */
     const launchButtonRef = useRef()
     const launchButtonZTarget = nodes.launch_button.position.z - 0.09
     const launchState = {
@@ -81,6 +98,11 @@ export default function CareerArea(props) {
         isTimeToFly: false, // There will be a small delay before the rocket actually flys up, but the exhaust needs to be going in that time.
         hasLaunched: false
     }
+    
+    /**
+     * CR
+     * Managing the exhaust fumes this way is too hacky.
+     */
     const exhaustRef = useRef({
         isVisible: false,
         terminate: false
