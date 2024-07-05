@@ -18,6 +18,8 @@ const useSwitchCamera = (targetCamera) => {
 
     const smoothedTargetCameraPosition = useRef(new THREE.Vector3())
     const smoothedTargetCameraRotation = useRef(new THREE.Vector3())
+    const smoothedTargetCameraFov = useRef(0)
+    const smoothedTargetCameraFocalLength = useRef(0)
 
     const goForSwitch = useRef(false)
 
@@ -35,13 +37,18 @@ const useSwitchCamera = (targetCamera) => {
 
                 const targetCameraRotAsVec3 = new THREE.Vector3().setFromEuler(targetCamera.rotation)
                 smoothedTargetCameraRotation.current.lerp(targetCameraRotAsVec3, 3 * delta)
+
+                smoothedTargetCameraFov.current = THREE.MathUtils.lerp(state.camera.fov, targetCamera.fov, 3 * delta)
+
+                smoothedTargetCameraFocalLength.current = THREE.MathUtils.lerp(state.camera.getFocalLength(), targetCamera.getFocalLength(), 3 * delta)
                 
                 state.camera.position.copy(smoothedTargetCameraPosition.current)
                 state.camera.rotation.setFromVector3(smoothedTargetCameraRotation.current)
+                state.camera.fov = smoothedTargetCameraFov.current
+                state.camera.setFocalLength(smoothedTargetCameraFocalLength.current)
 
                 // TODO interpolate FOV if want to keep the cameras in the same position
 
-                console.log("rotation: ", state.camera.rotation)
                 // goForSwitch.current = false
 
             } else {
