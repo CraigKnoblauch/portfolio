@@ -2,15 +2,6 @@ import { useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
-// Handle the event here
-// Switch to the specified camera
-
-/**
- let pos = new THREE.Vector3().lerpVectors(camera position, target cam position, w);
-let rot = new THREE.Vector3().lerpVectors(camera rot, target cam rot, w);
-camera.position.set(pos.x, pos.y, pos.z);
-camera.rotation.set(rot.x, rot.y, rot.z);
-    */
 
 const useSwitchCamera = (targetCamera) => {
 

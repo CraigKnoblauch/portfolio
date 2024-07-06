@@ -54,14 +54,20 @@ That reveals that in these cases and the area cases we're concerned about switch
 
 ## Summarized requirements an implementation ideas
 **Requirements**
-1. When the player enters a certain area, switch to a camera meant for viewing the primary model of that area. 
-2. Area camera should move slightly with the player
-3. When the player exits an area, switch to the primary camera that tracks the player
-4. Allow the player to occlude their own model.
-5. Never allow the player to go out of view, except as described in previous.
-6. Allow the user to move the primary camera (translate, pan, zoom) at will.
-7. If not in an area, focus the primary camera on the player when the player starts moving. 
-8. Allow switching to static cameras based on user events.
+1. [x] When the player enters a certain area, switch to a camera meant for viewing the primary model of that area. 
+2. ~~[ ] Area camera should move slightly with the player~~
+3. [ ] When the player exits an area, switch to the primary camera that tracks the player
+4. [x] Allow the player to occlude their own model.
+5. [ ] Never allow the player to go out of view, except as described in previous.
+6. [x] Allow the user to move the primary camera (translate, pan, zoom) at will.
+7. [ ] If not in an area, focus the primary camera on the player when the player starts moving. 
+8. [x] Allow switching to static cameras based on user events.
+
+Struck out 2 because the implementation is difficult with the design and I don't really think it's needed.
+
+5 is something to be concious of on a case by case basis. The camera's view in blender should include the whole area captured by the camera zone.
+
+6 is accomplishted with OrbitControls. Will set pan, rotate, move, etc. limits 
 
 **Implementation ideas**
 1. Have three elements to each area:
@@ -114,5 +120,58 @@ Returns to renderer: Rigid body as a sensor. Calls useCameraOnEvent callback whe
 Found that I have to select "loose edges" on export to have the camera area geometry exported.
 
 I think there's a lot of loose points in the ASU model and the phoenix logo model. When I selected "loose points" in the export, the sun and most components of the phoenix logo appeared in the middle of the level.
+
+The challenges I solved implementing a useCameraSwitch hook were:
+- Multiple approaches trying to get the camera zone to draw. These included:
+    - Building a custom buffer geometry. I thought that didn't work with the rigid body intersections so I tryed to modify a cylinder positions attribute array
+    - Modifying an existing cylinder geometry. Found that the buffer geometry didn't work how I expected. There were groups of vertices where the last vertex in the group was the first vertex again. I tried using a 4 point cylinder to figure out the geometry, then I tried to replace the points correctly. Didn't work out. I missed one of the vertex group
+    - Creating a THREE.Shape with the path I've drawn for the zone, then extruding out to form the final geometry. Worked perfectly once I figued out I wanted to use onCollisionEnter instead of intersection triggers on the RigidBody
+- Changed from "moving the camera on an event and managing the event in the same hook" to "switching the camera in the hook, providing function handle to use for that switch"
+- Figured out how to interpolate camera position. 
+- Figured out how to interpolate camera rotation. 
+- Found out that the orbit controls camera has a target that needs to be set when the camera rotation changes. Otherwise after I finish updating the camera continuously, the camera would snap back to looking at the last target (the origin in a lot of my testing). Probably will find that my look at position is not calculated correctly. Calculation was neat though.
+- Figured out how to interpolate the camera fov and focal length to achieve the same view as on blender. Probably want to change the blender cameras to have the same focal length and fov as the three camera. That way I can have the same near and far for all cameras rather than having custom configurations. 
+- Forgot to reset the smoothing variables so I was seeing the camera snap back even though the distance to the next target camera was the same. Sense the zones are individual objects, the smoothing variables were already set for that zone. That's why this would happen only with previously visited zones and not new unvisited zones.
+
+## What should be responsible for switching the camera back to the player?
+In the current use of useSwitchCamera, you provide a target camera and it provides a function handle to use when you want to switch to that target camera. In the case of camera zones, there's an event on entry, and the same event on exit. I had planned to have useSwitchCamera figure out when to switch back to the player camera, but this is too much responsibility for that hook. It advances the scope of that hook in two ways:
+1. The hook now needs to be cognizent of the player and putting the camera back to focus on the player. That could couple at least two parts of our software. 
+2. It's not clear to the consumer of useSwitchCamera that this behavior exists. There could be situations in the future where I want to switch the camera in the same way, but not have a partner event that would mean switch back.
+I believe it's better to do the following:
+1. Define a perspective camera that allways follows the Rabbit
+2. Have a consumer of useSwitchCamera provide that perspective camera to the hook and be responsible for defining the event to switch to it.
+
+### Case where the user has moved the camera somewhere else
+The camera should look at the user defined target until the rabbit starts moving again or until some long time has passed (3 minutes?). If the user starts moving again and it's in a camera zone, the camera should go back to the zone camera. If it's out of camera zone, it should go back to the player camera. In most cases it means **go back to the last used camera**.
+
+[x] Need a mechanism for tracking the last used camera.
+
+## Mechanism for tracking last used camera
+I could implement a store. In the store put all the cameras in the system. 
+| Pros | Cons |
+| :--- | :--- |
+|      | Requires an extra step for using cameras. You have to add each to the store. |
+| The store would be easy to test | |
+| | Integrating the store into the useSwitchCamera would make useSwitchCamera harder to test, but honestly the integration may not be necessary or provide a benefit. |
+| | Every time I switch cameras, there's an extra step where the store has to be told the switch happened | 
+
+I could have system track the last stable location of state.camera
+| Pros | Cons |
+| :--- | :--- |
+| | Would have to know what a stable location is. Could just be "was there longer than 1 second" |
+| Wouldn't require any additional steps when using cameras. | |
+| | Would be difficult to test because it requires mocking camera movement. |
+| Would be far less coupled than store solution. Consumers wouldn't **have** to use it. They could use it when they need it. | |
+| | Wouldn't be able to return more information about the camera that the state.camera was moving too. Consumer would be restricted to relevant details like position, rotation, fov, focal length, etc. |
+
+After consideration, I'm going to implement the second option. If I find I need object information of the specific camera that was the last camera used, I'll implement a camera store that will contain all of the available cameras. The camera tracker can provide the position of the last camera used to the store and get the right camera object back.
+
+NOTE: If implementing this as a hook, make sure it behaves like a singleton. I'm still not really sure how these things work. 
+
+### Requirements for useLastCamera
+- [ ] Returns a Perspective Camera object with the postion, rotation, fov, and focal length of the last used camera
+- [ ] Returns null if the last used camera is the current camera.
+- [ ] Last used camera is defined as the last camera where the configuration was stable for at least 1 second.
+
 
 
