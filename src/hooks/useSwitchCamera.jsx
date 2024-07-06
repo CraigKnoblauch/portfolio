@@ -14,7 +14,7 @@ camera.rotation.set(rot.x, rot.y, rot.z);
 
 const useSwitchCamera = (targetCamera) => {
 
-    const { camera } = useThree()
+    const { camera, controls } = useThree()
 
     const smoothedTargetCameraPosition = useRef(new THREE.Vector3())
     const smoothedTargetCameraRotation = useRef(new THREE.Quaternion())
@@ -51,6 +51,9 @@ const useSwitchCamera = (targetCamera) => {
                 // NOTE Camera seems to default back to last lookAt position after setting rotation. Therefore I'm changing the look at location each time
                 const smoothedLookAtPosition = new THREE.Vector3(0, 0, -1).applyQuaternion(smoothedTargetCameraRotation.current).add(state.camera.position);
                 state.camera.lookAt(smoothedLookAtPosition);
+                
+                // Update the controls target so the camera doesn't snap back to the origin when the rotation isn't being constantly updated.
+                controls.target = smoothedLookAtPosition
 
                 // state.camera.rotation.setFromQuaternion(smoothedTargetCameraRotation.current)
                 // state.camera.quaternion.copy(smoothedTargetCameraRotation.current)
