@@ -29,7 +29,7 @@ const useSwitchCamera = (targetCamera) => {
          */
         if (goForSwitch.current) {
 
-            // NOTE TODO This check may never fail after move. Not sure
+            // NOTE TODO Seeing a bug where the camera is not interpolating when revisiting an area
             if (state.camera.position.distanceTo(targetCamera.position) >= 0.01) {
                 
                 const targetCameraPosAsVec3 = new THREE.Vector3().copy(targetCamera.position)
@@ -46,6 +46,7 @@ const useSwitchCamera = (targetCamera) => {
 
                 /**
                  * Different solutions for setting camera rotation. Camera seems to look at origin no matter what when move is done.
+                 * OrbitControls is causing that. May need some system to have the camera constant look at the last lookAt position if the user isn't controlling it
                  */
                 // NOTE Camera seems to default back to last lookAt position after setting rotation. Therefore I'm changing the look at location each time
                 const smoothedLookAtPosition = new THREE.Vector3(0, 0, -1).applyQuaternion(smoothedTargetCameraRotation.current).add(state.camera.position);
