@@ -17,7 +17,7 @@ const useSwitchCamera = (targetCamera) => {
     const { camera, controls } = useThree()
 
     const smoothedTargetCameraPosition = useRef(new THREE.Vector3())
-    const smoothedTargetCameraRotation = useRef(new THREE.Quaternion())
+    const smoothedTargetCameraRotation = useRef(new THREE.Quaternion()) // Used to avoid gimbal lock when rotating the camera
     const smoothedTargetCameraFov = useRef(0)
     const smoothedTargetCameraFocalLength = useRef(0)
 
@@ -25,13 +25,15 @@ const useSwitchCamera = (targetCamera) => {
 
     useFrame((state, delta) => {
         /**
-         * Smoothly interpolate the camera to the target camera position
+         * Smoothly interpolate the camera to the target camera configuration
          */
         if (goForSwitch.current) {
 
             // NOTE TODO Seeing a bug where the camera is not interpolating when revisiting an area
             if (state.camera.position.distanceTo(targetCamera.position) >= 0.01) {
                 
+                // Calculate a new position, rotation , fov, and focal length for the camera. 
+                // Each calculation is one step on the way to the target camera's configuration
                 const targetCameraPosAsVec3 = new THREE.Vector3().copy(targetCamera.position)
                 smoothedTargetCameraPosition.current.lerp(targetCameraPosAsVec3, 3 * delta)
 
@@ -42,11 +44,12 @@ const useSwitchCamera = (targetCamera) => {
 
                 smoothedTargetCameraFocalLength.current = THREE.MathUtils.lerp(state.camera.getFocalLength(), targetCamera.getFocalLength(), 3 * delta)
                 
+                // Set the camera's new position
                 state.camera.position.copy(smoothedTargetCameraPosition.current)
 
                 /**
-                 * Different solutions for setting camera rotation. Camera seems to look at origin no matter what when move is done.
-                 * OrbitControls is causing that. May need some system to have the camera constant look at the last lookAt position if the user isn't controlling it
+                 * Different solutions for setting camera rotation. Camera seemed to look at origin no matter what when move is done.
+                 * OrbitControls was causing that. Making Orbit Controls default with makeDefault allowed me to use controls from Three to update the camera target
                  */
                 // NOTE Camera seems to default back to last lookAt position after setting rotation. Therefore I'm changing the look at location each time
                 const smoothedLookAtPosition = new THREE.Vector3(0, 0, -1).applyQuaternion(smoothedTargetCameraRotation.current).add(state.camera.position);
@@ -55,11 +58,16 @@ const useSwitchCamera = (targetCamera) => {
                 // Update the controls target so the camera doesn't snap back to the origin when the rotation isn't being constantly updated.
                 controls.target = smoothedLookAtPosition
 
+                /**
+                 * Other solutions I'm keeping here for reference. The downside of these is that
+                 * they don't give a position that will allow an update of the controls' target
+                 */
                 // state.camera.rotation.setFromQuaternion(smoothedTargetCameraRotation.current)
                 // state.camera.quaternion.copy(smoothedTargetCameraRotation.current)
 
                 /**********************************************************************************************************************8 */
 
+                // Set the camera's new fov and focal length
                 state.camera.fov = smoothedTargetCameraFov.current
                 state.camera.setFocalLength(smoothedTargetCameraFocalLength.current)
 
@@ -79,15 +87,6 @@ const useSwitchCamera = (targetCamera) => {
 
     const swithCamera = () => {
         goForSwitch.current = true
-        // /**
-        //  * I'm not actually switching a camera. I'm lerping the current camera to the target camera's position and rotation
-        //  * TODO move the camera back to the default position and rotation if the current camera is the target camera on this event
-        //  * Above is going to require a way to store the default position and rotation of the camera, and the ability to get the location of the rabbit (without coupling to it)
-        //  */
-        // let pos = new THREE.Vector3().lerpVectors(camera.position, targetCamera.position, 1);
-        // let rot = new THREE.Vector3().lerpVectors(camera.rotation, targetCamera.rotation, 1);
-        // camera.position.lerp(pos, 0.4);
-        // camera.rotation.lerp(rot, 0.4);
     }
 
     return swithCamera
