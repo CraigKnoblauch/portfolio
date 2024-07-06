@@ -17,7 +17,7 @@ const useSwitchCamera = (targetCamera) => {
     const { camera } = useThree()
 
     const smoothedTargetCameraPosition = useRef(new THREE.Vector3())
-    const smoothedTargetCameraRotation = useRef(new THREE.Vector3())
+    const smoothedTargetCameraRotation = useRef(new THREE.Quaternion())
     const smoothedTargetCameraFov = useRef(0)
     const smoothedTargetCameraFocalLength = useRef(0)
 
@@ -35,15 +35,15 @@ const useSwitchCamera = (targetCamera) => {
                 const targetCameraPosAsVec3 = new THREE.Vector3().copy(targetCamera.position)
                 smoothedTargetCameraPosition.current.lerp(targetCameraPosAsVec3, 3 * delta)
 
-                const targetCameraRotAsVec3 = new THREE.Vector3().setFromEuler(targetCamera.rotation)
-                smoothedTargetCameraRotation.current.lerp(targetCameraRotAsVec3, 3 * delta)
+                const targetCameraRotAsQuat = new THREE.Quaternion().setFromEuler(targetCamera.rotation)
+                smoothedTargetCameraRotation.current.slerp(targetCameraRotAsQuat, 3 * delta)
 
                 smoothedTargetCameraFov.current = THREE.MathUtils.lerp(state.camera.fov, targetCamera.fov, 3 * delta)
 
                 smoothedTargetCameraFocalLength.current = THREE.MathUtils.lerp(state.camera.getFocalLength(), targetCamera.getFocalLength(), 3 * delta)
                 
                 state.camera.position.copy(smoothedTargetCameraPosition.current)
-                state.camera.rotation.setFromVector3(smoothedTargetCameraRotation.current)
+                state.camera.rotation.setFromQuaternion(smoothedTargetCameraRotation.current)
                 state.camera.fov = smoothedTargetCameraFov.current
                 state.camera.setFocalLength(smoothedTargetCameraFocalLength.current)
 
@@ -53,6 +53,7 @@ const useSwitchCamera = (targetCamera) => {
 
             } else {
 
+                console.debug("Position found")
                 goForSwitch.current = false
 
             }
