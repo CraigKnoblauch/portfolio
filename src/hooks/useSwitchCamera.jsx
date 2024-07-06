@@ -30,6 +30,7 @@ const useSwitchCamera = (targetCamera) => {
         if (goForSwitch.current) {
 
             // NOTE TODO Seeing a bug where the camera is not interpolating when revisiting an area
+            // NOTE Use Quaternion.angleTo(Quaternion) to check if the rotation is close enough to the target rotation
             if (state.camera.position.distanceTo(targetCamera.position) >= 0.01) {
                 
                 // Calculate a new position, rotation , fov, and focal length for the camera. 
@@ -71,16 +72,18 @@ const useSwitchCamera = (targetCamera) => {
                 state.camera.fov = smoothedTargetCameraFov.current
                 state.camera.setFocalLength(smoothedTargetCameraFocalLength.current)
 
-                // goForSwitch.current = false
-
             } else {
 
                 console.debug("Position found")
                 goForSwitch.current = false
 
+                // Reset smoothing values
+                smoothedTargetCameraPosition.current = new THREE.Vector3()
+                smoothedTargetCameraRotation.current = new THREE.Quaternion()
+                smoothedTargetCameraFov.current = state.camera.fov
+                smoothedTargetCameraFocalLength.current = state.camera.getFocalLength()
+
             }
-            console.log("Position: ", state.camera.position)
-            console.log("Rotation: ", state.camera.rotation)
         }
         
     })
