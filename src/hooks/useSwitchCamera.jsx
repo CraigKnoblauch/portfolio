@@ -30,7 +30,7 @@ const useSwitchCamera = (targetCamera) => {
         if (goForSwitch.current) {
 
             // NOTE TODO This check may never fail after move. Not sure
-            if (state.camera.position != targetCamera.position || state.camera.rotation != targetCamera.rotation) {
+            if (state.camera.position.distanceTo(targetCamera.position) >= 0.01) {
                 
                 const targetCameraPosAsVec3 = new THREE.Vector3().copy(targetCamera.position)
                 smoothedTargetCameraPosition.current.lerp(targetCameraPosAsVec3, 3 * delta)
@@ -43,11 +43,21 @@ const useSwitchCamera = (targetCamera) => {
                 smoothedTargetCameraFocalLength.current = THREE.MathUtils.lerp(state.camera.getFocalLength(), targetCamera.getFocalLength(), 3 * delta)
                 
                 state.camera.position.copy(smoothedTargetCameraPosition.current)
-                state.camera.rotation.setFromQuaternion(smoothedTargetCameraRotation.current)
+
+                /**
+                 * Different solutions for setting camera rotation. Camera seems to look at origin no matter what when move is done.
+                 */
+                // NOTE Camera seems to default back to last lookAt position after setting rotation. Therefore I'm changing the look at location each time
+                const smoothedLookAtPosition = new THREE.Vector3(0, 0, -1).applyQuaternion(smoothedTargetCameraRotation.current).add(state.camera.position);
+                state.camera.lookAt(smoothedLookAtPosition);
+
+                // state.camera.rotation.setFromQuaternion(smoothedTargetCameraRotation.current)
+                // state.camera.quaternion.copy(smoothedTargetCameraRotation.current)
+
+                /**********************************************************************************************************************8 */
+
                 state.camera.fov = smoothedTargetCameraFov.current
                 state.camera.setFocalLength(smoothedTargetCameraFocalLength.current)
-
-                // TODO interpolate FOV if want to keep the cameras in the same position
 
                 // goForSwitch.current = false
 
@@ -57,6 +67,8 @@ const useSwitchCamera = (targetCamera) => {
                 goForSwitch.current = false
 
             }
+            console.log("Position: ", state.camera.position)
+            console.log("Rotation: ", state.camera.rotation)
         }
         
     })
