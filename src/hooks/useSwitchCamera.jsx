@@ -65,8 +65,9 @@ const useSwitchCamera = (targetCamera) => {
 
             } else {
 
-                console.debug("Position found")
+                // Render camera has settled into target configuration. Stop the interpolation and set the render camera's name
                 goForSwitch.current = false
+                state.camera.name = targetCamera.name
 
                 // Reset smoothing values
                 smoothedTargetCameraPosition.current = new THREE.Vector3()

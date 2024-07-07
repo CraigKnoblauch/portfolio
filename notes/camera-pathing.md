@@ -174,4 +174,15 @@ NOTE: If implementing this as a hook, make sure it behaves like a singleton. I'm
 - [ ] Last used camera is defined as the last camera where the configuration was stable for at least 1 second.
 
 
+### Implemented singley-linked backward list and algo
+After implementing the first iteration I realized a breaking case:
+
+What if the user moves the camera, lets it rest, then moves it again and lets it rest, and then moves it again. In this case, the camera will return to a user defined position. That's not desired behavior. To fix that, we will need to know if the current camera in use is a defined camera.
+
+By default, perspective cameras do not have names. I could maintain a store of cameras.... I just realized I don't even need to track the camera. If I need a store of cameras anyway to solve this problem, I could do this:
+1. Maintain a store of system cameras
+2. Have useSwitchCamera set the name of the render camera to be the name of the targetCamera once it's reached
+3. In useLastCamera, get the camera object from the store by name (User driven camera actions will never change the name). In fact you could skip the useLastCamera hook entirely and just get the camera by name from the store. 
+
+
 
