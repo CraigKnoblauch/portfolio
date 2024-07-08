@@ -184,5 +184,19 @@ By default, perspective cameras do not have names. I could maintain a store of c
 2. Have useSwitchCamera set the name of the render camera to be the name of the targetCamera once it's reached
 3. In useLastCamera, get the camera object from the store by name (User driven camera actions will never change the name). In fact you could skip the useLastCamera hook entirely and just get the camera by name from the store. 
 
+## How to manage which camera to use
+Most of the time the camera should be following the rabbit. There are events (user, camera zones, animation scenes) that pull the camera away. The novel way of keeping the camera on the rabbit requires updating the camera each frame. This still works in a camera zone because the rabbit camera will have it's position updated, not the state camera. Uhhh I actually don't think this is a problem.
+1. State camera defaults to rabbit cam. 
+2. State cam follows rabbit cam around (this part I think is what I need to add extenerally)
+3. State cam target is updated with useSwitchCamera
+4. State cam target is updated with useSwitchCamera by the consumer when it's done.
+5. If the rabbit is moving, the state cam is always set to the last camera. If the rabbit is not in special conditions, the last camera will be the rabbit camera.
+
+So really, I just need to implement some external system that has state camera track the current camera object. 
+
+The only camera that gets followed in this way is the rabbit camera. I could switch the name of the state camera as soon as the switch event starts, then I could, in the rabbit frame logic, say that if the state camera is the rabbit camera, update the state camera parameters with the rabbit camera parameters. Not future proof, but at the moment we only have one camera that needs to be followed in this way. If/when there's another camera that needs to be tracked, I'll redesign it then. 
+
+Oh wait, there is another camera like that. Well no, the entrypoint camera and future project cameras will follow pretermined spline paths. We can problem design like a holding system for that. 
+
 
 

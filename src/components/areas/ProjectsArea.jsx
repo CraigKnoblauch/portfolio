@@ -12,7 +12,6 @@ import FogWall from 'src/components/FogWall.jsx'
 
 export default function ProjectsArea(props) {
   const { nodes } = useGLTF('./models/projects-area.glb')
-  console.log(nodes)
   const groundTexture = useTexture('./textures/projects-area-baked.jpg')
   groundTexture.flipY = false
 

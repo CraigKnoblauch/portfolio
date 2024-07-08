@@ -7,6 +7,8 @@ import { isMobile } from "react-device-detect"
 import PropTypes from 'prop-types'
 
 import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
+import { useCameraStore } from "../stores/useCameraStore"
+import useSwitchCamera from "../hooks/useSwitchCamera"
 
 
 export default function Rabbit(props) {
@@ -22,6 +24,17 @@ export default function Rabbit(props) {
     const [ smoothCameraPosition ] = useState(() => new THREE.Vector3(3, 1, 2))
     const [ smoothCameraTarget ] = useState(() => new THREE.Vector3())
 
+    /**
+     * Load the camera object that follows the rabbit
+     */
+    const addCamera = useCameraStore((state) => state.addCamera)
+    const rabbitCameraModel = useGLTF('./models/rabbit-camera.glb')
+    const rabbitCameraRef = useRef(rabbitCameraModel.nodes.rabbit_camera)
+    addCamera(rabbitCameraRef.current)
+    const cameraOffsetRef = useRef(new THREE.Vector3())
+    const switchCamera = useSwitchCamera(rabbitCameraRef.current)
+    switchCamera()
+
     // useEffect from the docs: https://pmndrs.github.io/react-three-rapier/#moving-things-around-and-applying-forces
     useEffect(() => {
         if (body.current) {
@@ -32,6 +45,9 @@ export default function Rabbit(props) {
             body.current.setTranslation(position, true);
             body.current.setRotation(quaternion, true);
             body.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+
+            // Calculate the differnce in positions between the rabbit and its camera
+            cameraOffsetRef.current = rabbitCameraRef.current.position.sub(vec3(body.current.translation()))
         }
     }, [])
 
@@ -64,10 +80,10 @@ export default function Rabbit(props) {
 
         const cameraPosition = new THREE.Vector3()
         cameraPosition.copy(bodyPosition)
-        cameraPosition.z += 5
-        cameraPosition.y += 4
-        cameraPosition.x += 5
+        cameraPosition.add(cameraOffsetRef.current)
 
+        // TODO the camera target isn't necessarily the rabbit. It's more like a point at infinity that is
+        // along a normal vector drawn from the rabbit's camera. That way the rabbit doesn't have to be centered
         const cameraTarget = new THREE.Vector3()
         cameraTarget.copy(bodyPosition)
         // cameraTarget.y += 0.25
@@ -77,9 +93,11 @@ export default function Rabbit(props) {
         smoothCameraPosition.lerp(cameraPosition, 5 * delta)
         smoothCameraTarget.lerp(cameraTarget, 5 * delta)
 
-        // NOTE TODO Disabled for development
-        // state.camera.position.copy(smoothCameraPosition)
-        // state.camera.lookAt(smoothCameraTarget)
+        // If the state camera is the rabbit camera, update its position
+        if (state.camera.name == rabbitCameraRef.current.name) {
+            state.camera.position.copy(smoothCameraPosition)
+            state.camera.lookAt(smoothCameraTarget)
+        }
 
         // Get the direction vector for the camera
         const cameraDirection = new THREE.Vector3()
@@ -211,3 +229,4 @@ Rabbit.propTypes = {
 }
 
 useGLTF.preload('./models/rabbit.glb')
+useGLTF.preload('./models/rabbit-camera.glb')

@@ -63,11 +63,15 @@ const useSwitchCamera = (targetCamera) => {
                 state.camera.fov = smoothedTargetCameraFov.current
                 state.camera.setFocalLength(smoothedTargetCameraFocalLength.current)
 
+                // Set the camera's name to the target camera's name
+                if (state.camera.name !== targetCamera.name) {
+                    state.camera.name = targetCamera.name
+                }
+
             } else {
 
-                // Render camera has settled into target configuration. Stop the interpolation and set the render camera's name
+                // Render camera has settled into target configuration. Stop the interpolation
                 goForSwitch.current = false
-                state.camera.name = targetCamera.name
 
                 // Reset smoothing values
                 smoothedTargetCameraPosition.current = new THREE.Vector3()
