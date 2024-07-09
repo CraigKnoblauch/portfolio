@@ -1,6 +1,7 @@
 import { Physics } from "@react-three/rapier"
 import { Suspense } from "react"
 import { OrbitControls } from "@react-three/drei"
+import PropTypes from 'prop-types'
 
 import RabbitHoleArea from "src/components/areas/RabbitHoleArea.jsx"
 import CareerArea from "src/components/areas/CareerArea.jsx"
@@ -10,7 +11,9 @@ import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
 import RabbitSpawn from "./RabbitSpawn"
 
 
-export default function Experience() {
+export default function Experience( { playerRef } ) {
+
+    console.log("Experience.jsx: playerRef: ", playerRef.current)
 
     return (
         <>
@@ -19,7 +22,7 @@ export default function Experience() {
                 <OrbitControls makeDefault />
 
                 {/* Load the Rabbit spawn first */}
-                <RabbitSpawn />
+                <RabbitSpawn playerRef={playerRef} />
 
                 {/* Wait for the rest of the areas to load */}
                 <Suspense>
@@ -33,3 +36,6 @@ export default function Experience() {
         </>
     )
 }
+Experience.propTypes = {
+    playerRef: PropTypes.object.isRequired,
+};

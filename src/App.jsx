@@ -2,11 +2,16 @@ import { Canvas } from "@react-three/fiber"
 import Experience from "src/components/Experience.jsx"
 import { KeyboardControls } from "@react-three/drei"
 import { isMobile } from "react-device-detect"
-import { StrictMode } from "react"
+import { StrictMode, useRef } from "react"
 import MobileInterface from "src/components/MobileInterface.jsx"
 
 
 function App() {
+
+  // Pass this ref as props to relevant components
+  // Most components should read
+  // The Rabbit component is the one one that should write
+  const playerRef = useRef(null)
 
   return (
     <>
@@ -24,7 +29,7 @@ function App() {
         {/* NOTE Starting camera position before beta release: [3, 1, 2] */}
         <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
           <StrictMode>
-            <Experience />
+            <Experience playerRef={playerRef} />
           </StrictMode>
         </Canvas>
 

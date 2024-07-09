@@ -14,7 +14,7 @@ import useSwitchCamera from "../hooks/useSwitchCamera"
 export default function Rabbit(props) {
 
     const model = useGLTF('./models/rabbit.glb')
-    const body = useRef()
+    const body = props.playerRef
     
     const rabbitShadowTexture = useTexture('./textures/rabbit-shadow.png')
 
@@ -225,7 +225,8 @@ export default function Rabbit(props) {
     </>
 }
 Rabbit.propTypes = {
-    position: PropTypes.arrayOf(PropTypes.number)
+    position: PropTypes.arrayOf(PropTypes.number),
+    playerRef: PropTypes.object.isRequired,
 }
 
 useGLTF.preload('./models/rabbit.glb')

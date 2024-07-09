@@ -2,12 +2,13 @@ import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
 import { Suspense } from 'react'
 import { useProgress } from '@react-three/drei'
+import PropTypes from 'prop-types'
 
 import LoadingIndicator from 'src/components/LoadingIndicator.jsx'
 import Rabbit from 'src/components/Rabbit.jsx'
 
 
-export default function RabbitSpawn() {
+export default function RabbitSpawn({ playerRef }) {
 
     const platformHeight = 1
     const { active } = useProgress()
@@ -27,7 +28,10 @@ export default function RabbitSpawn() {
         )}
 
         <Suspense>
-            <Rabbit position={[0, 0.002, 0]} />
+            <Rabbit position={[0, 0.002, 0]} playerRef={playerRef} />
         </Suspense>
     </>
+}
+RabbitSpawn.propTypes = {
+    playerRef: PropTypes.object.isRequired,
 }
