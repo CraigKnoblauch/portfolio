@@ -2,8 +2,9 @@ import { Canvas } from "@react-three/fiber"
 import Experience from "src/components/Experience.jsx"
 import { KeyboardControls } from "@react-three/drei"
 import { isMobile } from "react-device-detect"
-import { StrictMode, useRef } from "react"
+import { useRef } from "react"
 import MobileInterface from "src/components/MobileInterface.jsx"
+import { PlayerContext } from "src/contexts/PlayerContext"
 
 
 function App() {
@@ -28,9 +29,9 @@ function App() {
         {/* NOTE Camera position to debug flames shader: [1.6, 5.9, -32.4] */}
         {/* NOTE Starting camera position before beta release: [3, 1, 2] */}
         <Canvas camera={{ position: [3, 1, 2], fov: 50 }}>
-          <StrictMode>
+          <PlayerContext.Provider value={playerRef}>
             <Experience playerRef={playerRef} />
-          </StrictMode>
+          </PlayerContext.Provider>
         </Canvas>
 
       </KeyboardControls> 

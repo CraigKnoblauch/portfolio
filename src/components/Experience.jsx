@@ -1,5 +1,5 @@
 import { Physics } from "@react-three/rapier"
-import { Suspense } from "react"
+import { Suspense, createContext } from "react"
 import { OrbitControls } from "@react-three/drei"
 import PropTypes from 'prop-types'
 
@@ -15,6 +15,7 @@ export default function Experience( { playerRef } ) {
 
     console.log("Experience.jsx: playerRef: ", playerRef.current)
 
+    // TODO use a context for the playerRef
     return (
         <>
             <Physics debug={true}>

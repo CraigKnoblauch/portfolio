@@ -1,11 +1,12 @@
 import { useGLTF, useKeyboardControls, useAnimations, useTexture } from "@react-three/drei"
 import { quat, vec3, RigidBody, CuboidCollider } from "@react-three/rapier"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useContext } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { isMobile } from "react-device-detect"
 import PropTypes from 'prop-types'
 
+import { PlayerContext } from "src/contexts/PlayerContext"
 import { useMobileControlsStore } from "src/stores/useMobileControlsStore.jsx"
 import { useCameraStore } from "../stores/useCameraStore"
 import useSwitchCamera from "../hooks/useSwitchCamera"
@@ -14,7 +15,7 @@ import useSwitchCamera from "../hooks/useSwitchCamera"
 export default function Rabbit(props) {
 
     const model = useGLTF('./models/rabbit.glb')
-    const body = props.playerRef
+    const body = useContext(PlayerContext)
     
     const rabbitShadowTexture = useTexture('./textures/rabbit-shadow.png')
 
@@ -225,8 +226,7 @@ export default function Rabbit(props) {
     </>
 }
 Rabbit.propTypes = {
-    position: PropTypes.arrayOf(PropTypes.number),
-    playerRef: PropTypes.object.isRequired,
+    position: PropTypes.arrayOf(PropTypes.number)
 }
 
 useGLTF.preload('./models/rabbit.glb')
