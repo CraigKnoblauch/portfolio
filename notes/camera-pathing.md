@@ -198,5 +198,21 @@ The only camera that gets followed in this way is the rabbit camera. I could swi
 
 Oh wait, there is another camera like that. Well no, the entrypoint camera and future project cameras will follow pretermined spline paths. We can problem design like a holding system for that. 
 
+## Having the player camera follow a predetermined track
+I realized that having the player camera track the rabbit doesn't work for a lot of cases. The primary problem, is how I manage orbiting the camera to the proper position around the player. Take the career area, when the rabbit enters and moves towards the right, and the camera is orbited on the left of the player, it works out just fine. The user can see the rabbit and the models. As soon as the rabbit goes into the position where the models are on the other side, the user can no longer see the models in a good way. The problem is determining when to orbit the rabbit. And when to do ithat in a way that is scalable. I could do it off of position, but tht isn't relient to change. I would have to define like a bounding area of some kind to do that in a resilent way. And even then, going off of straight positions is just, it's too easily broken. 
+
+So I had the idea to have a positional spline. So I have a predifined track that ththe camera goes along. Now I need to figure out the logic of that track. 
+
+Having the camera begin where the rabbit begins is easy enought, I can set that up in the blender level . But how do I determine when the camera rotates, or goes to a new section of track? 
+
+- I could keep the camera's rotatoinal angle on some kind of offset with teh rabbit. This way the user gets a pretty consistent viewing angle.
+- I could try to maintain som ethreshold of distance between the camera and the player. That way the camera would move out of hte way if the player got to close, but move to anothe rpart of the track if the player got too far away. I should say TRY to move to some other part of the track. There are cases where the user mvoes very far away and the camera should just stay  in its position in thsoe case. 
+
+Before I make requirements, let's see if I can at least gget the camera to follow the plaer camera track spline as the user moves. 
+
+I need to know the following
+- How to import the spline from a glb
+- How to animate the camera long that spline as the user moves
+
 
 

@@ -9,6 +9,7 @@ import ProjectsArea from "src/components/areas/ProjectsArea.jsx"
 import ContactArea from "src/components/areas/ContactArea.jsx"
 import HobbiesArea from "src/components/areas/HobbiesArea.jsx"
 import RabbitSpawn from "./RabbitSpawn"
+import PlayerCameraTrack from "src/components/cameras/PlayerCameraTrack"
 
 
 export default function Experience( { playerRef } ) {
@@ -24,6 +25,9 @@ export default function Experience( { playerRef } ) {
 
                 {/* Load the Rabbit spawn first */}
                 <RabbitSpawn playerRef={playerRef} />
+
+                {/* Debugg; camera track for player */}
+                {/* <PlayerCameraTrack /> */}
 
                 {/* Wait for the rest of the areas to load */}
                 <Suspense>
