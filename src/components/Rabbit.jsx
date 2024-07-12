@@ -34,7 +34,7 @@ export default function Rabbit(props) {
     addCamera(rabbitCameraRef.current)
     const cameraOffsetRef = useRef(new THREE.Vector3())
     const switchCamera = useSwitchCamera(rabbitCameraRef.current)
-    switchCamera()
+    // switchCamera()
 
     // useEffect from the docs: https://pmndrs.github.io/react-three-rapier/#moving-things-around-and-applying-forces
     useEffect(() => {

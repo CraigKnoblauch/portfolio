@@ -1,5 +1,5 @@
 import { Physics } from "@react-three/rapier"
-import { Suspense, createContext } from "react"
+import { Suspense } from "react"
 import { OrbitControls } from "@react-three/drei"
 import PropTypes from 'prop-types'
 
@@ -27,7 +27,7 @@ export default function Experience( { playerRef } ) {
                 <RabbitSpawn playerRef={playerRef} />
 
                 {/* Debugg; camera track for player */}
-                {/* <PlayerCameraTrack /> */}
+                <PlayerCameraTrack />
 
                 {/* Wait for the rest of the areas to load */}
                 <Suspense>
