@@ -1,7 +1,9 @@
-import { useRef } from 'react'
+import { useRef, useContext, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
+
+import { PlayerContext } from 'src/contexts/PlayerContext.jsx'
 
 
 export default function PlayerCameraTrack() {
@@ -24,13 +26,43 @@ export default function PlayerCameraTrack() {
 
     const progress = useRef(0);
 
+    /**
+     * TODO
+     * Calculate the position of the camera along the track such that the camera is the
+     * minimum distance away from the player and never less than TBD distance
+     * 
+     * TBD distance has to be greatr than the distance from the player to the track. This
+     * ensures the camera is always viewing the player from an angle. Could even have a minimum
+     * viewing angle and then get the minimum distance from that. 
+     * 
+     * i.e. Let's say the minimum viewing angle is 45 degrees. That's the angle drawn from:
+     *  1. A vector normal to the camera's view
+     *  2. A vector pointing straight down from the camera's position
+     * In this case, the minimu distance would be calculated as:
+     *  minDistance = (trackHeight - lookPosition.y) * cos(minViewAngle)
+     * 
+     * Easier to see that with a visualization, but I worked it out on some scratch paper.
+     * 
+     * Have the camera look at a point a few units above the player
+     */
+    const player = useContext(PlayerContext)
+    const minViewAngle = 45 * (Math.PI / 180)
+
+    // Calculate the minimum distance from the camera to the player after the player component has been committed
+    useEffect(() => {
+        const minDistanceFromCameraToPlayer = (trackHeight - player.current.translation().y) * Math.cos(minViewAngle)
+        console.log("minDistanceFromCameraToPlayer: ", minDistanceFromCameraToPlayer)
+    }, [minViewAngle, player])
+    
     // Current behavior animates the camera along the track
     useFrame((state, delta) => {
         progress.current += delta * 0.1; // Adjust speed as needed
         if (progress.current > 1) progress.current = 0;
 
+        // Calculate the distance 
+
         const position = trackCurve.getPoint(progress.current);
-        state.camera.position.copy(position);
+        // state.camera.position.copy(position);
 
         // const lookAtPosition = spline.getPointAt((progress.current + 0.01) % 1);
         // state.camera.lookAt(player.current.translation());
