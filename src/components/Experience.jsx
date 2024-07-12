@@ -19,7 +19,7 @@ export default function Experience( { playerRef } ) {
     // TODO use a context for the playerRef
     return (
         <>
-            <Physics debug={true}>
+            <Physics debug={false}>
                 <ambientLight />
                 <OrbitControls makeDefault />
 
@@ -27,7 +27,9 @@ export default function Experience( { playerRef } ) {
                 <RabbitSpawn playerRef={playerRef} />
 
                 {/* Debugg; camera track for player */}
-                <PlayerCameraTrack />
+                <Suspense>
+                    <PlayerCameraTrack />
+                </Suspense>
 
                 {/* Wait for the rest of the areas to load */}
                 <Suspense>

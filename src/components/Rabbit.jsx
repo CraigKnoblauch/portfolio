@@ -95,10 +95,10 @@ export default function Rabbit(props) {
         smoothCameraTarget.lerp(cameraTarget, 5 * delta)
 
         // If the state camera is the rabbit camera, update its position
-        if (state.camera.name == rabbitCameraRef.current.name) {
-            state.camera.position.copy(smoothCameraPosition)
-            state.camera.lookAt(smoothCameraTarget)
-        }
+        // if (state.camera.name == rabbitCameraRef.current.name) {
+        //     state.camera.position.copy(smoothCameraPosition)
+        //     state.camera.lookAt(smoothCameraTarget)
+        // }
 
         // Get the direction vector for the camera
         const cameraDirection = new THREE.Vector3()

@@ -13,7 +13,8 @@ export default function PlayerCameraTrack() {
     const trackObj = nodes.player_camera_track
     const points = trackObj.geometry.attributes.position.array
 
-    const trackHeight = 4.5
+    const trackHeight = 1.5
+    const trackDivisions = 300
 
     const vec3Points = []
     for (let i = 0; i < points.length; i += 3) {
@@ -23,8 +24,9 @@ export default function PlayerCameraTrack() {
     // Create a CatmullRomCurve3 from the track's vector3 points. 
     // This points on this curve will be used to move the camera along the track
     const trackCurve = new THREE.CatmullRomCurve3(vec3Points, true, 'catmullrom')
+    const trackPoints = trackCurve.getPoints(trackDivisions)
 
-    const progress = useRef(0);
+    const trackProgress = useRef(0); // Begin at the start of the track
 
     /**
      * TODO
@@ -48,28 +50,70 @@ export default function PlayerCameraTrack() {
     const player = useContext(PlayerContext)
     const minViewAngle = 45 * (Math.PI / 180)
 
-    // Calculate the minimum distance from the camera to the player after the player component has been committed
+    // Hacky I don't like this
+    let minDistanceFromCameraToPlayer = 0
+    let lookAtPosition = new THREE.Vector3()
+
+    /**
+     * Calculate the following after the player component has been committed:
+     *  1. The minimum distance from the camera to the player
+     *  2. The lookAt position as a point a little higher than the player
+     */
+    // NOTE TODO This being able to run depends on Suspense working in the Experience component. 
+    // That's an assumption that I don't think is good to make. Makes this hard to test.
     useEffect(() => {
         const minDistanceFromCameraToPlayer = (trackHeight - player.current.translation().y) * Math.cos(minViewAngle)
+        const lookAtPosition = new THREE.Vector3(player.current.translation().x, player.current.translation().y + 2, player.current.translation().z)
         console.log("minDistanceFromCameraToPlayer: ", minDistanceFromCameraToPlayer)
-    }, [minViewAngle, player])
-    
+    }, [player, minViewAngle])
+
     // Current behavior animates the camera along the track
     useFrame((state, delta) => {
-        progress.current += delta * 0.1; // Adjust speed as needed
-        if (progress.current > 1) progress.current = 0;
 
-        // Calculate the distance 
+        /**
+         * Determine a point on the track that is at least minDistanceFromCameraToPlayer
+         * Dumb first solution:
+         *  1. Calculate the distance from the lookAt position to every point on the track
+         *  2. Choose the point that is both the closest to minDistanceFromCameraToPlayer and the closest to the current camera position
+         *     - Could also convert the found point to a progress on the curve, then compare that against the current progress
+         */
+        lookAtPosition.set(player.current.translation().x, player.current.translation().y + 2, player.current.translation().z)
+        let potentials = []
+        for (let i = 0; i < trackPoints.length; i++) {
+            let distance = trackPoints[i].distanceTo(lookAtPosition)
+            if (distance >= minDistanceFromCameraToPlayer) {
+                potentials.push(
+                    { 
+                        distance: distance, 
+                        point: trackPoints[i],
+                        t: i / trackPoints.length,
+                        index: i
+                    }
+                )
+            }
+        }
 
-        const position = trackCurve.getPoint(progress.current);
-        // state.camera.position.copy(position);
+        // Sort the potentials by distance
+        potentials = potentials.sort((a, b) => a.distance - b.distance)
+
+        // Drop all potentials except for the first 5
+        potentials = potentials.slice(0, 5)
+
+        // Sort the potentials again by the difference between t and the current trackProgress
+        potentials.sort((a, b) => Math.abs(a.t - trackProgress.current) - Math.abs(b.t - trackProgress.current))
+
+        // Use the first potential as the new camera position
+        const newTrackPosition = potentials[0].point
+        trackProgress.current = potentials[0].t
+
+        state.camera.position.copy(newTrackPosition)
 
         // const lookAtPosition = spline.getPointAt((progress.current + 0.01) % 1);
-        // state.camera.lookAt(player.current.translation());
+        state.camera.lookAt(lookAtPosition);
     });
 
     // NOTE TODO Track is visible with this code. This is not desired in the final release
-    const trackGeometry = new THREE.BufferGeometry().setFromPoints(trackCurve.getPoints(50))
+    const trackGeometry = new THREE.BufferGeometry().setFromPoints(trackPoints)
     const trackMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 })
     return <>
         <line geometry={trackGeometry} material={trackMaterial} scale={trackObj.scale}/>
