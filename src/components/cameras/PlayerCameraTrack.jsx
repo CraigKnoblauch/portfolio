@@ -29,7 +29,6 @@ export default function PlayerCameraTrack() {
     const trackProgress = useRef(0); // Begin at the start of the track
 
     /**
-     * TODO
      * Calculate the position of the camera along the track such that the camera is the
      * minimum distance away from the player and never less than TBD distance
      * 
@@ -50,7 +49,7 @@ export default function PlayerCameraTrack() {
     const player = useContext(PlayerContext)
     const minViewAngle = 45 * (Math.PI / 180)
 
-    // Hacky I don't like this
+    // TECH DEBT. See note in useEffect. Hacky I don't like this
     let minDistanceFromCameraToPlayer = 0
     let lookAtPosition = new THREE.Vector3()
 
@@ -62,10 +61,17 @@ export default function PlayerCameraTrack() {
     // NOTE TODO This being able to run depends on Suspense working in the Experience component. 
     // That's an assumption that I don't think is good to make. Makes this hard to test.
     useEffect(() => {
-        const minDistanceFromCameraToPlayer = (trackHeight - player.current.translation().y) * Math.cos(minViewAngle)
-        const lookAtPosition = new THREE.Vector3(player.current.translation().x, player.current.translation().y + 2, player.current.translation().z)
-        console.log("minDistanceFromCameraToPlayer: ", minDistanceFromCameraToPlayer)
-    }, [player, minViewAngle])
+        /**
+         * TECH DEBT
+         * These calculations can only be performed if player.current is not null. But that makes minDistanceFromCameraToPlayer and lookAtPosition
+         * null during useFrame. For now I suppose I can have conditoinal checks in useFrame, but that's not ideal.
+         */
+        if (player.current) {
+            minDistanceFromCameraToPlayer = (trackHeight - player.current.translation().y) * Math.cos(minViewAngle)
+            lookAtPosition = new THREE.Vector3(player.current.translation().x, player.current.translation().y + 2, player.current.translation().z)
+            console.log("minDistanceFromCameraToPlayer: ", minDistanceFromCameraToPlayer)
+        }
+    }, [player.current, minViewAngle])
 
     // Current behavior animates the camera along the track
     useFrame((state, delta) => {
@@ -77,39 +83,41 @@ export default function PlayerCameraTrack() {
          *  2. Choose the point that is both the closest to minDistanceFromCameraToPlayer and the closest to the current camera position
          *     - Could also convert the found point to a progress on the curve, then compare that against the current progress
          */
-        lookAtPosition.set(player.current.translation().x, player.current.translation().y + 2, player.current.translation().z)
-        let potentials = []
-        for (let i = 0; i < trackPoints.length; i++) {
-            let distance = trackPoints[i].distanceTo(lookAtPosition)
-            if (distance >= minDistanceFromCameraToPlayer) {
-                potentials.push(
-                    { 
-                        distance: distance, 
-                        point: trackPoints[i],
-                        t: i / trackPoints.length,
-                        index: i
-                    }
-                )
+        if (player.current) {
+            lookAtPosition.set(player.current.translation().x, player.current.translation().y + 2, player.current.translation().z)
+            let potentials = []
+            for (let i = 0; i < trackPoints.length; i++) {
+                let distance = trackPoints[i].distanceTo(lookAtPosition)
+                if (distance >= minDistanceFromCameraToPlayer) {
+                    potentials.push(
+                        { 
+                            distance: distance, 
+                            point: trackPoints[i],
+                            t: i / trackPoints.length,
+                            index: i
+                        }
+                    )
+                }
             }
+
+            // Sort the potentials by distance
+            potentials = potentials.sort((a, b) => a.distance - b.distance)
+
+            // Drop all potentials except for the first 5
+            potentials = potentials.slice(0, 5)
+
+            // Sort the potentials again by the difference between t and the current trackProgress
+            potentials.sort((a, b) => Math.abs(a.t - trackProgress.current) - Math.abs(b.t - trackProgress.current))
+
+            // Use the first potential as the new camera position
+            const newTrackPosition = potentials[0].point
+            trackProgress.current = potentials[0].t
+
+            state.camera.position.copy(newTrackPosition)
+
+            // const lookAtPosition = spline.getPointAt((progress.current + 0.01) % 1);
+            state.camera.lookAt(lookAtPosition);
         }
-
-        // Sort the potentials by distance
-        potentials = potentials.sort((a, b) => a.distance - b.distance)
-
-        // Drop all potentials except for the first 5
-        potentials = potentials.slice(0, 5)
-
-        // Sort the potentials again by the difference between t and the current trackProgress
-        potentials.sort((a, b) => Math.abs(a.t - trackProgress.current) - Math.abs(b.t - trackProgress.current))
-
-        // Use the first potential as the new camera position
-        const newTrackPosition = potentials[0].point
-        trackProgress.current = potentials[0].t
-
-        state.camera.position.copy(newTrackPosition)
-
-        // const lookAtPosition = spline.getPointAt((progress.current + 0.01) % 1);
-        state.camera.lookAt(lookAtPosition);
     });
 
     // NOTE TODO Track is visible with this code. This is not desired in the final release
