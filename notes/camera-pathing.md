@@ -248,3 +248,9 @@ To move the camera to the next camera location (in the cam location structure), 
 - Interpolate along the least number of points between the current track position and the target track position. 
 
 
+### Performance
+At current state searching an array, the CPU latency is around 3.5-4ms. Worst case was 5ms. This will just get worse as our track gets bigger. 
+Without searching the array, the CPU latency is around 1.5-2ms.
+Using the dumb search of the array causes a noticeable peformance hit. 
+
+Even though the current soluiton (commit 2f02ed5183a91c267910330b8d5f3b3666418128) works smoothly on desktop and mobile, it hits the system too hard. Phone was hot, and laptop was stuttering.
