@@ -14,7 +14,7 @@ export default function PlayerCameraTrack() {
     const points = trackObj.geometry.attributes.position.array
 
     const trackHeight = 1.5
-    const trackDivisions = 300
+    const trackDivisions = 50000
 
     const vec3Points = []
     for (let i = 0; i < points.length; i += 3) {

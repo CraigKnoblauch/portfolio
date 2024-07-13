@@ -214,5 +214,37 @@ I need to know the following
 - How to import the spline from a glb
 - How to animate the camera long that spline as the user moves
 
+### Calculating the next position for the camera along the track
+A quick solution to this is calculating the distance from the lookAtPosition to the track **for every position on the track**. This is a fine solution for relatively few track divisions. In my testing 5000 track divisions works ok, but another order of magnitude is noticeably laggy. 
+
+There's also the problem that moving the camera from one point on the track to another is very jumpy. They're discrete steps and you can tell. A quick fix is to increase the number of track divisions so this movement looks smooth. This results in an amount of track divisions that bogs down the next location search algorithm.
+
+There's another issue. What do we do if the next location is on the other side of the track. Say the track is a circle, and the player goes through the center. The camera tracks the player to the center, then instaneously jumps to the other side of the track to pick up the player again as it's going through the center. The desired behavior is that the camera would swing around the track and come to rest at the right position. 
+
+That problem, and the problem of the second paragraph, can be solved by interpolating the camera to the next point, rather than jumping. Interpolation works if the points are direct neighbors, but if they're not, the interpolation will no longer match the curve. In this situation, which would be the situation of the previous paragraph, you would want the camera to interpolate along it's neighbors, until coming to rest at the target point.
+
+In those frames while the camera is moving to the new target, we can't looking for new targets on each frame. The way of implementing that just feels broken though. Like `if moving don't calculate otherwise calculate and move`? That feels off.
+
+What if I had a structure that was tracking new targets, and I was always interpolating the camera to those new targets? 
+[ ] Structure for tracking new camera targets
+[ ] Constantly seek new camera target on each frame
+
+[ ] Algorithm that scales better for calculating next target
+
+__Algo requirements__
+Organize track points into a structure that can be efficiently queried for points in a volume of space.
+
+To calculate the next cmaera location, on each frame:
+- "Draw" a walled cone from the player into infinity. The angles from the player are defined by the maximum and minimum viewing angles.
+- Query the track points for points that are within that walled cone volume of space
+- Of the found points, choose the point that is closest to the player as the next camera location
+- Register the new location with a different structure
+- KD trees are more efficient for a few hundred to a few thousand points over searching an array
+![](./camera-track-query-area.png)
+
+To move the camera to the next camera location (in the cam location structure), on each frame:
+- Look at the position at the head of the structure
+- Retrieve the position from a linked hash map of track positions 
+- Interpolate along the least number of points between the current track position and the target track position. 
 
 

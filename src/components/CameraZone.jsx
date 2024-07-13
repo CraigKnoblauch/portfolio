@@ -33,7 +33,7 @@ export default function CameraZone({ cameraZoneBase, height=5, camera }) {
     return <>
         {/* Using onCollisionExit only fires if the player has completely entered or completely exited the zone */}
         <RigidBody type="fixed"
-                   onCollisionExit={switchCamera} 
+                   onCollisionExit={() => console.log("camera zone entrance")} 
                    sensor={true}
                    colliders="trimesh"
         >
