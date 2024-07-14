@@ -254,3 +254,14 @@ Without searching the array, the CPU latency is around 1.5-2ms.
 Using the dumb search of the array causes a noticeable peformance hit. 
 
 Even though the current soluiton (commit 2f02ed5183a91c267910330b8d5f3b3666418128) works smoothly on desktop and mobile, it hits the system too hard. Phone was hot, and laptop was stuttering.
+
+
+### Drawing inspiration from elsewhere
+cross section rotated about axis from calc 3
+How do PID controllers work. Might be able to calculate an acceleration along the track to get to the right distance and viewing angle. 
+
+
+### Controller for feedback system
+Instead of having a queue of targets to hit, have a feedback loop where a controller adjusts the velocity of the camera along the track until the camera comes to rest at the desired location. This works even if the desired location is always changing.
+
+A controller could **seek** a point rather than moving to a specific point. i.e. Move the camera until a point with the correct viewing angle and distance is found. 
