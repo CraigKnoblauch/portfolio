@@ -10,5 +10,9 @@ export default defineConfig({
     alias: {
       src: "/src/",
     }
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.js']
   }
 })
