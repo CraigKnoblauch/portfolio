@@ -265,3 +265,11 @@ How do PID controllers work. Might be able to calculate an acceleration along th
 Instead of having a queue of targets to hit, have a feedback loop where a controller adjusts the velocity of the camera along the track until the camera comes to rest at the desired location. This works even if the desired location is always changing.
 
 A controller could **seek** a point rather than moving to a specific point. i.e. Move the camera until a point with the correct viewing angle and distance is found. 
+
+__Implementation needs__
+- Function that works like lerp, but on the track points. A polynomial fit rather than a linear fit.
+    - Actually may not even have to do that. If I just get an amount that the entity wants to move on each timestep, I can add that to my current u and get a point at that location
+- Controller that continously calculates how much to traverse to achieve viewing angle and distance.
+    - In this case viewing would be an angle because that's set by the lookAt function. I also don't want to be complicating things by changing that.
+
+## PID controller design
