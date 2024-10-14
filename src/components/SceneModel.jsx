@@ -24,5 +24,5 @@ export default function SceneModel( { meshMaterialPairs } ) {
     </>
 }
 SceneModel.propTypes = {
-    meshMaterialPairs: PropTypes.arrayOf(PropTypes.object).isRequired
+    meshMaterialPairs: PropTypes.arrayOf(PropTypes.array).isRequired
 };
