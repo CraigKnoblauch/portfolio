@@ -1,8 +1,4 @@
 import SceneModel from 'src/components/SceneModel'
-import { useTexture } from "@react-three/drei"
-import * as THREE from 'three'
-// TODO import rocket flames shader material
-import MatcapManager from 'src/MatcapManager.js'
 import PropTypes from 'prop-types'
 
 /**
@@ -17,44 +13,23 @@ import PropTypes from 'prop-types'
  *    external system that would be difficult to get online, it should be mocked. Or if for example its 
  *    a heavy model. Otherwise I think it should be internal.
  */
-export default function Rocket( { nodes } ) {
+export default function Rocket( { meshes, materials } ) {
 
-    if (!nodes) {
+    if (!meshes || !materials) {
         return <SceneModel meshMaterialPairs={[]} />
     }
 
-    const matcaps = new MatcapManager()
-
-    /**
-     * Materials
-     */
-    // TODO NOTE Might want to mock MatcapManager, thus take it as dependency injection
-    const nozzleMaterial = matcaps.matcapMaterial('silver')
-
-    const bodyMaterial = useTexture('./texture/rocket-uv-map.jpg')
-
-    // TODO replace with shader material
-    const flamesMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-
-    /**
-     * Meshes
-     */
-    const bodyMesh = new THREE.Mesh(nodes.body.geometry)
-    const nozzle1Mesh = new THREE.Mesh(nodes.rocket_nozzle_1.geometry)
-    const nozzle2Mesh = new THREE.Mesh(nodes.rocket_nozzle_2.geometry)
-    const flames1Mesh = new THREE.Mesh(nodes.yellow_flames_1.geometry)
-    const flames2Mesh = new THREE.Mesh(nodes.yellow_flames_2.geometry)
-
     return (
         <SceneModel meshMaterialPairs={[
-            [bodyMesh, bodyMaterial],
-            [nozzle1Mesh, nozzleMaterial],
-            [nozzle2Mesh, nozzleMaterial],
-            [flames1Mesh, flamesMaterial],
-            [flames2Mesh, flamesMaterial]
+            [meshes.bodyMesh, materials.bodyMaterial],
+            [meshes.nozzle1Mesh, materials.nozzleMaterial],
+            [meshes.nozzle2Mesh, materials.nozzleMaterial],
+            [meshes.flames1Mesh, materials.flamesMaterial],
+            [meshes.flames2Mesh, materials.flamesMaterial]
         ]} />
     )
 }
 Rocket.propTypes = {
-    nodes: PropTypes.object.isRequired
+    meshes: PropTypes.object.isRequired,
+    materials: PropTypes.object.isRequired
 };
