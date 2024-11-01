@@ -1,0 +1,10 @@
+site_name: craigknoblauch.com docs
+nav:
+  - Home: index.md
+  - About: about.md
+  - Introduction: introduction.md
+  - Making the models: making-the-models.md
+  - Textures: textures.md
+  - Rleasing a Beta: releasing-a-beta.md
+  - Redesigning for Testing: redesigning-for-testing.md
+theme: readthedocs
