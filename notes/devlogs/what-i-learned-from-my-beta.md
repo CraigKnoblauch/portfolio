@@ -51,4 +51,22 @@ TODO:
 - Make sure you test rigorously with the platform most of your users will be on. All I can say is that I at least knew it worked on mobile, but I didn't have a dedicated mobile experience in mind.
  
 
+## Changes for a public beta
+- [ ] Will have to keep notes agnostic of branches.
+- [ ] Will need a versioning scheme to keep the beta releases seaparate from the main release
+- [ ] Will need an introduction page with an enter button
+- [ ] Change the camera so it can be freely moved
+- [ ] Route to beta.craigknoblauch.com or craigknoblauch.com/beta
+- [ ] Link to video on front page
+- [ ] Ask ASU for permission to use their logo like I have
 
+### Versioning scheme
+For original beta, use 0.1.0-closed-beta
+For public beta release, use 0.1.0-public-beta
+Public beta release is separate branch from main that will never join back. Continue minor release numbering on main until version 1.0.0 is done. Project addtions and architecture changes count as minor releases from that point on.
+
+### Steps for public beta set up
+1. Add an additional tag to beta commit named `0.1.0-closed-beta`
+2. Branch from those commits to a branch called beta
+3. Set up vercel to deploy from beta branch
+4. Make code changes above 
