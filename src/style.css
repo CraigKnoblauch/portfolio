@@ -1,4 +1,4 @@
-html,
+/* html,
 body,
 #root
 {
@@ -10,16 +10,3 @@ body,
     background: skyblue;
 }
 
-/**
-* Mobile controls interface
-*/
-.mobile-interface
-{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: auto;
-    height: auto;
-    margin: 20px;
-    opacity: 0.2;
-}
