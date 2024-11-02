@@ -4,13 +4,11 @@ import App from './App.jsx'
 // import './style.css'
 import { createTheme, MantineProvider } from '@mantine/core'
 import { RabbitAnimationsProvider } from './contexts/RabbitAnimationsContext.jsx'
-import FrontPage from './components/FrontPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <FrontPage />
-      {/* <RabbitAnimationsProvider>
+      <RabbitAnimationsProvider>
         <App />
-      </RabbitAnimationsProvider> */}
+      </RabbitAnimationsProvider>
   </React.StrictMode>,
 )
