@@ -1,8 +1,21 @@
-import { it, expect, describe } from 'vitest'
+import { it, expect, describe, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
 import * as THREE from 'three'
 import Rocket from '../../src/components/Rocket'
 import ReactThreeTestRenderer from '@react-three/test-renderer'
+
+// Mock the useGLTF hook
+vi.mock('@react-three/drei', () => ({
+    useGLTF: vi.fn(() => ({
+      nodes: {
+        // Mock nodes data
+        node1: { /* mock node data */ },
+        node2: { /* mock node data */ },
+        // Add more mock nodes as needed
+      }
+    }))
+  }))
+  
 
 describe('Rocket', () => {
     it('should render Rocket component', async () => {
