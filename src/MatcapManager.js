@@ -1,4 +1,5 @@
 import { TextureLoader } from 'three'
+import path from 'path'
 
 /**
  * Manages the loading and retrieval of matcaps.
@@ -10,10 +11,11 @@ export default class MatcapManager {
         this.textureLoader = new TextureLoader()
     }
 
-    loadMatcaps(matcapFiles) {
-        Object.keys(matcapFiles).forEach((imageFilename) => {
+    loadMatcaps(dir, files) {
+        files.forEach((imageFilename) => {
             const materialName = imageFilename.split('.')[0]
-            this.matcaps[materialName] = this.textureLoader.load('./matcaps/' + imageFilename) // Load the matcap
+            const filePath = path.join(dir, imageFilename)
+            this.matcaps[materialName] = this.textureLoader.load(filePath) // Load the matcap
         })
         console.log(this.matcaps)
     }
