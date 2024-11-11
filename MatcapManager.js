@@ -1,4 +1,4 @@
-import { TextureLoader } from 'three'
+import { TextureLoader, MeshMatcapMaterial } from 'three'
 import path from 'path'
 
 /**
@@ -15,7 +15,8 @@ export default class MatcapManager {
         files.forEach((imageFilename) => {
             const materialName = imageFilename.split('.')[0]
             const filePath = path.join(dir, imageFilename)
-            this.matcaps[materialName] = this.textureLoader.load(filePath) // Load the matcap
+            const texture = this.textureLoader.load(filePath) // Load the matcap
+            this.matcaps[materialName] = new MeshMatcapMaterial({ map: texture })
         })
         console.log(this.matcaps)
     }

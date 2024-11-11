@@ -1,6 +1,6 @@
 import { it, expect, describe } from 'vitest'
 import MatcapManager from '../MatcapManager'
-import { Texture } from 'three'
+import { MeshMatcapMaterial } from 'three'
 
 describe('MatcapManager', () => {
     it('Should not be a singleton', () => {
@@ -14,7 +14,7 @@ describe('MatcapManager', () => {
         mm.loadMatcaps('matcaps', [
             'test-material-1.png'
         ])
-        expect(mm.matcaps['test-material-1']).toBeInstanceOf(Texture)
+        expect(mm.matcaps['test-material-1']).toBeInstanceOf(MeshMatcapMaterial)
     })
 
     it('Should load matcaps', () => {
@@ -24,9 +24,9 @@ describe('MatcapManager', () => {
             'test-material-2.png',
             'test-material-3.png'
         ])
-        expect(mm.matcaps['test-material-1']).toBeInstanceOf(Texture)
-        expect(mm.matcaps['test-material-2']).toBeInstanceOf(Texture)
-        expect(mm.matcaps['test-material-3']).toBeInstanceOf(Texture)
+        expect(mm.matcaps['test-material-1']).toBeInstanceOf(MeshMatcapMaterial)
+        expect(mm.matcaps['test-material-2']).toBeInstanceOf(MeshMatcapMaterial)
+        expect(mm.matcaps['test-material-3']).toBeInstanceOf(MeshMatcapMaterial)
     })
 
     it('Should get matcap by name', () => {
@@ -35,7 +35,7 @@ describe('MatcapManager', () => {
             'test-material-1.png'
         ])
         const material = mm.getMatcapByName('test-material-1')
-        expect(material).toBeInstanceOf(Texture)
+        expect(material).toBeInstanceOf(MeshMatcapMaterial)
     })
 
     it('Should return undefined if matcap not found', () => {
