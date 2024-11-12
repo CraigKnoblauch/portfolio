@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest'
-import MatcapManager from '../MatcapManager'
+import MatcapManager from 'src/MatcapManager'
 import { MeshMatcapMaterial } from 'three'
 
 describe('MatcapManager', () => {

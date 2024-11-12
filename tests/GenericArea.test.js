@@ -1,9 +1,9 @@
 import { it, expect, describe, beforeAll } from 'vitest'
-import GenericArea from '../GenericArea'
+import GenericArea from 'src/GenericArea'
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { TextureLoader, MeshBasicMaterial, Group, Mesh } from 'three'
-import MatcapManager from '../MatcapManager'
+import MatcapManager from 'src/MatcapManager'
 
 beforeAll( () => {
     console.log(process.cwd())
