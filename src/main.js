@@ -9,6 +9,7 @@ import { TextureLoader } from 'three'
 import MatcapManger from './MatcapManager'
 import matcapImages from './matcapImages'
 import GenericArea from './GenericArea'
+import NG12LaunchShowcase from './showcases/NG12LaunchShowcase'
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -65,14 +66,13 @@ gltfLoader.load(
     (gltf) =>
     {
         const careerArea = new GenericArea(gltf, scene, matcapMgr, careerAreaGroundMaterial, [
-            "career_ground", 
             "asu_camera_zone", "asu_camera",
             "nrl_camera_zone", "nrl_camera",
             "exhaust_emitter", "rocket", "rocket_nozzle_1", "rocket_nozzle_2", "rocket_cradle",
             "rocket_yellow_flames_1", "rocket_yellow_flames_2",
             "launch_button"
         ])
-        // scene.add(careerArea.group)
+        const launchShowcase = new NG12LaunchShowcase("NG-12 Launch", gltf, scene)
     }
 )
 
