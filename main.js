@@ -15,9 +15,10 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
+scene.background = new THREE.Color(0x87CEEB)
 
 // Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+const ambientLight = new THREE.AmbientLight(0xffffff, 1)
 scene.add(ambientLight)
 
 // Red cube
@@ -42,9 +43,10 @@ const gltfLoader = new GLTFLoader()
 /**
  * Textures
  */
-const careerAreaGroundTexture = textureLoader.load('textures/career-are-baked.jpg')
+const careerAreaGroundTexture = textureLoader.load('textures/career-area-baked.jpg')
 careerAreaGroundTexture.flipY = false
 careerAreaGroundTexture.encoding = THREE.sRGBEncoding
+careerAreaGroundTexture.colorSpace = THREE.SRGBColorSpace 
 
 /**
  * Materials
@@ -52,12 +54,6 @@ careerAreaGroundTexture.encoding = THREE.sRGBEncoding
 const matcapMgr = new MatcapManger()
 matcapMgr.loadMatcaps('matcaps', matcapImages)
 
-const testMatcapMgr = new MatcapManger()
-testMatcapMgr.loadMatcaps('matcaps', [
-  'test-material-1.png',
-  'test-material-2.png',
-  'test-material-3.png'
-])
 // Career area ground material
 const careerAreaGroundMaterial = new THREE.MeshBasicMaterial({ map: careerAreaGroundTexture })
 
@@ -68,7 +64,7 @@ gltfLoader.load(
     'models/career-area.glb',
     (gltf) =>
     {
-        const careerArea = new GenericArea(gltf, matcapMgr, careerAreaGroundMaterial, [
+        const careerArea = new GenericArea(gltf, scene, matcapMgr, careerAreaGroundMaterial, [
             "career_ground", 
             "asu_camera_zone", "asu_camera",
             "nrl_camera_zone", "nrl_camera",
@@ -76,7 +72,7 @@ gltfLoader.load(
             "rocket_yellow_flames_1", "rocket_yellow_flames_2",
             "launch_button"
         ])
-        scene.add(careerArea.group)
+        // scene.add(careerArea.group)
     }
 )
 
@@ -135,6 +131,7 @@ const renderer = new THREE.WebGLRenderer({
     antialias: true
 })
 renderer.outputEncoding = THREE.sRGBEncoding
+renderer.outputColorSpace = THREE.SRGBColorSpace
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
