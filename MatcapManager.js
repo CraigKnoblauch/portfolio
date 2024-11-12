@@ -1,4 +1,4 @@
-import { TextureLoader, MeshMatcapMaterial } from 'three'
+import * as THREE from 'three'
 
 /**
  * Manages the loading and retrieval of matcaps.
@@ -7,14 +7,16 @@ import { TextureLoader, MeshMatcapMaterial } from 'three'
 export default class MatcapManager {
     constructor() {
         this.matcaps = {}
-        this.textureLoader = new TextureLoader()
+        this.textureLoader = new THREE.TextureLoader()
     }
 
     loadMatcaps(dir, files) {
         files.forEach((imageFilename) => {
             const materialName = imageFilename.split('.')[0]
             const texture = this.textureLoader.load(dir + '/' + imageFilename) // Load the matcap
-            this.matcaps[materialName] = new MeshMatcapMaterial({ map: texture })
+            texture.encoding = THREE.sRGBEncoding
+            texture.colorSpace = THREE.SRGBColorSpace
+            this.matcaps[materialName] = new THREE.MeshMatcapMaterial({ matcap: texture })
         })
         console.log(this.matcaps)
     }
