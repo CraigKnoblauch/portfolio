@@ -11,7 +11,7 @@ describe('MatcapManager', () => {
 
     it('Should load matcap', () => {
         const mm = new MatcapManager()
-        mm.loadMatcaps('matcaps', [
+        mm.loadMatcaps('test/matcaps', [
             'test-material-1.png'
         ])
         expect(mm.matcaps['test-material-1']).toBeInstanceOf(MeshMatcapMaterial)
@@ -19,7 +19,7 @@ describe('MatcapManager', () => {
 
     it('Should load matcaps', () => {
         const mm = new MatcapManager()
-        mm.loadMatcaps('matcaps', [
+        mm.loadMatcaps('test/matcaps', [
             'test-material-1.png',
             'test-material-2.png',
             'test-material-3.png'
@@ -31,7 +31,7 @@ describe('MatcapManager', () => {
 
     it('Should get matcap by name', () => {
         const mm = new MatcapManager()
-        mm.loadMatcaps('matcaps', [
+        mm.loadMatcaps('test/matcaps', [
             'test-material-1.png'
         ])
         const material = mm.getMatcapByName('test-material-1')
@@ -40,7 +40,7 @@ describe('MatcapManager', () => {
 
     it('Should return undefined if matcap not found', () => {
         const mm = new MatcapManager()
-        mm.loadMatcaps('matcaps', [
+        mm.loadMatcaps('test/matcaps', [
             'test-material-1.png'
         ])
         const material = mm.getMatcapByName('non-existent-material')

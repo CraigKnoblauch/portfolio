@@ -18,7 +18,6 @@ export default class MatcapManager {
             texture.colorSpace = THREE.SRGBColorSpace
             this.matcaps[materialName] = new THREE.MeshMatcapMaterial({ matcap: texture })
         })
-        console.log(this.matcaps)
     }
 
     getMatcapByName(name) {
