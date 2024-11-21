@@ -14,7 +14,6 @@ export default class MatcapManager {
         files.forEach((imageFilename) => {
             const materialName = imageFilename.split('.')[0]
             const texture = this.textureLoader.load(dir + '/' + imageFilename) // Load the matcap
-            texture.encoding = THREE.sRGBEncoding
             texture.colorSpace = THREE.SRGBColorSpace
             this.matcaps[materialName] = new THREE.MeshMatcapMaterial({ matcap: texture })
         })

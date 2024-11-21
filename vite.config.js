@@ -1,9 +1,25 @@
 // https://vite.dev/config/
 import { defineConfig } from 'vite'
 import path from 'path'
+import fs from 'fs'
+
+function removeTestAssets() {
+    return {
+        name: 'remove-test-assets',
+        resolveId (source) {
+            return source === 'virtual-module' ? source : null
+        },
+        renderStart (outputOptions, inputOptions) {
+            const outDir = outputOptions.dir
+            const testAssetsDir = path.resolve(outDir, 'test')
+            fs.rmdir(testAssetsDir, { recursive: true }, () => console.log(`Deleted ${testAssetsDir}`))
+        }
+    }
+}
 
 const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env
 export default defineConfig({
+    plugins: [removeTestAssets()],
     root: 'src/',
     publicDir: '../public',
     base: './',
@@ -13,7 +29,7 @@ export default defineConfig({
     },
     build:
     {
-        outDir: './dist',
+        outDir: '../dist',
         emptyOutDir: true,
         sourcemap: true
     },

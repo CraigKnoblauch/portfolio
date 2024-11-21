@@ -46,7 +46,6 @@ const gltfLoader = new GLTFLoader()
  */
 const careerAreaGroundTexture = textureLoader.load('textures/career-area-baked.jpg')
 careerAreaGroundTexture.flipY = false
-careerAreaGroundTexture.encoding = THREE.sRGBEncoding
 careerAreaGroundTexture.colorSpace = THREE.SRGBColorSpace 
 
 /**
@@ -75,16 +74,6 @@ gltfLoader.load(
         const launchShowcase = new NG12LaunchShowcase("NG-12 Launch", gltf, scene)
     }
 )
-
-// gltfLoader.load(
-//     'models/test-area.glb',
-//     (gltf) => 
-//     {
-//       const testArea = new GenericArea(gltf, testMatcapMgr, careerAreaGroundMaterial, ["test_exclusion_1", "test_exclusion_2"])
-//       scene.add(testArea.group)
-//       console.log('loaded')
-//     }
-// )
 
 /**
  * Sizes
@@ -130,7 +119,6 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true
 })
-renderer.outputEncoding = THREE.sRGBEncoding
 renderer.outputColorSpace = THREE.SRGBColorSpace
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
