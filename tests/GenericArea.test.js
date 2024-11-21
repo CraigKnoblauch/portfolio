@@ -8,7 +8,7 @@ import MatcapManager from 'src/MatcapManager'
 describe('GenericArea', () => {
     it('Should create prop meshes', () => {
         const loader = new GLTFLoader()
-        loader.load('./test/models/test-area.glb', (gltf) => {
+        loader.load('/test/models/test-area.glb', (gltf) => {
             expect(gltf.scene).not.toBeUndefined()
             console.log("GLTF in before all")
             console.log(gltf)
