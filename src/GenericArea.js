@@ -4,10 +4,8 @@ import { MeshBasicMaterial, BoxGeometry } from 'three'
 export default class GenericArea {
     constructor(gltf, scene, matcapMgr, groundMaterial, exclusions) {
         this.matcapMgr = matcapMgr
-        this.group = new Group()
-        this.props = new Group()
 
-        gltf.scene.traverse(node => {
+        gltf.scene.children.forEach(node => {
             if (node.name.includes("ground")) {
                 this.ground = new Mesh(node.geometry, groundMaterial)
                 scene.add(this.ground)
@@ -28,10 +26,5 @@ export default class GenericArea {
                 mesh.scale.copy(node.scale)
             }
         })
-
-        this.group.add(this.props)
-        if (this.ground) { 
-            this.group.add(this.ground) 
-        }
     }
 }
