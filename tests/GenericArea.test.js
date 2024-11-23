@@ -4,10 +4,14 @@ import GenericArea from 'src/GenericArea'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { TextureLoader, MeshBasicMaterial, Group, Mesh, Scene } from 'three'
 import MatcapManager from 'src/MatcapManager'
-import { exp } from 'three/webgpu'
+
+const countMeshesInGroup = (group) => {
+    return group.children.filter((child) => child instanceof Mesh).length;
+};
+  
 
 describe('GenericArea', () => {
-    it('Should create prop meshes', () => {
+    it('Should create prop meshes', async () => {
         const textureLoader = new TextureLoader()
         const groundTexture = textureLoader.load('test/textures/test-texture-1024.png')
         groundTexture.flipY = false
@@ -18,17 +22,21 @@ describe('GenericArea', () => {
             'test-material-2.png',
             'test-material-3.png'
         ])
-        const scene = new Scene()
 
+        let area = null
         const loader = new GLTFLoader()
-        loader.load('/test/models/test-area.glb', (gltf) => {
-            // Expecting 4 total meshes in the scene
-            const area = new GenericArea(gltf, scene, matcapMgr, groundMaterial, ["test_exclusion_1", "test_exclusion_2"])
+        const loaderPromise = new Promise((resolve, reject) => {
+            loader.load('/test/models/test-area.glb', (gltf) => {
+                // Expecting 4 total meshes in the scene
+                area = new GenericArea(gltf, matcapMgr, groundMaterial, ["test_exclusion_1", "test_exclusion_2"])
+                console.log(area.group)
+                resolve(area)
+            }, undefined, (error) => { reject(error) })
         })
 
-        // TODO this is weird. This expect in the load callback sees the right
-        // amount of children. Here it always sees 0 children.
-        expect(scene.children.length).toBe(4)
+        await loaderPromise
+            .then((area) => { expect(countMeshesInGroup(area.group)).toEqual(4) })
+            .catch((error) => { expect.fail(error) })        
     })
 
     it.todo('Should add all prop meshes to final group', () => {
