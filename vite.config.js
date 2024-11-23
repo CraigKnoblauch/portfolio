@@ -1,21 +1,75 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import glsl from 'vite-plugin-glsl'
+import path from 'path'
+import fs from 'fs'
 
-// https://vitejs.dev/config/
-// Added glsl() on recomendation to resolve syntax error on glsl import: https://www.reddit.com/r/threejs/comments/10q4cnl/shader_file_throws_error_unexpected_token/?rdt=60672
+function removeTestAssets() {
+    return {
+        name: 'remove-test-assets',
+        resolveId (source) {
+            return source === 'virtual-module' ? source : null
+        },
+        renderStart (outputOptions, inputOptions) {
+            const outDir = outputOptions.dir
+            const testAssetsDir = path.resolve(outDir, 'test')
+            fs.rmdir(testAssetsDir, { recursive: true }, () => console.log(`Deleted ${testAssetsDir}`))
+        }
+    }
+}
+
 export default defineConfig({
-  plugins: [react(), glsl()],
+    plugins: [removeTestAssets(), react(), glsl()],
+//    root: 'src/',
+//    publicDir: '../public',
+//    base: './',
+    server: {
+        host: true,
+        open: true
+    },
+    build:
+    {
+        outDir: '../dist',
+        emptyOutDir: true,
+        sourcemap: true
+    },
+    test: {
+        include: ['./tests/**/*.test.js[x]'],
+        browser: {
+            provider: 'playwright', // 'webdriverio' | 'playwright'
+            enabled: true,
+            name: 'chromium', // browser name is required
+            headless: true, // overridden in CLI
+            viewport: { width: 800, height: 600 },
+            providerOptions: {}
+        }
+    },
+    resolve: {
+        alias: {
+            src: ('/src/')
+        }
+    },
+    allowOnly: true,
+    maxConcurrency: 1,
+    minWorkers: 1,
+    testTimeout: 5000,
+    restoreMocks: true,
+    sequence: {
+      concurrent: false
+    }
+    /**
+     * For the future, you can use resolve and alias to make your paths in your
+     * source files work out. For reference:
+
   resolve: {
     alias: {
-      src: "/src/",
-    }
-  },
-  test: {
-    environment: 'jsdom',
-    setupFiles: ['./tests/setup.js'],
-    deps: {
-        inline: ['vitest-canvas-mock'],
-    }
-  }
+      src: path.resolve(__dirname, './src'),
+      assets: path.resolve(__dirname, './src/assets'),
+      components: path.resolve(__dirname, './src/components'),
+      lib: path.resolve(__dirname, './src/lib'),
+      scenarios: path.resolve(__dirname, './src/scenarios'),
+      testutils: path.resolve(__dirname, './src/tests/testutils')
+    },
+     */
 })
+
