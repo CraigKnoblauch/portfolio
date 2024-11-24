@@ -26,3 +26,6 @@ dist-ssr
 
 # Draw.io back up files
 *.drawio.bkp
+
+# Testing data
+tests/**/__screenshots__
